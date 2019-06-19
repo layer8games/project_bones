@@ -10,7 +10,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Lib\Headers\;$(ProjectDir)..\Headers\</AdditionalIncludeDirectories>
-      <ProgramDataBaseFileName>$(ProjectDir)..\..\Bin\</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(ProjectName)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\Lib\</AdditionalLibraryDirectories>
