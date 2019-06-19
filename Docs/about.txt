@@ -1,0 +1,1 @@
+This folder will hold any relevant docs that pertain to your project. This could be code documentation, design docs, build instructions, coding standards, love notes... it doesn't matter. This is a place for your to store the docs that you need to remember. 

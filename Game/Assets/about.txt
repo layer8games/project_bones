@@ -1,0 +1,1 @@
+This folder will hold all of the raw assets of the game. This can include anything that you need to make your game happen. For example, you should put textures, images, audio files, font files, shaders, models, design maps, and anything else that you can think of that you'll need to make your game playable. 

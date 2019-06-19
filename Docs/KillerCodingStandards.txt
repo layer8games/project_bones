@@ -1,0 +1,295 @@
+Coding Standards: 
+
+------------------------------------------------------- 1. COMMENTS -------------------------------------------------------
+
+All comments should be places as far to the left margin as they can be. Even if the relevant code is in the middle of the column, by placing all the comments to the furthermost left it allows for the comments to be easier to find in the IDE.
+ 
+Header comment. Begin each header file with a comment section which explains the use of the functions and any interface or design details that would be relevant to understand in order for the someone new to know what choices you had made. 
+
+example: 
+
+/*========================================================================
+Explanation of interface and design here
+
+credit here:
+This is not free to use, and cannot be used without the express permission
+of KillerWave.
+
+Written by Maxwell Miller
+========================================================================*/
+
+Function group comments. These are placed to at the start of a group of functions so that it is easy to identify what a related group of functions are for. 
+
+example:
+
+//==========================================================================================================================
+//
+//Function group
+//
+//==========================================================================================================================
+
+Function name comments. These are to label the individual functions located in the files for ease of access. If the functions are in a header, or if they are grouped small enough that adding this comment would double the number of lines, then don't use it. It's meant more for very large files that many functions (ie the Renderer really needs this). 
+
+example
+
+//=======================================================================================================
+//FunctionName
+//=======================================================================================================
+
+Notational comment. 
+
+These are used to make small, notation comments in the code for ease of use. This is defined as // followed by exactly 5 equal signs, followed by the comment, followed by exactly 5 more equal signs. 
+
+example
+
+//===== Comment =====
+
+End of scope comment.
+
+This is used where the brackets may be misleading, and it could be difficult to tell where one scope ends and another beings.
+
+example
+{
+	if {
+		while() 
+		{
+
+		}
+	}
+	else if()
+	{
+
+	}
+};//end of scope
+
+
+------------------------------------------------------- 2. Header format -------------------------------------------------------
+
+Every header file should be set up in the same format. Use pre-processor definition here, in order to prevent a header class being declared twice by the compiler. Next the includes and any relavant using statments with a comment lable indicating the location or purpose of these includes. The namespace comes next, following by any forward definitions of classes, then the class definition. Next comes the class itself, and all of the functions and members that that class will use. Members always come first. Note that there should only be one function per line, and there should be a new line between all functions and the next, even in the same group. Also, all classes should have private functions and members declared before public functions and members. Ideally every single header in a project will be formated in the exact same way. This goes down to the order in which the functions are defined and the number of spaces between the beginning and end of a comment, and the start of the code. I know that I can be a bit annal about how these things works, but I like to have these exact. Please note the spacing as it will drive me nuts. 
+
+example:
+
+/*========================================================================
+Explaination of interface and design here
+
+credit here
+========================================================================/*
+#pragma once
+
+//=====lib includes=====
+#include <lib.h>
+using lib::function;
+
+//=====STL includes=====
+#include <stl_lib>
+using std::lib;
+
+namespace ProjectNamespace 
+{
+
+//=====Foreward class definition=====
+	class Forward;
+
+	class NewClass 
+	{
+private:
+//==========================================================================================================================
+//
+//Function group1
+//
+//==========================================================================================================================
+//=======================================================================================================
+//functions1
+//=======================================================================================================
+		void functions1(void);
+		
+//=======================================================================================================
+//functions2
+//=======================================================================================================
+		void functions2(void);
+		
+//=======================================================================================================
+//functions3
+//=======================================================================================================
+		void functions3(void);
+
+public:
+//==========================================================================================================================
+//
+//Function group2
+//
+//==========================================================================================================================
+//=======================================================================================================
+//functions4
+//=======================================================================================================
+		void functions4(void);
+		
+//=======================================================================================================
+//functions5
+//=======================================================================================================
+		void functions5(void);
+		
+//=======================================================================================================
+//functions6
+//=======================================================================================================
+		void functions6(void);
+		
+	};
+}//End namepace
+
+------------------------------------------------------- 3. Implementation (.cpp files) -------------------------------------------------------
+
+All implemnations should have only a single include that links them to their header file. The header is where all other includes should be found. This is because implemantions are meant to be edited with the header open for reference. They should be implmenated in the same order they are delcared for ease of access and to make them more standard. The example would be for the header listed in item 2's example.
+
+example:
+
+#include <file.h>
+
+namespace ProjectNamespace 
+{
+//==========================================================================================================================
+//
+//Constructor Example
+//
+//==========================================================================================================================
+	Class::Class()
+	: 
+	thing(), 
+	thing2(), 
+	things3()
+	{  }
+
+//==========================================================================================================================
+//
+//Function group1
+//
+//==========================================================================================================================
+	void NewClass::functions1() 
+	{
+		implementation;
+	}
+
+	void NewClass::functions2() 
+	{
+		implementation;
+	}
+
+	void NewClass::functions2() 
+	{
+		implementation;
+	}
+
+//==========================================================================================================================
+//
+//Function group2
+//
+//==========================================================================================================================
+	void NewClass::functions4() 
+	{
+		implementation;
+	}
+
+	void NewClass::functions5() 
+	{
+		implementation;
+	}
+
+	void NewClass::functions6() 
+	{
+		implementation;
+	}
+
+}//End namespace
+
+
+------------------------------------------------------- 4. Bracing -------------------------------------------------------
+
+As has likely been clear throughout these example, I prefer the k and r style bracing over other types of bracing. There are some exceptions to this, when for readability it makes more sense to use a different style. Here are some exceptions that I would approve of. 
+
+For example: 
+
+class NewClass
+{
+	NewClass(void)
+	{
+
+	}
+
+	~NewClass(void)
+	{
+
+	}
+
+	ClassFunction(type arg, type arg, type arg)
+	{
+
+	}	
+};
+
+
+Multi-line declaration of variable:
+
+**this example is from the actual matrix class: 
+
+Matrix4<T>
+(
+	lhm[0] * rhm[0] + lhm[1] * rhm[4] + lhm[2] * rhm[8]  + lhm[3] * rhm[12], //m11
+	lhm[0] * rhm[1] + lhm[1] * rhm[5] + lhm[2] * rhm[9]  + lhm[3] * rhm[13], //m12
+	lhm[0] * rhm[2] + lhm[1] * rhm[6] + lhm[2] * rhm[10] + lhm[3] * rhm[14], //m13
+	lhm[0] * rhm[3] + lhm[1] * rhm[7] + lhm[2] * rhm[11] + lhm[3] * rhm[15], //m14
+
+	lhm[4] * rhm[0] + lhm[5] * rhm[4] + lhm[6] * rhm[8]  + lhm[7] * rhm[12], //m21
+	lhm[4] * rhm[1] + lhm[5] * rhm[5] + lhm[6] * rhm[9]  + lhm[7] * rhm[13], //m22
+	lhm[4] * rhm[2] + lhm[5] * rhm[6] + lhm[6] * rhm[10] + lhm[7] * rhm[14], //m23
+	lhm[4] * rhm[3] + lhm[5] * rhm[7] + lhm[6] * rhm[11] + lhm[7] * rhm[15], //m24
+
+	lhm[8] * rhm[0] + lhm[9] * rhm[4] + lhm[10] * rhm[8]  + lhm[11] * rhm[12], //m31
+	lhm[8] * rhm[1] + lhm[9] * rhm[5] + lhm[10] * rhm[9]  + lhm[11] * rhm[13], //m32
+	lhm[8] * rhm[2] + lhm[9] * rhm[6] + lhm[10] * rhm[10] + lhm[11] * rhm[14], //m33
+	lhm[8] * rhm[3] + lhm[9] * rhm[7] + lhm[10] * rhm[11] + lhm[11] * rhm[15], //m34
+
+	lhm[12] * rhm[0] + lhm[13] * rhm[4] + lhm[14] * rhm[8]  + lhm[15] * rhm[12], //m41
+	lhm[12] * rhm[1] + lhm[13] * rhm[5] + lhm[14] * rhm[9]  + lhm[15] * rhm[13], //m42
+	lhm[12] * rhm[2] + lhm[13] * rhm[6] + lhm[14] * rhm[10] + lhm[15] * rhm[14], //m43
+	lhm[12] * rhm[3] + lhm[13] * rhm[7] + lhm[14] * rhm[11] + lhm[15] * rhm[15]  //m44
+);
+
+
+------------------------------------------------------- 5. Naming -------------------------------------------------------
+
+There are several types of names, and I will cover how each should be handled. All names should prefer camel case to under scoring. 
+
+public or local variable names use camel case:
+
+simpleVariable1;
+
+private variable names use camel case proceeded with an _ (under score) 
+
+_simpleNamedVariable2;
+
+public function names use camel Case starting with a cap: 
+
+FunctionName1(void);
+FunctionName2(int numberOfThings);
+
+private function names are the same, but proceeded with an _ (underscore): 
+
+_FunctionName3(void);
+
+virtual function names also use camel case, proceeded with a v_: 
+
+v_FunctionName4(void);
+
+Classes are named like public Functions.
+
+class NewMathClass
+{
+	
+};
+
+------------------------------------------------------- 6. Design Ideas -------------------------------------------------------
+This is going to be a bigger section that will change as times goes on. It is no where near complete, this is just a place to start because its on my mind. 
+
+1. All input should be held in a Level, not in an object. 
+
+This has a few implications. First, it means that the Controller should only ever be called from inside a Level. It also means that GameObjects should only ever run v_Update(void) over their own data members, not over any input that is given to them by the player. 
