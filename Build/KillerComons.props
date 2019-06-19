@@ -3,24 +3,14 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-<<<<<<< HEAD
-    <OutDir>$(ProjectDir)..\..\Bin\$(PlatformName)_$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Game\</OutDir>
     <IntDir>$(ProjectDir)..\Temp\$(ProjectName)_$(Configuration)\</IntDir>
-=======
-    <OutDir>$(ProjectDir)..\..\Bin\</OutDir>
-    <IntDir>$(ProjectDir)..\..\Temp\$(ProjectName)_$(Configuration)\</IntDir>
->>>>>>> fbd5ff242ed098d22b8628f1687e97d1a66fb266
     <TargetName>$(ProjectName)_$(PlatformName)_$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-<<<<<<< HEAD
       <AdditionalIncludeDirectories>$(ProjectDir)..\Lib\Headers\;$(ProjectDir)..\Headers\</AdditionalIncludeDirectories>
-      <ProgramDataBaseFileName>$(ProjectDir)/</ProgramDataBaseFileName>
-=======
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Lib\Headers\;$(ProjectDir)..\..\Headers\</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(ProjectDir)..\..\Bin\</ProgramDataBaseFileName>
->>>>>>> fbd5ff242ed098d22b8628f1687e97d1a66fb266
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\Lib\</AdditionalLibraryDirectories>

@@ -1,1 +1,0 @@
-This folder will hold the build chain for the game. This could include the visual studio project that you are using to build the game, or the linux style make file that is used as the actual build process. This is going be a highly customizable place where you will have control over your project and how it is made. 
