@@ -51,7 +51,6 @@ public:
 	void Move(F32 xVal)
 	{
 		_position[x] += xVal * _speed * KM::Timer::Instance()->DeltaTime();
-		_boundingBox.SetCenter(GameObject::_position);
 	}
 
 //==========================================================================================================================

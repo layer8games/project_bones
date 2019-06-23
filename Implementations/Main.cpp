@@ -22,6 +22,7 @@ int main()
 	KE::ErrorManager::Instance()->DisplayErrors();
 
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
 
-	
+	KE::ErrorManager::Instance()->DisplayErrors();
 }

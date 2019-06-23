@@ -2,5 +2,6 @@
 
 enum TextureID
 {
-	SOLDIER = 1
+	SOLDIER = 1,
+	YELLOW_MONSTER = 2,
 };
