@@ -8,6 +8,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Killer_Engine\Headers\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutputDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\Killer_Engine\Bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

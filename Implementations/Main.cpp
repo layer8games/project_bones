@@ -4,8 +4,12 @@
 #include <Engine/Atom.h>
 #include <Engine/Engine.h>
 #include <Engine/ErrorManager.h>
+#include <Engine/TextureManager.h>
 
 namespace KE = KillerEngine;
+
+//===== Project Includes =====
+#include <Game/ID_Database.h>
 
 int main()
 {
@@ -16,4 +20,8 @@ int main()
 
 	KE::Engine::Instance()->Init(wndWidth, wndHeight, wndTitle, wndFullScreen);
 	KE::ErrorManager::Instance()->DisplayErrors();
+
+	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
+
+	
 }
