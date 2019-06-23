@@ -11,6 +11,9 @@
     <Filter Include="Source Files\Monster">
       <UniqueIdentifier>{34ca0121-db96-4882-8fae-db7a066bae00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Settlement">
+      <UniqueIdentifier>{ea49df9f-16c8-4106-90c6-bd92431cd995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -22,6 +25,9 @@
     <ClCompile Include="..\..\Implementations\Monster.cpp">
       <Filter>Source Files\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Settlement.cpp">
+      <Filter>Source Files\Settlement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -32,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ID_Database.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Settlement.h">
+      <Filter>Source Files\Settlement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

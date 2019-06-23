@@ -8,7 +8,7 @@
 namespace KE = KillerEngine;
 namespace KC = KillerCollisions;
 
-class Monster : public KE::GameObject
+class Settlement : public KE::GameObject
 {
 public:
 //==========================================================================================================================
@@ -16,23 +16,23 @@ public:
 //Constructors	 	
 //
 //==========================================================================================================================
-	Monster(void);
+	Settlement(void);
 
-	~Monster(void);
+	~Settlement(void);
 
 //==========================================================================================================================
 //
-//Virtal Functions
+//Virtual Functions
 //
 //==========================================================================================================================
-	void v_Update(void);
+	void v_Update(void) final;
 
 //==========================================================================================================================
 //
 //Functions
 //
 //==========================================================================================================================
-	inline void Damage(U32 dmg=1)
+	inline void Damage(U32 dmg = 1)
 	{
 		_hp -= dmg;
 	}
@@ -47,28 +47,10 @@ public:
 		return _hp;
 	}
 
-	inline void SetDamage(U32 val)
-	{
-		_dmg = val;
-	}
-
-	inline U32 GetPointValue(void) const
-	{
-		return _pointValue;
-	}
-
-	inline void SetPointValue(U32 val)
-	{
-		_pointValue = val;
-	}
-
 private:
 	U32		 _hp;
-	U32		 _dmg;
-	F32		 _speed;
-	F32		 _attackRate;
-	U32		 _pointValue;
 	KC::AABB _boundingBox;
+
 };//end Class
 
-typedef shared_ptr<Monster> p_Monster;
+typedef shared_ptr<Settlement> p_Settlement;
