@@ -27,5 +27,6 @@ public:
 	void v_Update(void);
 
 private:
+	U32 _hp;
 
 };//end Class
