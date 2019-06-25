@@ -6,6 +6,8 @@
 #include <Engine/Timer.h>
 #include <Engine/ErrorManager.h>
 #include <Engine/AABB.h>
+//Remove later
+#include <Engine/Controller.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
@@ -48,7 +50,7 @@ public:
 
 	void Fire(void);
 
-	void Move(F32 xVal)
+	inline void Move(F32 xVal)
 	{
 		_position[x] += xVal * _speed * KM::Timer::Instance()->DeltaTime();
 	}

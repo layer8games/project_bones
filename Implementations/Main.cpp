@@ -5,11 +5,16 @@
 #include <Engine/Engine.h>
 #include <Engine/ErrorManager.h>
 #include <Engine/TextureManager.h>
+#include <Engine/LevelManager.h>
+#include <Engine/ShaderManager.h>
 
 namespace KE = KillerEngine;
 
 //===== Project Includes =====
 #include <Game/ID_Database.h>
+#include <Game/Battleground.h>
+
+#include <vector>
 
 int main()
 {
@@ -21,8 +26,38 @@ int main()
 	KE::Engine::Instance()->Init(wndWidth, wndHeight, wndTitle, wndFullScreen);
 	KE::ErrorManager::Instance()->DisplayErrors();
 
-	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
+	//If User indicated they want to close they Game
+	if(KE::ErrorManager::Instance()->DisplayErrors())
+	{
+		KE::Engine::Instance()->End();
+	}
 
-	KE::ErrorManager::Instance()->DisplayErrors();
+	std::vector<KE::ShaderData> shaderData;
+	KE::ShaderData vertexShader;
+	KE::ShaderData fragmentShader;
+
+	vertexShader.filePath = "./Assets/Shaders/Default/sprite_vertex.glsl";
+	vertexShader.type = KE::VERTEX;
+	shaderData.push_back(vertexShader);
+
+	fragmentShader.filePath = "./Assets/Shaders/Default/sprite_fragment.glsl";
+	fragmentShader.type = KE::FRAGMENT;
+	shaderData.push_back(fragmentShader);
+
+	KE::ShaderManager::Instance()->LoadShader(KE::SPRITE, shaderData);
+
+	KE::LevelManager::Instance()->SetActiveLevel( p_Battleground(new Battleground()));
+
+	//If User indicated they want to close they Game
+	if(KE::ErrorManager::Instance()->DisplayErrors())
+	{
+		KE::Engine::Instance()->End();
+	}
+
+	while (KE::Engine::Instance()->Running())
+	{
+		KE::Engine::Instance()->Update();
+		KE::Engine::Instance()->Render();
+	}
 }
+			

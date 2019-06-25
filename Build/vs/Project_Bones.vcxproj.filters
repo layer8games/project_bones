@@ -20,6 +20,12 @@
     <Filter Include="Source Files\ObjectFactory">
       <UniqueIdentifier>{f231d1a4-39d7-4bb8-8c7b-e7ce297622c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{27a08493-a8f7-46ec-be9e-e0a0af1d0b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Shaders">
+      <UniqueIdentifier>{68d3d696-ca7a-4a00-b6dc-bdded86a2475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -60,5 +66,19 @@
     <ClInclude Include="..\..\Headers\Game\ObjectFactory.h">
       <Filter>Source Files\ObjectFactory</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Game\Assets\Shaders\Default\glyph_fragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Game\Assets\Shaders\Default\glyph_vertex.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Game\Assets\Shaders\Default\sprite_fragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Game\Assets\Shaders\Default\sprite_vertex.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

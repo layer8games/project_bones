@@ -169,6 +169,12 @@
       </SubType>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Game\Assets\Shaders\Default\glyph_fragment.glsl" />
+    <None Include="..\..\Game\Assets\Shaders\Default\glyph_vertex.glsl" />
+    <None Include="..\..\Game\Assets\Shaders\Default\sprite_fragment.glsl" />
+    <None Include="..\..\Game\Assets\Shaders\Default\sprite_vertex.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

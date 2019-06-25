@@ -8,7 +8,7 @@
 Soldier::Soldier(void)
 :
 _hp(3),
-_speed(3.0f),
+_speed(300.0f),
 _attackRate(2.0f),
 _boundingBox()
 {
@@ -37,5 +37,5 @@ void Soldier::v_Update(void)
 //==========================================================================================================================
 void Soldier::Fire(void)
 {
-
+	
 }
