@@ -14,6 +14,12 @@
     <Filter Include="Source Files\Settlement">
       <UniqueIdentifier>{ea49df9f-16c8-4106-90c6-bd92431cd995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Battleground">
+      <UniqueIdentifier>{b5bcf52a-9a72-4319-8bca-ce4642d96a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectFactory">
+      <UniqueIdentifier>{f231d1a4-39d7-4bb8-8c7b-e7ce297622c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -28,6 +34,12 @@
     <ClCompile Include="..\..\Implementations\Settlement.cpp">
       <Filter>Source Files\Settlement</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Battleground.cpp">
+      <Filter>Source Files\Battleground</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\ObjectFactory.cpp">
+      <Filter>Source Files\ObjectFactory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -41,6 +53,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Settlement.h">
       <Filter>Source Files\Settlement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Battleground.h">
+      <Filter>Source Files\Battleground</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\ObjectFactory.h">
+      <Filter>Source Files\ObjectFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

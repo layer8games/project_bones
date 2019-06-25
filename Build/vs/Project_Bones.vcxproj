@@ -124,8 +124,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Implementations\Battleground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Main.cpp" />
     <ClCompile Include="..\..\Implementations\Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\ObjectFactory.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -139,8 +147,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Headers\Game\Battleground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ID_Database.h" />
     <ClInclude Include="..\..\Headers\Game\Monster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\ObjectFactory.h">
       <SubType>
       </SubType>
     </ClInclude>
