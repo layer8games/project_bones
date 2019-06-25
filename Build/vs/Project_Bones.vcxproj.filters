@@ -26,6 +26,9 @@
     <Filter Include="Assets\Shaders">
       <UniqueIdentifier>{68d3d696-ca7a-4a00-b6dc-bdded86a2475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Projectile">
+      <UniqueIdentifier>{e86c7b50-f431-4222-895a-1eb3e0b107e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -46,6 +49,9 @@
     <ClCompile Include="..\..\Implementations\ObjectFactory.cpp">
       <Filter>Source Files\ObjectFactory</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Projectile.cpp">
+      <Filter>Source Files\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -65,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ObjectFactory.h">
       <Filter>Source Files\ObjectFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Projectile.h">
+      <Filter>Source Files\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

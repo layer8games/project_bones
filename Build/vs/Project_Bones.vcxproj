@@ -137,6 +137,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Projectile.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Settlement.cpp">
       <SubType>
       </SubType>
@@ -157,6 +161,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ObjectFactory.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Projectile.h">
       <SubType>
       </SubType>
     </ClInclude>
