@@ -7,6 +7,7 @@
 #include <Game/Soldier.h>
 #include <Game/Monster.h>
 #include <Game/Settlement.h>
+#include <Game/Projectile.h>
 
 
 class ObjectFactory
@@ -39,6 +40,11 @@ public:
 	p_Settlement MakeSettlement(void)
 	{
 		return p_Settlement(new Settlement());
+	}
+
+	p_Projectile MakeProjectile(void)
+	{
+		return p_Projectile(new Projectile());
 	}
 
 //==========================================================================================================================

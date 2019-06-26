@@ -15,6 +15,11 @@ namespace KE = KillerEngine;
 #include <Game/Monster.h>
 #include <Game/Settlement.h>
 #include <Game/ObjectFactory.h>
+#include <Game/Projectile.h>
+
+#include <vector>
+
+typedef std::vector<p_Projectile> BulletPool;
 
 class Battleground : public KE::Level
 {
@@ -38,9 +43,11 @@ public:
 	void v_Update(void) final;
 
 private:
-	p_Soldier _player;
-	p_Monster _monster;
+	U32			 _poolSize;
+	p_Soldier	 _player;
+	p_Monster	 _monster;
 	p_Settlement _settlement;
+	BulletPool	 _pool;
 
 };//end Class
 

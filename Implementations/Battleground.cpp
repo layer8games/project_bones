@@ -7,9 +7,11 @@
 //==========================================================================================================================
 Battleground::Battleground(void)
 	:
+	_poolSize(25),
 	_player(nullptr),
 	_monster(nullptr),
-	_settlement(nullptr)
+	_settlement(nullptr),
+	_pool()
 {
 
 }
@@ -20,6 +22,8 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(SOLDIER);
 	KE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
 	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
+
+	_pool.clear();
 }
 
 //==========================================================================================================================
@@ -29,12 +33,12 @@ Battleground::~Battleground(void)
 //==========================================================================================================================
 void Battleground::v_Init(void)
 {
-	Level::SetID(BATTLEGROUND);
-	Level::SetWidth(KE::GameWindow::Instance()->GetWidth());
-	Level::SetHeight(KE::GameWindow::Instance()->GetHeight());
-	Level::SetBackgroundColor(KE::Color(0.2f, 0.2f, 0.2f));
-	Level::SetLeftBorder(-Level::GetWidth() / 2);
-	Level::SetRightBorder(Level::GetWidth()/ 2);
+	SetID(BATTLEGROUND);
+	SetWidth(KE::GameWindow::Instance()->GetWidth());
+	SetHeight(KE::GameWindow::Instance()->GetHeight());
+	SetBackgroundColor(KE::Color(0.2f, 0.2f, 0.2f));
+	SetLeftBorder(-GetWidth() / 2);
+	SetRightBorder(Level::GetWidth()/ 2);
 
 	//Load Textures
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
@@ -43,22 +47,31 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
 
 	_player = ObjectFactory::Instance()->MakeSoldier();
-	_player->SetPosition(0.0f, 0.0f);
+	_player->SetPosition(0.0f, -200.0f);
 	_player->SetScale(32.0f, 32.0f);
 	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
-	Level::AddObjectToLevel(_player);
+	AddObjectToLevel(_player);
 
 	_monster = ObjectFactory::Instance()->MakeMonster();
 	_monster->SetPosition(0.0f, 150.0f);
 	_monster->SetScale(32.0f, 32.0f);
 	_monster->SetTexture(KE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
-	Level::AddObjectToLevel(_monster);
+	AddObjectToLevel(_monster);
 
 	_settlement = ObjectFactory::Instance()->MakeSettlement();
 	_settlement->SetPosition(0.0f, -300.0f);
 	_settlement->SetScale(64.0f, 64.0f);
 	_settlement->SetTexture(KE::TextureManager::Instance()->GetTexture(SETTLEMENT));
-	Level::AddObjectToLevel(_settlement);
+	AddObjectToLevel(_settlement);
+
+	for(U32 i = 0; i < _poolSize; ++i)
+	{
+		p_Projectile p = ObjectFactory::Instance()->MakeProjectile();
+		p->SetPosition(0.0f, -1000.0f);
+		p->SetUp(BULLET);
+		_pool.push_back(p);
+		AddObjectToLevel(p);
+	}
 }
 
 void Battleground::v_Update(void)
@@ -80,6 +93,17 @@ void Battleground::v_Update(void)
 		if(_player->GetPosition()[x] < GetRightBorder())
 		{
 			_player->Move(1.0f);
+		}
+	}
+	
+	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE))
+	{
+		for(auto p : _pool)
+		{
+			if(!p->GetActive())
+			{
+				_player->Fire(p);
+			}
 		}
 	}
 }

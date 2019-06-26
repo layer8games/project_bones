@@ -7,10 +7,13 @@
 //==========================================================================================================================
 Soldier::Soldier(void)
 :
+_canFire(true),
 _hp(3),
 _speed(300.0f),
-_attackRate(2.0f),
-_boundingBox()
+_fireRate(0.2f),
+_lastFire(0.0f),
+_boundingBox(),
+_activeFireType(BULLET)
 {
 	GameObject::MakeSprite();
 	_boundingBox.SetCenter(GameObject::_position);
@@ -27,6 +30,17 @@ Soldier::~Soldier(void)
 //==========================================================================================================================
 void Soldier::v_Update(void)
 {
+	if(!_canFire)
+	{
+		_lastFire += KM::Timer::Instance()->DeltaTime();
+
+		if(_lastFire >= _fireRate)
+		{
+			_canFire = true;
+			_lastFire = 0.0f;
+		}
+	}
+
 	_boundingBox.SetCenter(GameObject::_position);
 }
 
@@ -35,7 +49,12 @@ void Soldier::v_Update(void)
 //Functions
 //
 //==========================================================================================================================
-void Soldier::Fire(void)
+void Soldier::Fire(p_Projectile projectile)
 {
-	
+	if(_canFire)
+	{
+		projectile->SetUp(_activeFireType);
+		projectile->Fire(_position);
+		_canFire = false;
+	}
 }

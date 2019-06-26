@@ -13,6 +13,7 @@ namespace KE = KillerEngine;
 namespace KM = KillerMath;
 namespace KC = KillerCollisions;
 
+#include <Game/Projectile.h>
 
 class Soldier : public KE::GameObject
 {
@@ -48,7 +49,7 @@ public:
 		_hp += health;
 	}
 
-	void Fire(void);
+	void Fire(p_Projectile projectile);
 
 	inline void Move(F32 xVal)
 	{
@@ -76,11 +77,29 @@ public:
 		_speed = speed; 
 	}
 
+	inline void SetFireRate(F32 rate)
+	{
+		_fireRate = rate;
+	}
+
+	inline ProjectileType GetActiveFireType(void) const
+	{
+		return _activeFireType;
+	}
+
+	inline void SetActiveFireType(ProjectileType type)
+	{
+		_activeFireType = type;
+	}
+
 private:
+	bool	 _canFire;
 	U32 	 _hp;
 	F32 	 _speed;
-	F32 	 _attackRate;
+	F32 	 _fireRate;
+	F32		 _lastFire;
 	KC::AABB _boundingBox;
+	ProjectileType _activeFireType;
 
 };//end Class
 
