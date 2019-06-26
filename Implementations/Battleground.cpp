@@ -22,6 +22,7 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(SOLDIER);
 	KE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
 	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
+	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
 
 	_pool.clear();
 }

@@ -32,7 +32,7 @@ Projectile::~Projectile(void)
 //==========================================================================================================================
 void Projectile::v_Update(void)
 {
-	_distTraveled +=  _forwardVelocity * KM::Timer::Instance()->DeltaTime();
+	_distTraveled += _forwardVelocity * KM::Timer::Instance()->DeltaTime();
 
 	_position[y] += _distTraveled;
 	
