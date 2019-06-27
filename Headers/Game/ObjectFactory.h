@@ -2,6 +2,7 @@
 
 //=====Engine Includes=====
 #include <Engine/Atom.h>
+#include <Engine/TextureManager.h>
 
 //===== Game Includes =====
 #include <Game/Soldier.h>
@@ -39,7 +40,12 @@ public:
 
 	p_Settlement MakeSettlement(void)
 	{
-		return p_Settlement(new Settlement());
+		p_Settlement p = make_shared<Settlement>();
+		
+		p->SetScale(64.0f, 64.0f);
+		p->SetTexture(KE::TextureManager::Instance()->GetTexture(SETTLEMENT));
+		
+		return p;
 	}
 
 	p_Projectile MakeProjectile(void)

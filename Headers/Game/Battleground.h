@@ -7,6 +7,7 @@
 #include <Engine/Controller.h>
 #include <Engine/Engine.h>
 #include <Engine/TextureManager.h>
+#include <Engine/ErrorManager.h>
 
 namespace KE = KillerEngine;
 
@@ -20,6 +21,8 @@ namespace KE = KillerEngine;
 #include <vector>
 
 typedef std::vector<p_Projectile> BulletPool;
+typedef std::vector<p_Monster> MonsterPool;
+typedef std::vector<p_Settlement> SettlementList;
 
 class Battleground : public KE::Level
 {
@@ -43,11 +46,25 @@ public:
 	void v_Update(void) final;
 
 private:
-	U32			 _poolSize;
-	p_Soldier	 _player;
-	p_Monster	 _monster;
-	p_Settlement _settlement;
-	BulletPool	 _pool;
+//==========================================================================================================================
+//
+//Private Functions
+//
+//==========================================================================================================================	
+	void _Spawn(U32 amount, MonsterAIType type);
+
+//==========================================================================================================================
+//
+//Data
+//
+//==========================================================================================================================
+	U32			   _projectilePoolSize;
+	U32			   _monsterPoolSize;
+	U32			   _settlementListSize;
+	p_Soldier	   _player;
+	BulletPool	   _projectilePool;
+	MonsterPool	   _monsterPool;
+	SettlementList _settlementList;
 
 };//end Class
 

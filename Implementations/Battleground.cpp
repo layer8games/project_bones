@@ -7,11 +7,13 @@
 //==========================================================================================================================
 Battleground::Battleground(void)
 	:
-	_poolSize(25),
+	_projectilePoolSize(25),
+	_monsterPoolSize(30),
+	_settlementListSize(5),
 	_player(nullptr),
-	_monster(nullptr),
-	_settlement(nullptr),
-	_pool()
+	_projectilePool(),
+	_monsterPool(),
+	_settlementList()
 {
 
 }
@@ -24,7 +26,9 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
 	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
 
-	_pool.clear();
+	_projectilePool.clear();
+	_monsterPool.clear();
+	_settlementList.clear();
 }
 
 //==========================================================================================================================
@@ -40,6 +44,8 @@ void Battleground::v_Init(void)
 	SetBackgroundColor(KE::Color(0.2f, 0.2f, 0.2f));
 	SetLeftBorder(-GetWidth() / 2);
 	SetRightBorder(Level::GetWidth()/ 2);
+	SetTopBorder(Level::GetHeight() / 2);
+	SetBottomBorder(-Level::GetHeight() / 2);
 
 	//Load Textures
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
@@ -47,41 +53,61 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
 
+	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
 	_player->SetPosition(0.0f, -200.0f);
 	_player->SetScale(32.0f, 32.0f);
 	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
-	AddObjectToLevel(_player);
+	AddObjectToLevel(_player);	
 
-	_monster = ObjectFactory::Instance()->MakeMonster();
-	_monster->SetPosition(0.0f, 150.0f);
-	_monster->SetScale(32.0f, 32.0f);
-	_monster->SetTexture(KE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
-	AddObjectToLevel(_monster);
-
-	_settlement = ObjectFactory::Instance()->MakeSettlement();
-	_settlement->SetPosition(0.0f, -300.0f);
-	_settlement->SetScale(64.0f, 64.0f);
-	_settlement->SetTexture(KE::TextureManager::Instance()->GetTexture(SETTLEMENT));
-	AddObjectToLevel(_settlement);
-
-	for(U32 i = 0; i < _poolSize; ++i)
+	//Create Projectile Pool
+	for(U32 i = 0; i < _projectilePoolSize; ++i)
 	{
 		p_Projectile p = ObjectFactory::Instance()->MakeProjectile();
 		p->SetPosition(0.0f, -1000.0f);
 		p->SetUp(BULLET);
-		_pool.push_back(p);
+		_projectilePool.push_back(p);
 		AddObjectToLevel(p);
 	}
+
+	//Create Monster Pool
+	for(U32 i = 0; i < _monsterPoolSize; ++i)
+	{
+		p_Monster m = ObjectFactory::Instance()->MakeMonster();
+		m->SetActive(false);
+		m->SetPosition(0.0f, -1000.0f);
+		_monsterPool.push_back(m);
+		AddObjectToLevel(m);
+	}
+
+	//KM::Point settlmentPos { Level::GetRightBorder() + 128.0f, Level::GetBottomBorder() + 64.0f};
+	KM::Point settlementPos { 0.0f, 0.0f };
+	
+	//Create Settlements
+	for(U32 i = 0; i < _settlementListSize; ++i)
+	{
+		p_Settlement s = ObjectFactory::Instance()->MakeSettlement();
+		s->SetPosition(settlementPos);
+		//Need to update AABB pos and scale
+		_settlementList.push_back(s);
+		AddObjectToLevel(s);
+		settlementPos[x] += 96.0f;
+	}
+
+	//TestSpawn Logic
+	_Spawn(10, AI_YELLOW_MONSTER);
 }
 
 void Battleground::v_Update(void)
 {
+	//Exit or Menu check
 	if (KE::Controller::Instance()->GetKeyDown(KE::ESCAPE))
 	{
 		KE::Engine::Instance()->End();
+		return;
 	}
 
+	//Player input loop
 	if(KE::Controller::Instance()->GetKeyHeld(KE::LEFT_ARROW))
 	{
 		if(_player->GetPosition()[x] > Level::GetLeftBorder())
@@ -99,12 +125,67 @@ void Battleground::v_Update(void)
 	
 	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE))
 	{
-		for(auto p : _pool)
+		for(auto p : _projectilePool)
 		{
 			if(!p->GetActive())
 			{
 				_player->Fire(p);
 			}
 		}
+	}
+
+	//AI loop
+	for(auto monster : _monsterPool)
+	{
+		if(monster->GetActive())
+		{	
+		//This may not work... the list to send to choose will change from type to type
+			if(monster->GetAIState() == CHOOSE)
+			{
+				PotentialTargetList targets;
+
+				for(auto settlement : _settlementList)
+				{
+					PotentialTarget target;
+					target.target = settlement;
+					target.weight = 0;
+					targets.push_back(target);
+				}
+
+				monster->Choose(targets);
+			}
+			else if(monster->GetAIState() == SEEK)
+			{
+				monster->Seek();
+			}
+			else if(monster->GetAIState() == ATTACK)
+			{
+				monster->Attack();
+			}
+			else
+			{
+				KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Battleground::v_Update Monster attempted to update with invalid AI");
+			}
+		}
+	}
+}
+
+void Battleground::_Spawn(U32 amount, MonsterAIType type)
+{
+	KM::Point pos(Level::GetLeftBorder() + 32.0f, Level::GetTopBorder() - 32.0f);
+	//rand for pos
+
+	for(U32 i = 0; i < amount; ++i)
+	{
+		for(auto monster : _monsterPool)
+		{
+			if(!monster->GetActive())
+			{
+				monster->Setup(type, pos);
+				break;
+			}
+			//update rand
+		}
+		pos[x] += 64.0f;
 	}
 }
