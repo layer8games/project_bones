@@ -9,6 +9,7 @@
 #include <Engine/TextureManager.h>
 #include <Engine/Vector3.h>
 #include <Engine/Random.h>
+#include <Engine/Timer.h>
 
 namespace KE = KillerEngine;
 namespace KC = KillerCollisions;
@@ -112,6 +113,7 @@ private:
 	F32					_speed;
 	F32					_attackRate;
 	U32					_pointValue;
+	F32					_attackRange;
 	KC::AABB			_boundingBox;
 	MonsterAIState		_aiState;
 	MonsterAIType		_aiType;

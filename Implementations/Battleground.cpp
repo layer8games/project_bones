@@ -9,14 +9,12 @@ Battleground::Battleground(void)
 	:
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
-	_settlementListSize(5),
+	_settlementListSize(6),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
 	_settlementList()
-{
-
-}
+{ }
 
 Battleground::~Battleground(void)
 {
@@ -80,8 +78,7 @@ void Battleground::v_Init(void)
 		AddObjectToLevel(m);
 	}
 
-	//KM::Point settlmentPos { Level::GetRightBorder() + 128.0f, Level::GetBottomBorder() + 64.0f};
-	KM::Point settlementPos { 0.0f, 0.0f };
+	KM::Point settlementPos { Level::GetLeftBorder() + 128.0f, Level::GetBottomBorder() + 64.0f};
 	
 	//Create Settlements
 	for(U32 i = 0; i < _settlementListSize; ++i)
@@ -91,7 +88,7 @@ void Battleground::v_Init(void)
 		//Need to update AABB pos and scale
 		_settlementList.push_back(s);
 		AddObjectToLevel(s);
-		settlementPos[x] += 96.0f;
+		settlementPos[x] += 150.0f;
 	}
 
 	//TestSpawn Logic

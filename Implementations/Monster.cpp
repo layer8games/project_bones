@@ -1,4 +1,5 @@
 #include <Game/Monster.h>
+#include <iostream>
 
 //==========================================================================================================================
 //
@@ -12,6 +13,7 @@ Monster::Monster(void)
 	_speed(1.0f),
 	_attackRate(1.0f),
 	_pointValue(0),
+	_attackRange(5.0f),
 	_boundingBox(),
 	_aiState(NO_STATE),
 	_aiType(NO_TYPE),
@@ -35,10 +37,6 @@ Monster::~Monster(void)
 void Monster::v_Update(void)
 {
 	_boundingBox.SetCenter(_position);
-
-	//Move
-
-	
 }
 
 void Monster::Setup(MonsterAIType type, KM::Point pos)
@@ -50,7 +48,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_aiState = CHOOSE;
 			_position = pos;
 			_hp = 1;
-			_speed = 100.0f;
+			_speed = 1.0f;
 			_damage = 1;
 			_attackRate = 0.1f;
 			_pointValue = 1;
@@ -77,6 +75,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 //==========================================================================================================================
 void Monster::Choose(PotentialTargetList targetList)
 {
+	std::cout << "choose called\n";
 	if(_aiType == AI_YELLOW_MONSTER)
 	{
 		S32 maxChance = 0;
@@ -114,12 +113,29 @@ void Monster::Choose(PotentialTargetList targetList)
 
 void Monster::Seek(void)
 {
-	//if we found our target
-	_aiState = ATTACK;
+	std::cout << "seek called\n";
+	
+	if(_target != nullptr)
+	{
+		std::cout << "I found a target, its ID is " << _target->GetID() << std::endl;
+
+		KM::Vector3 targetVec = _target->GetPosition() - _position;
+
+		if(targetVec.SqrMagnitude() <= _attackRange * _attackRange)
+		{
+			std::cout << "I can attack now\n";
+			_aiState = ATTACK;
+		}
+		else
+		{
+			_position += targetVec * _speed * KM::Timer::Instance()->DeltaTime();
+		}
+	}
 }
 
 void Monster::Attack(void)
 {
+	//std::cout << "Attack called\n";
 	//Attack timer logic
 
 	//if target is no longer in range
@@ -127,4 +143,6 @@ void Monster::Attack(void)
 	
 	//If our target is dead
 	//_aiState = CHOOSE;
+	//Set to no state to end AI loop for tests. remove later
+	//_aiState = NO_STATE;
 }
