@@ -16,7 +16,7 @@ Settlement::Settlement(void)
 	GameObject::MakeSprite();
 	_boundingBox.SetCenter(_position);
 	_boundingBox.SetHalfDimensions(_scale);
-	_position[z] = 1.0f;
+	_position[z] = -1.0f;
 
 	_hp = 10;
 }

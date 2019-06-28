@@ -14,7 +14,7 @@ Monster::Monster(void)
 	_attackRate(1.0f),
 	_lastAttack(0.0f),
 	_pointValue(0),
-	_attackRange(100.0f),
+	_attackRange(5.0f),
 	_shuffleDir(0.0f),
 	_boundingBox(),
 	_aiState(NO_STATE),
@@ -24,7 +24,7 @@ Monster::Monster(void)
 	GameObject::MakeSprite();
 	_boundingBox.SetCenter(_position);
 	_boundingBox.SetHalfDimensions(_scale);
-	_position[z] = -1.0f;
+	_position[z] = 1.0f;
 }
 
 Monster::~Monster(void)
