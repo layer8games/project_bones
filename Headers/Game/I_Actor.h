@@ -3,18 +3,10 @@
 //=====Engine Includes=====
 #include <Engine/Atom.h>
 #include <Engine/GameObject.h>
-#include <Engine/AABB.h>
-#include <Engine/Color.h>
-#include <Engine/Timer.h>
 
 namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
-namespace KM = KillerMath;
 
-//===== Game Includes =====
-#include <Game/I_Actor.h>
-
-class Settlement : public I_Actor 
+class I_Actor : public KE::GameObject
 {
 public:
 //==========================================================================================================================
@@ -22,26 +14,47 @@ public:
 //Constructors	 	
 //
 //==========================================================================================================================
-	Settlement(void);
+	I_Actor(void);
 
-	~Settlement(void);
+	~I_Actor(void);
 
 //==========================================================================================================================
 //
-//Virtual Functions
+//Functions
 //
 //==========================================================================================================================
-	void v_Update(void) final;
+	inline bool Alive(void)
+	{
+		return _alive;
+	}
+	
+	inline virtual void v_Damage(S32 dmg=1)
+	{
+		DefaultDamage(dmg);
+	}
 
-	void v_Damage(S32 dmg) final;
+	inline void Heal(S32 heal)
+	{
+		_hp += heal;
+	}
 
-private:
-	bool	 _isDmg;
-	F32		 _dmgTime;
-	F32		 _dmgCounter;
-	KE::Color _dmgColor;
-	KC::AABB _boundingBox;
+	inline S32 GetHP(void) const
+	{
+		return _hp;
+	}
 
+protected:
+	inline void DefaultDamage(S32 dmg = 1)
+	{
+		_hp -= dmg;
+
+		if(_hp <= 0)
+		{
+			_alive = false;
+		}
+	}
+
+	bool	 _alive;
+	S32 	 _hp;
 };//end Class
-
-typedef shared_ptr<Settlement> p_Settlement;
+typedef shared_ptr<I_Actor> p_Actor;

@@ -8,10 +8,11 @@
 //==========================================================================================================================
 Monster::Monster(void)
 	:
-	_hp(1),
 	_damage(1),
 	_speed(1.0f),
+	_canAttack(true),
 	_attackRate(1.0f),
+	_lastAttack(0.0f),
 	_pointValue(0),
 	_attackRange(5.0f),
 	_boundingBox(),
@@ -36,6 +37,17 @@ Monster::~Monster(void)
 //==========================================================================================================================
 void Monster::v_Update(void)
 {
+	if(!_canAttack)
+	{
+		_lastAttack += KM::Timer::Instance()->DeltaTime();
+
+		if(_lastAttack >= _attackRate)
+		{
+			_canAttack = true;
+			_lastAttack = 0.0f;
+		}
+	}
+	
 	_boundingBox.SetCenter(_position);
 }
 
@@ -44,13 +56,13 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 	switch(type)
 	{
 		case AI_YELLOW_MONSTER :
+			_hp = 1;
 			_aiType = type;
 			_aiState = CHOOSE;
 			_position = pos;
-			_hp = 1;
-			_speed = 1.0f;
+			_speed = 150.0f;
 			_damage = 1;
-			_attackRate = 0.1f;
+			_attackRate = 1.0f;
 			_pointValue = 1;
 			SetScale(32.0f, 32.0f);
 			SetTexture(KE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
@@ -75,7 +87,6 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 //==========================================================================================================================
 void Monster::Choose(PotentialTargetList targetList)
 {
-	std::cout << "choose called\n";
 	if(_aiType == AI_YELLOW_MONSTER)
 	{
 		S32 maxChance = 0;
@@ -112,22 +123,18 @@ void Monster::Choose(PotentialTargetList targetList)
 }
 
 void Monster::Seek(void)
-{
-	std::cout << "seek called\n";
-	
+{	
 	if(_target != nullptr)
 	{
-		std::cout << "I found a target, its ID is " << _target->GetID() << std::endl;
-
 		KM::Vector3 targetVec = _target->GetPosition() - _position;
 
 		if(targetVec.SqrMagnitude() <= _attackRange * _attackRange)
 		{
-			std::cout << "I can attack now\n";
 			_aiState = ATTACK;
 		}
 		else
 		{
+			targetVec.Normalize();
 			_position += targetVec * _speed * KM::Timer::Instance()->DeltaTime();
 		}
 	}
@@ -135,14 +142,16 @@ void Monster::Seek(void)
 
 void Monster::Attack(void)
 {
-	//std::cout << "Attack called\n";
-	//Attack timer logic
+	if(_canAttack)
+	{
+		_target->v_Damage(_damage);
+		_canAttack = false;
+	}
 
-	//if target is no longer in range
-	//_aiState = SEEK;
-	
-	//If our target is dead
-	//_aiState = CHOOSE;
-	//Set to no state to end AI loop for tests. remove later
-	//_aiState = NO_STATE;
+	if(!_target->Alive())
+	{
+		_target->SetActive(false);
+		SetActive(false);
+	}
+
 }

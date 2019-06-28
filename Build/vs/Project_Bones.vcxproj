@@ -128,6 +128,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\I_Actor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Main.cpp" />
     <ClCompile Include="..\..\Implementations\Monster.cpp">
       <SubType>
@@ -156,6 +160,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ID_Database.h" />
+    <ClInclude Include="..\..\Headers\Game\I_Actor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Monster.h">
       <SubType>
       </SubType>

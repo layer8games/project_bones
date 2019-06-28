@@ -92,7 +92,7 @@ void Battleground::v_Init(void)
 	}
 
 	//TestSpawn Logic
-	_Spawn(10, AI_YELLOW_MONSTER);
+	_Spawn(5, AI_YELLOW_MONSTER);
 }
 
 void Battleground::v_Update(void)

@@ -29,6 +29,9 @@
     <Filter Include="Source Files\Projectile">
       <UniqueIdentifier>{e86c7b50-f431-4222-895a-1eb3e0b107e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\I_Actor">
+      <UniqueIdentifier>{e1972344-cf8b-4132-ad1e-2ee226faabba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -52,6 +55,9 @@
     <ClCompile Include="..\..\Implementations\Projectile.cpp">
       <Filter>Source Files\Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\I_Actor.cpp">
+      <Filter>Source Files\I_Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -74,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Projectile.h">
       <Filter>Source Files\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\I_Actor.h">
+      <Filter>Source Files\I_Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

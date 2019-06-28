@@ -13,9 +13,10 @@ namespace KE = KillerEngine;
 namespace KM = KillerMath;
 namespace KC = KillerCollisions;
 
+#include <Game/I_Actor.h>
 #include <Game/Projectile.h>
 
-class Soldier : public KE::GameObject
+class Soldier : public I_Actor
 {
 public:
 //==========================================================================================================================
@@ -39,16 +40,6 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	inline void Damage(U32 dmg=1)
-	{
-		_hp -= dmg;
-	}
-
-	inline void Heal(U32 health=1)
-	{
-		_hp += health;
-	}
-
 	void Fire(p_Projectile projectile);
 
 	inline void Move(F32 xVal)
@@ -61,11 +52,6 @@ public:
 //Accessors
 //
 //==========================================================================================================================
-	inline U32 GetHP(void) const
-	{
-		return _hp;
-	}
-
 	inline void SetSpeed(F32 speed)
 	{
 		if(speed < 0.0f)
@@ -94,7 +80,6 @@ public:
 
 private:
 	bool	 _canFire;
-	U32 	 _hp;
 	F32 	 _speed;
 	F32 	 _fireRate;
 	F32		 _lastFire;

@@ -8,7 +8,6 @@
 Soldier::Soldier(void)
 :
 _canFire(true),
-_hp(3),
 _speed(300.0f),
 _fireRate(0.2f),
 _lastFire(0.0f),
@@ -18,6 +17,7 @@ _activeFireType(BULLET)
 	GameObject::MakeSprite();
 	_boundingBox.SetCenter(GameObject::_position);
 	_boundingBox.SetHalfDimensions(GameObject::_scale);
+	_hp = 3;
 }
 
 Soldier::~Soldier(void)

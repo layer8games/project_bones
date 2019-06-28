@@ -16,6 +16,7 @@ namespace KC = KillerCollisions;
 namespace KM = KillerMath;
 
 //===== Game Includes =====
+#include <Game/I_Actor.h>
 #include <Game/ID_Database.h>
 
 //===== STL Includes =====
@@ -26,7 +27,7 @@ namespace KM = KillerMath;
 //==========================================================================================================================
 struct PotentialTarget
 {
-	KE::p_GameObject target = nullptr;
+	p_Actor target = nullptr;
 	S32				 weight = 0;
 };
 
@@ -35,7 +36,7 @@ typedef std::vector<PotentialTarget> PotentialTargetList;
 //==========================================================================================================================
 //Monster 
 //==========================================================================================================================
-class Monster : public KE::GameObject
+class Monster : public I_Actor
 {
 public:
 //==========================================================================================================================
@@ -59,11 +60,6 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	inline void Damage(U32 dmg=1)
-	{
-		_hp -= dmg;
-	}
-
 	void Setup(MonsterAIType type, KM::Point pos);
 
 //==========================================================================================================================
@@ -82,11 +78,6 @@ public:
 //Accessors
 //
 //==========================================================================================================================
-	inline U32 GetHP(void) const
-	{
-		return _hp;
-	}
-
 	inline void SetDamage(U32 val)
 	{
 		_damage = val;
@@ -108,16 +99,17 @@ public:
 	}
 
 private:
-	U32					_hp;
 	U32					_damage;
 	F32					_speed;
+	bool				_canAttack;
 	F32					_attackRate;
+	F32					_lastAttack;
 	U32					_pointValue;
 	F32					_attackRange;
 	KC::AABB			_boundingBox;
 	MonsterAIState		_aiState;
 	MonsterAIType		_aiType;
-	KE::p_GameObject	_target;
+	p_Actor				_target;
 	KM::Vector3			_movementDirection;
 };//end Class
 
