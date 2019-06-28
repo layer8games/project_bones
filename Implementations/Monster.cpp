@@ -15,6 +15,7 @@ Monster::Monster(void)
 	_lastAttack(0.0f),
 	_pointValue(0),
 	_attackRange(5.0f),
+	_shuffleDir(0.0f),
 	_boundingBox(),
 	_aiState(NO_STATE),
 	_aiType(NO_TYPE),
@@ -146,6 +147,21 @@ void Monster::Attack(void)
 	{
 		_target->v_Damage(_damage);
 		_canAttack = false;
+		
+		U32 shuffleChance = KM::Random::Instance()->RandomInt(0, 100);
+
+		if(shuffleChance <= 50)
+		{
+			_shuffleDir = -1.0f;
+		}
+		else
+		{
+			_shuffleDir = 1.0f;
+		}
+	}
+	else
+	{
+		_position[x] += _shuffleDir * (_speed * 0.12f) * KM::Timer::Instance()->DeltaTime();
 	}
 
 	if(!_target->Alive())

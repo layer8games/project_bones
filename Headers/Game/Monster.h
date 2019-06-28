@@ -106,6 +106,7 @@ private:
 	F32					_lastAttack;
 	U32					_pointValue;
 	F32					_attackRange;
+	F32					_shuffleDir;
 	KC::AABB			_boundingBox;
 	MonsterAIState		_aiState;
 	MonsterAIType		_aiType;
