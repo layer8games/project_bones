@@ -70,6 +70,16 @@ void Battleground::v_Init(void)
 
 	KM::Point settlementPos{Level::GetLeftBorder() + 128.0f, Level::GetBottomBorder() + 64.0f};
 
+	//Create Monster Pool
+	for(U32 i = 0; i < _monsterPoolSize; ++i)
+	{
+		p_Monster m = ObjectFactory::Instance()->MakeMonster();
+		m->SetActive(false);
+		m->SetPosition(0.0f, -1000.0f);
+		_monsterPool.push_back(m);
+		AddObjectToLevel(m);
+	}
+	
 	//Create Settlements
 	for(U32 i = 0; i < _settlementListSize; ++i)
 	{
@@ -80,21 +90,9 @@ void Battleground::v_Init(void)
 		AddObjectToLevel(s);
 		settlementPos[x] += 150.0f;
 	}
-	
-	//Create Monster Pool
-	for(U32 i = 0; i < _monsterPoolSize; ++i)
-	{
-		p_Monster m = ObjectFactory::Instance()->MakeMonster();
-		m->SetActive(false);
-		m->SetPosition(0.0f, -1000.0f);
-		_monsterPool.push_back(m);
-		AddObjectToLevel(m);
-	}
-
-	
 
 	//TestSpawn Logic
-	_Spawn(5, AI_YELLOW_MONSTER);
+	_Spawn(15, AI_YELLOW_MONSTER);
 }
 
 void Battleground::v_Update(void)

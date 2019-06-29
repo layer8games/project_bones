@@ -12,10 +12,19 @@ void main()
 {
 	if(has_texture) 
 	{
-		color = sprite_color * texture(tex, fs_texCoord);
+		vec4 texColor = sprite_color * texture(tex, fs_texCoord);
+		if(texColor.a < 0.01)
+		{
+			discard;
+		}
+		color = texColor;
 	}
 	else
 	{
+		if(sprite_color.a < 0.01)
+		{
+			discard;
+		}
 		color = sprite_color;
 	}
 }
