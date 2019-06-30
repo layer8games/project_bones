@@ -1,4 +1,5 @@
 #include <Game/Battleground.h>
+#include <iostream>
 
 //==========================================================================================================================
 //
@@ -56,6 +57,7 @@ void Battleground::v_Init(void)
 	_player->SetPosition(0.0f, -200.0f);
 	_player->SetScale(32.0f, 32.0f);
 	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
+	_player->v_Awake();
 	AddObjectToLevel(_player);	
 
 	//Create Projectile Pool
@@ -85,7 +87,7 @@ void Battleground::v_Init(void)
 	{
 		p_Settlement s = ObjectFactory::Instance()->MakeSettlement();
 		s->SetPosition(settlementPos);
-		//Need to update AABB pos and scale
+		s->v_Awake();
 		_settlementList.push_back(s);
 		AddObjectToLevel(s);
 		settlementPos[x] += 150.0f;
@@ -98,11 +100,18 @@ void Battleground::v_Init(void)
 void Battleground::v_Update(void)
 {
 	//Exit or Menu check
-	if (KE::Controller::Instance()->GetKeyDown(KE::ESCAPE))
+	if(KE::Controller::Instance()->GetKeyDown(KE::ESCAPE))
 	{
 		KE::Engine::Instance()->End();
 		return;
 	}
+
+	if(!_player->Alive())
+	{
+		std::cout << "I AM DEAD!!!\n";
+	}
+	
+	_ProcessCollisions();
 
 	//Player input loop
 	if(KE::Controller::Instance()->GetKeyHeld(KE::LEFT_ARROW))
@@ -184,5 +193,20 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 			//update rand
 		}
 		pos[x] += 64.0f;
+	}
+}
+
+void Battleground::_ProcessCollisions(void)
+{
+	for(auto monster : _monsterPool)
+	{
+		if(monster->GetActive())
+		{
+			if(_player->OverlapCheck(monster))
+			{
+				std::cout << "Gonna attack the player\n";
+				monster->Attack(_player);
+			}
+		}
 	}
 }

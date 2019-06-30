@@ -8,15 +8,15 @@
 Soldier::Soldier(void)
 :
 _canFire(true),
+_tookDamage(false),
 _speed(300.0f),
 _fireRate(0.2f),
 _lastFire(0.0f),
-_boundingBox(),
+_lastDamaged(0.0f),
+_immune(0.5f),
 _activeFireType(BULLET)
 {
 	GameObject::MakeSprite();
-	_boundingBox.SetCenter(GameObject::_position);
-	_boundingBox.SetHalfDimensions(GameObject::_scale);
 	_hp = 3;
 }
 
@@ -30,6 +30,19 @@ Soldier::~Soldier(void)
 //==========================================================================================================================
 void Soldier::v_Update(void)
 {
+	DefaultUpdate();
+
+	if(_tookDamage)
+	{
+		_lastDamaged += KM::Timer::Instance()->DeltaTime();
+
+		if(_lastDamaged >= _immune)
+		{
+			_tookDamage = false;
+			_lastDamaged = 0.0f;
+		}
+	}
+
 	if(!_canFire)
 	{
 		_lastFire += KM::Timer::Instance()->DeltaTime();
@@ -42,6 +55,11 @@ void Soldier::v_Update(void)
 	}
 
 	_boundingBox.SetCenter(GameObject::_position);
+}
+
+void Soldier::v_OnCollision(void)
+{
+
 }
 
 //==========================================================================================================================

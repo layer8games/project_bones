@@ -73,6 +73,8 @@ public:
 
 	void Attack(void);
 
+	void Attack(const p_Actor target);
+
 //==========================================================================================================================
 //
 //Accessors
@@ -81,6 +83,11 @@ public:
 	inline void SetDamage(U32 val)
 	{
 		_damage = val;
+	}
+
+	inline U32 GetDamage(void)
+	{
+		return _damage;
 	}
 
 	inline U32 GetPointValue(void) const
@@ -107,7 +114,6 @@ private:
 	U32					_pointValue;
 	F32					_attackRange;
 	F32					_shuffleDir;
-	KC::AABB			_boundingBox;
 	MonsterAIState		_aiState;
 	MonsterAIType		_aiType;
 	p_Actor				_target;

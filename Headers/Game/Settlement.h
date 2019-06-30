@@ -33,14 +33,8 @@ public:
 //==========================================================================================================================
 	void v_Update(void) final;
 
-	void v_Damage(S32 dmg) final;
-
 private:
-	bool	 _isDmg;
-	F32		 _dmgTime;
-	F32		 _dmgCounter;
-	KE::Color _dmgColor;
-	KC::AABB _boundingBox;
+
 
 };//end Class
 

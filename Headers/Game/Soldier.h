@@ -35,6 +35,8 @@ public:
 //==========================================================================================================================
 	void v_Update(void) final;
 
+	void v_OnCollision(void);
+
 //==========================================================================================================================
 //
 //Functions
@@ -45,6 +47,15 @@ public:
 	inline void Move(F32 xVal)
 	{
 		_position[x] += xVal * _speed * KM::Timer::Instance()->DeltaTime();
+	}
+
+	inline void v_Damage(S32 dmg = 1) final
+	{
+		if(!_tookDamage)
+		{
+			DefaultDamage();
+			_tookDamage = true;
+		}
 	}
 
 //==========================================================================================================================
@@ -80,10 +91,12 @@ public:
 
 private:
 	bool	 _canFire;
+	bool	 _tookDamage;
 	F32 	 _speed;
 	F32 	 _fireRate;
 	F32		 _lastFire;
-	KC::AABB _boundingBox;
+	F32		 _lastDamaged;
+	F32		 _immune;
 	ProjectileType _activeFireType;
 
 };//end Class

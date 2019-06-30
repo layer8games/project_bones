@@ -3,8 +3,11 @@
 //=====Engine Includes=====
 #include <Engine/Atom.h>
 #include <Engine/GameObject.h>
+#include <Engine/AABB.h>
+#include <Engine/Timer.h>
 
 namespace KE = KillerEngine;
+namespace KC = KillerCollisions;
 
 class I_Actor : public KE::GameObject
 {
@@ -23,14 +26,22 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	inline bool Alive(void)
+	void v_Awake(void) final
 	{
-		return _alive;
+		_boundingBox.SetCenter(_position);
+		_boundingBox.SetHalfDimensions(_scale);
 	}
+	
+	//virtual void v_OnCollision(void)=0;
 	
 	inline virtual void v_Damage(S32 dmg=1)
 	{
 		DefaultDamage(dmg);
+	}
+
+	inline bool Alive(void)
+	{
+		return _alive;
 	}
 
 	inline void Heal(S32 heal)
@@ -43,18 +54,28 @@ public:
 		return _hp;
 	}
 
-protected:
-	inline void DefaultDamage(S32 dmg = 1)
+	inline bool OverlapCheck(const shared_ptr<I_Actor> other)
 	{
-		_hp -= dmg;
-
-		if(_hp <= 0)
-		{
-			_alive = false;
-		}
+		return _boundingBox.TestCollision(other->GetBounding());
 	}
 
-	bool	 _alive;
-	S32 	 _hp;
+	inline const KC::AABB& GetBounding(void) const
+	{
+		return _boundingBox;
+	}
+
+protected:
+	void DefaultDamage(S32 dmg=1);
+
+	void DefaultUpdate(void);
+
+	bool	  _alive;
+	S32 	  _hp;
+	bool	  _isDmg;
+	F32		  _dmgTime;
+	F32		  _dmgCounter;
+	KE::Color _dmgColor;
+	KC::AABB  _boundingBox;
+
 };//end Class
 typedef shared_ptr<I_Actor> p_Actor;

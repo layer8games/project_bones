@@ -16,14 +16,11 @@ Monster::Monster(void)
 	_pointValue(0),
 	_attackRange(5.0f),
 	_shuffleDir(0.0f),
-	_boundingBox(),
 	_aiState(NO_STATE),
 	_aiType(NO_TYPE),
 	_target(nullptr)
 {
 	GameObject::MakeSprite();
-	_boundingBox.SetCenter(_position);
-	_boundingBox.SetHalfDimensions(_scale);
 	_position[z] = 1.0f;
 }
 
@@ -39,6 +36,8 @@ Monster::~Monster(void)
 //==========================================================================================================================
 void Monster::v_Update(void)
 {
+	DefaultUpdate();
+
 	if(!_canAttack)
 	{
 		_lastAttack += KM::Timer::Instance()->DeltaTime();
@@ -171,4 +170,13 @@ void Monster::Attack(void)
 		SetActive(false);
 	}
 
+}
+
+void Monster::Attack(const p_Actor target)
+{
+	if(_canAttack)
+	{
+		target->v_Damage(_damage);
+		_canAttack = false;
+	}
 }

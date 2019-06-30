@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\Player">
-      <UniqueIdentifier>{bb0b9503-d842-4225-894f-93265556725b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Monster">
       <UniqueIdentifier>{34ca0121-db96-4882-8fae-db7a066bae00}</UniqueIdentifier>
     </Filter>
@@ -32,13 +29,16 @@
     <Filter Include="Source Files\I_Actor">
       <UniqueIdentifier>{e1972344-cf8b-4132-ad1e-2ee226faabba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Soldier">
+      <UniqueIdentifier>{bb0b9503-d842-4225-894f-93265556725b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Implementations\Soldier.cpp">
-      <Filter>Source Files\Player</Filter>
+      <Filter>Source Files\Soldier</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Implementations\Monster.cpp">
       <Filter>Source Files\Monster</Filter>
@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
-      <Filter>Source Files\Player</Filter>
+      <Filter>Source Files\Soldier</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Monster.h">
       <Filter>Source Files\Monster</Filter>
