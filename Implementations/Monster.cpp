@@ -61,7 +61,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_aiType = type;
 			_aiState = CHOOSE;
 			_position = pos;
-			_speed = 150.0f;
+			_speed = 100.0f;
 			_damage = 1;
 			_attackRate = 1.0f;
 			_pointValue = 1;

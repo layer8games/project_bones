@@ -38,6 +38,11 @@ void I_Actor::DefaultDamage(S32 dmg)
 
 void I_Actor::DefaultUpdate(void)
 {
+	if(!_alive)
+	{
+		SetActive(false);
+	}
+	
 	if(_isDmg)
 	{
 		_dmgCounter += KM::Timer::Instance()->DeltaTime();

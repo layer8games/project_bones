@@ -13,6 +13,7 @@ namespace KC = KillerCollisions;
 namespace KM = KillerMath;
 
 #include <Game/ID_Database.h>
+#include <Game/I_Actor.h>
 
 enum ProjectileType
 {
@@ -58,14 +59,9 @@ public:
 		return _damage;
 	}
 
-	inline void SetNumEnemies(U32 num)
+	inline void HitEnemy(void)
 	{
-		_numEnemies = num;
-	}
-
-	inline U32 GetNumEnemies(void) const
-	{
-		return _numEnemies;
+		--_numEnemies;
 	}
 
 	inline void SetRange(F32 range)
@@ -88,9 +84,19 @@ public:
 		return _forwardVelocity;
 	}
 
+	inline bool OverlapCheck(const shared_ptr<I_Actor> other)
+	{
+		return _boundingBox.TestCollision(other->GetBounding());
+	}
+
+	inline const KC::AABB& GetBounding(void) const
+	{
+		return _boundingBox;
+	}
+
 private:
 	U32 _damage;
-	U32 _numEnemies; 
+	S32 _numEnemies; 
 	F32 _range;
 	F32 _distTraveled;
 	F32 _forwardVelocity;

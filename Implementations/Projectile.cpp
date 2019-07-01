@@ -32,6 +32,12 @@ Projectile::~Projectile(void)
 //==========================================================================================================================
 void Projectile::v_Update(void)
 {
+	if(_numEnemies == 0)
+	{
+		SetActive(false);
+		return;
+	}
+	
 	_distTraveled += _forwardVelocity * KM::Timer::Instance()->DeltaTime();
 
 	_position[y] += _distTraveled;

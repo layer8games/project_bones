@@ -198,14 +198,31 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 
 void Battleground::_ProcessCollisions(void)
 {
+	//Monsters vs Player
 	for(auto monster : _monsterPool)
 	{
 		if(monster->GetActive())
 		{
 			if(_player->OverlapCheck(monster))
 			{
-				std::cout << "Gonna attack the player\n";
 				monster->Attack(_player);
+			}
+		}
+	}
+
+	//Projectiles vs Monsters
+	for(auto projectile : _projectilePool)
+	{
+		if(projectile->GetActive())
+		{
+			for(auto monster : _monsterPool)
+			{
+				if(projectile->OverlapCheck(monster))
+				{
+					monster->v_Damage(projectile->GetDamage());
+					projectile->HitEnemy();
+					break;
+				}
 			}
 		}
 	}

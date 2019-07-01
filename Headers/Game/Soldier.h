@@ -46,6 +46,7 @@ public:
 
 	inline void Move(F32 xVal)
 	{
+		//Consider stagger for player. May need another timer....
 		_position[x] += xVal * _speed * KM::Timer::Instance()->DeltaTime();
 	}
 
