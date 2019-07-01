@@ -1,4 +1,5 @@
 #include <Game/Soldier.h>
+#include <iostream>
 
 //==========================================================================================================================
 //
@@ -53,8 +54,6 @@ void Soldier::v_Update(void)
 			_lastFire = 0.0f;
 		}
 	}
-
-	_boundingBox.SetCenter(GameObject::_position);
 }
 
 void Soldier::v_OnCollision(void)
@@ -72,7 +71,7 @@ void Soldier::Fire(p_Projectile projectile)
 	if(_canFire)
 	{
 		projectile->SetUp(_activeFireType);
-		projectile->Fire(_position);
+		projectile->Fire(GetPosition());
 		_canFire = false;
 	}
 }

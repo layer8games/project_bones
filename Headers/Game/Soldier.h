@@ -47,7 +47,7 @@ public:
 	inline void Move(F32 xVal)
 	{
 		//Consider stagger for player. May need another timer....
-		_position[x] += xVal * _speed * KM::Timer::Instance()->DeltaTime();
+		AddScaledPosition(KM::Vector3(xVal, 0.0f), _speed * KM::Timer::Instance()->DeltaTime());
 	}
 
 	inline void v_Damage(S32 dmg = 1) final

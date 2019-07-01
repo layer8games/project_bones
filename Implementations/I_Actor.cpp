@@ -12,8 +12,7 @@ I_Actor::I_Actor(void)
 	_isDmg(false),
 	_dmgTime(0.1f),
 	_dmgCounter(0.0f),
-	_dmgColor(0.5, 0.1f, 0.1f),
-	_boundingBox()
+	_dmgColor(0.5, 0.1f, 0.1f)
 {  }
 
 I_Actor::~I_Actor(void)
@@ -25,7 +24,13 @@ void I_Actor::DefaultDamage(S32 dmg)
 
 	if(_hp <= 0)
 	{
+		SetActive(false);
 		_alive = false;
+		_isDmg = false;
+		_dmgCounter = 0.0f;
+		SetColor(KE::Color(1.0f));
+		SetPosition(0.0f, -1000.0f);
+		UpdateInternals();
 	}
 
 	if(!_isDmg)
@@ -38,11 +43,6 @@ void I_Actor::DefaultDamage(S32 dmg)
 
 void I_Actor::DefaultUpdate(void)
 {
-	if(!_alive)
-	{
-		SetActive(false);
-	}
-	
 	if(_isDmg)
 	{
 		_dmgCounter += KM::Timer::Instance()->DeltaTime();

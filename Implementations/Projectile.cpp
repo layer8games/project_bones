@@ -12,14 +12,11 @@ Projectile::Projectile(void)
 	_range(1000.0f),
 	_distTraveled(0.0f),
 	_forwardVelocity(600.0f),
-	_boundingBox(),
 	_activeType(DO_NOTHING)
 {
 	SetActive(false);
 	MakeSprite();
-	_position.Set(0.0f, -1000.0f);
-	_boundingBox.SetCenter(_position);
-	_boundingBox.SetDimensions(_scale);
+	SetPosition(0.0f, -1000.0f);
 }
 
 Projectile::~Projectile(void)
@@ -32,39 +29,28 @@ Projectile::~Projectile(void)
 //==========================================================================================================================
 void Projectile::v_Update(void)
 {
-	if(_numEnemies == 0)
-	{
-		SetActive(false);
-		return;
-	}
-	
 	_distTraveled += _forwardVelocity * KM::Timer::Instance()->DeltaTime();
 
-	_position[y] += _distTraveled;
-	
-	_boundingBox.SetCenter(_position);
+	AddScaledPosition(KM::Vector3(0.0f, 1.0f), _distTraveled);
 
 	if(_distTraveled >= _range)
 	{
 		SetActive(false);
-		_position.Set(0.0f, -1000.0f);
+		SetPosition(0.0f, -1000.0f);
 		_distTraveled = 0.0f;
+		UpdateInternals();
 	}
 }
 
 void Projectile::Fire(const KM::Point& pos)
-{
-	_position = pos;
+{	
+	SetPosition(pos);
+	UpdateInternals();
 	SetActive(true);
 }
 
 void Projectile::SetUp(ProjectileType type)
 {
-	if(_activeType == type)
-	{
-		return;
-	}
-
 	switch(type)
 	{
 		case BULLET:
@@ -75,10 +61,21 @@ void Projectile::SetUp(ProjectileType type)
 			_forwardVelocity = 60.0f;
 			SetScale(8.0f, 8.0f);
 			SetTexture(KE::TextureManager::Instance()->GetTexture(DEFAULT_BULLET));
-			_boundingBox.SetDimensions(_scale);
 		break;
 		default:
 		
 		break;
 	};
+}
+
+void Projectile::HitEnemy(void)
+{
+	--_numEnemies;
+
+	if(_numEnemies == 0)
+	{
+		SetPosition(0.0f, -1000.0f);
+		SetActive(false);
+		UpdateInternals();
+	}
 }

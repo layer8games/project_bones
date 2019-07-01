@@ -8,8 +8,6 @@
 Settlement::Settlement(void)
 {
 	GameObject::MakeSprite();
-	_position[z] = -1.0f;
-
 	_hp = 10;
 }
 

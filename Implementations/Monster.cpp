@@ -1,5 +1,5 @@
 #include <Game/Monster.h>
-#include <iostream>
+
 
 //==========================================================================================================================
 //
@@ -21,7 +21,6 @@ Monster::Monster(void)
 	_target(nullptr)
 {
 	GameObject::MakeSprite();
-	_position[z] = 1.0f;
 }
 
 Monster::~Monster(void)
@@ -48,8 +47,6 @@ void Monster::v_Update(void)
 			_lastAttack = 0.0f;
 		}
 	}
-	
-	_boundingBox.SetCenter(_position);
 }
 
 void Monster::Setup(MonsterAIType type, KM::Point pos)
@@ -57,11 +54,13 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 	switch(type)
 	{
 		case AI_YELLOW_MONSTER :
+			_alive = true;
 			_hp = 1;
 			_aiType = type;
 			_aiState = CHOOSE;
-			_position = pos;
-			_speed = 100.0f;
+			SetColor(1.0f);
+			SetPosition(pos);
+			_speed = 80.0f;
 			_damage = 1;
 			_attackRate = 1.0f;
 			_pointValue = 1;
@@ -127,7 +126,7 @@ void Monster::Seek(void)
 {	
 	if(_target != nullptr)
 	{
-		KM::Vector3 targetVec = _target->GetPosition() - _position;
+		KM::Vector3 targetVec = _target->GetPosition() - GetPosition();
 
 		if(targetVec.SqrMagnitude() <= _attackRange * _attackRange)
 		{
@@ -136,7 +135,7 @@ void Monster::Seek(void)
 		else
 		{
 			targetVec.Normalize();
-			_position += targetVec * _speed * KM::Timer::Instance()->DeltaTime();
+			AddScaledPosition(targetVec, _speed * KM::Timer::Instance()->DeltaTime());
 		}
 	}
 }
@@ -161,7 +160,7 @@ void Monster::Attack(void)
 	}
 	else
 	{
-		_position[x] += _shuffleDir * (_speed * 0.12f) * KM::Timer::Instance()->DeltaTime();
+		AddScaledPosition(KM::Vector3(_shuffleDir, 0.0f), (_speed * 0.12f) * KM::Timer::Instance()->DeltaTime());
 	}
 
 	if(!_target->Alive())

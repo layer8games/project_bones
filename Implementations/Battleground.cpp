@@ -1,5 +1,4 @@
 #include <Game/Battleground.h>
-#include <iostream>
 
 //==========================================================================================================================
 //
@@ -11,10 +10,14 @@ Battleground::Battleground(void)
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
 	_settlementListSize(6),
+	_spawnRate(2.0f),
+	_lastSpawn(0.0f),
+	_canSpawn(true),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
-	_settlementList()
+	_settlementList(),
+	_spawnZones()
 { }
 
 Battleground::~Battleground(void)
@@ -64,8 +67,6 @@ void Battleground::v_Init(void)
 	for(U32 i = 0; i < _projectilePoolSize; ++i)
 	{
 		p_Projectile p = ObjectFactory::Instance()->MakeProjectile();
-		p->SetPosition(0.0f, -1000.0f);
-		p->SetUp(BULLET);
 		_projectilePool.push_back(p);
 		AddObjectToLevel(p);
 	}
@@ -93,8 +94,11 @@ void Battleground::v_Init(void)
 		settlementPos[x] += 150.0f;
 	}
 
-	//TestSpawn Logic
-	_Spawn(15, AI_YELLOW_MONSTER);
+	//Set up Spawn Zones
+	//On Screen, left
+	_spawnZones.push_back(KM::Point(GetLeftBorder() + 64.0f, GetTopBorder() - 64.0f));
+	//On Screen, right
+	_spawnZones.push_back(KM::Point(GetRightBorder() - 64.0f, GetTopBorder() - 64.0f));
 }
 
 void Battleground::v_Update(void)
@@ -106,9 +110,20 @@ void Battleground::v_Update(void)
 		return;
 	}
 
-	if(!_player->Alive())
+	if(_canSpawn)
 	{
-		std::cout << "I AM DEAD!!!\n";
+		_canSpawn = false;
+		_lastSpawn = 0.0f;
+		_Spawn(2, AI_YELLOW_MONSTER);
+	}
+	else
+	{
+		_lastSpawn += KM::Timer::Instance()->DeltaTime();
+
+		if(_lastSpawn >= _spawnRate)
+		{
+			_canSpawn = true;
+		}
 	}
 	
 	_ProcessCollisions();
@@ -178,21 +193,21 @@ void Battleground::v_Update(void)
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
 {
-	KM::Point pos(Level::GetLeftBorder() + 32.0f, Level::GetTopBorder() - 32.0f);
-	//rand for pos
-
 	for(U32 i = 0; i < amount; ++i)
 	{
+		KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f)};
+		
+		U32 spawnZoneToUse = KM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
+
 		for(auto monster : _monsterPool)
 		{
 			if(!monster->GetActive())
 			{
-				monster->Setup(type, pos);
+				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);	
 				break;
 			}
 			//update rand
 		}
-		pos[x] += 64.0f;
 	}
 }
 
