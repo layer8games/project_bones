@@ -70,6 +70,7 @@ private:
 	F32			   _spawnRate;
 	F32			   _lastSpawn;
 	bool		   _canSpawn;
+	U32			   _spawnAmount;
 	p_Soldier	   _player;
 	BulletPool	   _projectilePool;
 	MonsterPool	   _monsterPool;

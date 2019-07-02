@@ -1,4 +1,5 @@
 #include <Game/Battleground.h>
+#include <iostream>
 
 //==========================================================================================================================
 //
@@ -13,6 +14,7 @@ Battleground::Battleground(void)
 	_spawnRate(2.0f),
 	_lastSpawn(0.0f),
 	_canSpawn(true),
+	_spawnAmount(2),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
@@ -95,10 +97,15 @@ void Battleground::v_Init(void)
 	}
 
 	//Set up Spawn Zones
-	//On Screen, left
-	_spawnZones.push_back(KM::Point(GetLeftBorder() + 64.0f, GetTopBorder() - 64.0f));
-	//On Screen, right
-	_spawnZones.push_back(KM::Point(GetRightBorder() - 64.0f, GetTopBorder() - 64.0f));
+	//Can dynamically add more. _Spawn will support that without any additional work.
+	//30% from the left border, 10% from the top of the screen
+	_spawnZones.push_back(KM::Point(GetLeftBorder() * 0.33f, GetTopBorder() * 0.9f));
+	//30% from the right border, 10% from the top
+	_spawnZones.push_back(KM::Point(GetRightBorder() * 0.33f, GetTopBorder() * 0.9f));
+	//Right on the left border, 60% from the top of the screen
+	_spawnZones.push_back(KM::Point(GetLeftBorder(), GetTopBorder() * 0.4f));
+	//Right on the right border, 60% from the top of the screen
+	_spawnZones.push_back(KM::Point(GetRightBorder(), GetTopBorder() * 0.4f));
 }
 
 void Battleground::v_Update(void)
@@ -114,7 +121,8 @@ void Battleground::v_Update(void)
 	{
 		_canSpawn = false;
 		_lastSpawn = 0.0f;
-		_Spawn(2, AI_YELLOW_MONSTER);
+		_Spawn(_spawnAmount, AI_YELLOW_MONSTER);
+		++_spawnAmount;
 	}
 	else
 	{
@@ -165,11 +173,24 @@ void Battleground::v_Update(void)
 			{
 				PotentialTargetList targets;
 
+				bool foundTarget = false;
+				
 				for(auto settlement : _settlementList)
 				{
+					if(settlement->GetActive())
+					{
+						PotentialTarget target;
+						target.target = settlement;
+						target.weight = 0;
+						targets.push_back(target);
+						foundTarget = true;
+					}
+				}
+				
+				if(!foundTarget)
+				{
 					PotentialTarget target;
-					target.target = settlement;
-					target.weight = 0;
+					target.target = _player;
 					targets.push_back(target);
 				}
 

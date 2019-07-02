@@ -137,6 +137,11 @@ void Monster::Seek(void)
 			targetVec.Normalize();
 			AddScaledPosition(targetVec, _speed * KM::Timer::Instance()->DeltaTime());
 		}
+
+		if(!_target->GetActive())
+		{
+			_aiState = CHOOSE;
+		}
 	}
 }
 
