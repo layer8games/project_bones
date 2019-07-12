@@ -7,6 +7,7 @@
 #include <Engine/TextureManager.h>
 #include <Engine/LevelManager.h>
 #include <Engine/ShaderManager.h>
+#include <Engine/AudioManager.h>
 
 namespace KE = KillerEngine;
 
@@ -45,6 +46,28 @@ int main()
 	shaderData.push_back(fragmentShader);
 
 	KE::ShaderManager::Instance()->LoadShader(KE::SPRITE, shaderData);
+
+	KE::p_AudioClip battleMusicClip = make_shared<KE::AudioClip>();
+	battleMusicClip->LoadWAV("./Assets/Audio/battle_v1.wav");
+	//battleMusicClip->LoadWAV("./Assets/Audio/skate.wav");
+
+	KE::p_AudioSource backgroundSource = make_shared<KE::AudioSource>();
+	backgroundSource->AddClip(battleMusicClip);
+
+	if(KE::ErrorManager::Instance()->DisplayErrors())
+	{
+		KE::Engine::Instance()->End();
+	}
+
+	KE::AudioManager::Instance()->AddClip(BATTLE_MUSIC, battleMusicClip);
+	KE::AudioManager::Instance()->AddSource(BACKGROUND_MUSIC, backgroundSource);
+
+	if(KE::ErrorManager::Instance()->DisplayErrors())
+	{
+		KE::Engine::Instance()->End();
+	}
+
+	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC);
 
 	KE::LevelManager::Instance()->SetActiveLevel( p_Battleground(new Battleground()));
 

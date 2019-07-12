@@ -117,6 +117,8 @@ void Battleground::v_Update(void)
 		return;
 	}
 
+	//KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC);
+
 	if(_canSpawn)
 	{
 		_canSpawn = false;

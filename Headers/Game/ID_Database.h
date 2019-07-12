@@ -29,3 +29,13 @@ enum MonsterAIState
 	SEEK	= 2,
 	ATTACK	= 3,
 };
+
+enum AudioClipID
+{
+	BATTLE_MUSIC = 1,
+};
+
+enum AudioSourceID
+{
+	BACKGROUND_MUSIC = 1,
+};

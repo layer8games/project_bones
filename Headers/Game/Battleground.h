@@ -10,6 +10,7 @@
 #include <Engine/ErrorManager.h>
 #include <Engine/Point.h>
 #include <Engine/Random.h>
+#include <Engine/AudioManager.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
