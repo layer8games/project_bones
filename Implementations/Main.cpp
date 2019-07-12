@@ -49,10 +49,10 @@ int main()
 
 	KE::p_AudioClip battleMusicClip = make_shared<KE::AudioClip>();
 	battleMusicClip->LoadWAV("./Assets/Audio/battle_v1.wav");
-	//battleMusicClip->LoadWAV("./Assets/Audio/skate.wav");
 
 	KE::p_AudioSource backgroundSource = make_shared<KE::AudioSource>();
 	backgroundSource->AddClip(battleMusicClip);
+	backgroundSource->SetLooping(true);
 
 	if(KE::ErrorManager::Instance()->DisplayErrors())
 	{
