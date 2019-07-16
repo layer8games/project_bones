@@ -32,6 +32,9 @@
     <Filter Include="Source Files\Soldier">
       <UniqueIdentifier>{bb0b9503-d842-4225-894f-93265556725b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Audio">
+      <UniqueIdentifier>{f40f1f95-369c-41ee-8130-08031a1ce8db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -98,5 +101,43 @@
     <None Include="..\..\Game\Assets\Shaders\Default\sprite_vertex.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\Game\Assets\Audio\battle_v1.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\monster_damage.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\monster_die.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\monster_spawn.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\monster_spawn2.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\monster_walk.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\player_death.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\player_default_fire.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\player_walk.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\settlement_damage.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\settlement_death.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
+    <Media Include="..\..\Game\Assets\Audio\player_damage.wav">
+      <Filter>Assets\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

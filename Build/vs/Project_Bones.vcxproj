@@ -191,6 +191,20 @@
     <None Include="..\..\Game\Assets\Shaders\Default\sprite_fragment.glsl" />
     <None Include="..\..\Game\Assets\Shaders\Default\sprite_vertex.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\Game\Assets\Audio\battle_v1.wav" />
+    <Media Include="..\..\Game\Assets\Audio\monster_damage.wav" />
+    <Media Include="..\..\Game\Assets\Audio\monster_die.wav" />
+    <Media Include="..\..\Game\Assets\Audio\monster_spawn.wav" />
+    <Media Include="..\..\Game\Assets\Audio\monster_spawn2.wav" />
+    <Media Include="..\..\Game\Assets\Audio\monster_walk.wav" />
+    <Media Include="..\..\Game\Assets\Audio\player_damage.wav" />
+    <Media Include="..\..\Game\Assets\Audio\player_death.wav" />
+    <Media Include="..\..\Game\Assets\Audio\player_default_fire.wav" />
+    <Media Include="..\..\Game\Assets\Audio\player_walk.wav" />
+    <Media Include="..\..\Game\Assets\Audio\settlement_damage.wav" />
+    <Media Include="..\..\Game\Assets\Audio\settlement_death.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

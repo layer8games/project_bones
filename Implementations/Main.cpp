@@ -47,8 +47,55 @@ int main()
 
 	KE::ShaderManager::Instance()->LoadShader(KE::SPRITE, shaderData);
 
+	//Load audio clips
 	KE::p_AudioClip battleMusicClip = make_shared<KE::AudioClip>();
 	battleMusicClip->LoadWAV("./Assets/Audio/battle_v1.wav");
+	KE::AudioManager::Instance()->AddClip(BATTLE_MUSIC_CLIP, battleMusicClip);
+
+	KE::p_AudioClip monsterDamage = make_shared<KE::AudioClip>();
+	monsterDamage->LoadWAV("./Assets/Audio/monster_damage.wav");
+	KE::AudioManager::Instance()->AddClip(MONSTER_DAMAGE_CLIP, monsterDamage);
+
+	KE::p_AudioClip monsterDie = make_shared<KE::AudioClip>();
+	monsterDie->LoadWAV("./Assets/Audio/monster_die.wav");
+	KE::AudioManager::Instance()->AddClip(MONSTER_DIE_CLIP, monsterDie);
+
+	KE::p_AudioClip monsterSpawn = make_shared<KE::AudioClip>();
+	monsterSpawn->LoadWAV("./Assets/Audio/monster_spawn2.wav");
+	KE::AudioManager::Instance()->AddClip(MONSTER_SPAWN_CLIP, monsterSpawn);
+
+	KE::p_AudioClip monsterWalk = make_shared<KE::AudioClip>();
+	monsterWalk->LoadWAV("./Assets/Audio/monster_walk.wav");
+	KE::AudioManager::Instance()->AddClip(MONSTER_WALK_CLIP, monsterWalk);
+
+	KE::p_AudioClip playerDamage = make_shared<KE::AudioClip>();
+	playerDamage->LoadWAV("./Assets/Audio/player_damage.wav");
+	KE::AudioManager::Instance()->AddClip(PLAYER_DAMAGE_CLIP, playerDamage);
+
+	KE::p_AudioClip playerDeath = make_shared<KE::AudioClip>();
+	playerDeath->LoadWAV("./Assets/Audio/player_damage.wav");
+	KE::AudioManager::Instance()->AddClip(PLAYER_DIE_CLIP, playerDeath);
+
+	KE::p_AudioClip playerDefaultFire = make_shared<KE::AudioClip>();
+	playerDefaultFire->LoadWAV("./Assets/Audio/player_default_fire.wav");
+	KE::AudioManager::Instance()->AddClip(PLAYER_DEFAULT_FIRE_CLIP, playerDefaultFire);
+
+	KE::p_AudioClip playerWalk = make_shared<KE::AudioClip>();
+	playerWalk->LoadWAV("./Assets/Audio/player_walk.wav");
+	KE::AudioManager::Instance()->AddClip(PLAYER_WALK_CLIP, playerWalk);
+
+	KE::p_AudioClip settlmentDamage = make_shared<KE::AudioClip>();
+	settlmentDamage->LoadWAV("./Assets/Audio/settlement_damage.wav");
+	KE::AudioManager::Instance()->AddClip(SETTLEMENT_DAMAGE_CLIP, settlmentDamage);
+
+	KE::p_AudioClip settlementDeath = make_shared<KE::AudioClip>();
+	settlementDeath->LoadWAV("./Assets/Audio/settlement_death.wav");
+	KE::AudioManager::Instance()->AddClip(SETTLEMENT_DIE_CLIP, settlementDeath);
+
+	if(KE::ErrorManager::Instance()->DisplayErrors())
+	{
+		KE::Engine::Instance()->End();
+	}
 
 	KE::p_AudioSource backgroundSource = make_shared<KE::AudioSource>();
 	backgroundSource->AddClip(battleMusicClip);
@@ -59,15 +106,15 @@ int main()
 		KE::Engine::Instance()->End();
 	}
 
-	KE::AudioManager::Instance()->AddClip(BATTLE_MUSIC, battleMusicClip);
-	KE::AudioManager::Instance()->AddSource(BACKGROUND_MUSIC, backgroundSource);
+	
+	KE::AudioManager::Instance()->AddSource(BACKGROUND_MUSIC_SOURCE, backgroundSource);
 
 	if(KE::ErrorManager::Instance()->DisplayErrors())
 	{
 		KE::Engine::Instance()->End();
 	}
 
-	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC);
+	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	KE::LevelManager::Instance()->SetActiveLevel( p_Battleground(new Battleground()));
 
