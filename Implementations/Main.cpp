@@ -97,24 +97,28 @@ int main()
 		KE::Engine::Instance()->End();
 	}
 
+	//Create gloabl sources
 	KE::p_AudioSource backgroundSource = make_shared<KE::AudioSource>();
 	backgroundSource->AddClip(battleMusicClip);
 	backgroundSource->SetLooping(true);
-
-	if(KE::ErrorManager::Instance()->DisplayErrors())
-	{
-		KE::Engine::Instance()->End();
-	}
-
-	
 	KE::AudioManager::Instance()->AddSource(BACKGROUND_MUSIC_SOURCE, backgroundSource);
 
+	KE::p_AudioSource monsterDamgeSrc = make_shared<KE::AudioSource>();
+	monsterDamgeSrc->AddClip(monsterDamage);
+	KE::AudioManager::Instance()->AddSource(MONSTER_DAMAGE_SOURCE, monsterDamgeSrc);
+
+	KE::p_AudioSource monsterSpawnSrc = make_shared<KE::AudioSource>();
+	monsterSpawnSrc->AddClip(monsterSpawn);
+	KE::AudioManager::Instance()->AddSource(MONSTER_SPAWN_SOURCE, monsterSpawnSrc);
+
+	KE::p_AudioSource monsterWalkSrc = make_shared<KE::AudioSource>();
+	monsterWalkSrc->AddClip(monsterWalk);
+	KE::AudioManager::Instance()->AddSource(MONSTER_WALK_SOURCE, monsterWalkSrc);
+
 	if(KE::ErrorManager::Instance()->DisplayErrors())
 	{
 		KE::Engine::Instance()->End();
-	}
-
-	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
+	}	
 
 	KE::LevelManager::Instance()->SetActiveLevel( p_Battleground(new Battleground()));
 

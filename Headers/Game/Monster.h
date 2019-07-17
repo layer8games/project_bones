@@ -10,6 +10,8 @@
 #include <Engine/Vector3.h>
 #include <Engine/Random.h>
 #include <Engine/Timer.h>
+#include <Engine/AudioManager.h>
+#include <Engine/AudioSource.h>
 
 namespace KE = KillerEngine;
 namespace KC = KillerCollisions;
@@ -54,6 +56,8 @@ public:
 //
 //==========================================================================================================================
 	void v_Update(void);
+
+	void v_Damage(S32 dmg = 1) final;
 
 //==========================================================================================================================
 //
@@ -118,6 +122,7 @@ private:
 	MonsterAIType		_aiType;
 	p_Actor				_target;
 	KM::Vector3			_movementDirection;
+	KE::AudioSource		_deathAudioSource;
 };//end Class
 
 typedef shared_ptr<Monster> p_Monster;

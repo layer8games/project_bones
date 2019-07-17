@@ -18,9 +18,11 @@ Monster::Monster(void)
 	_shuffleDir(0.0f),
 	_aiState(NO_STATE),
 	_aiType(NO_TYPE),
-	_target(nullptr)
+	_target(nullptr),
+	_deathAudioSource()
 {
 	GameObject::MakeSprite();
+	_deathAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_DIE_CLIP));
 }
 
 Monster::~Monster(void)
@@ -46,6 +48,17 @@ void Monster::v_Update(void)
 			_canAttack = true;
 			_lastAttack = 0.0f;
 		}
+	}
+}
+
+void Monster::v_Damage(S32 dmg)
+{
+	DefaultDamage();
+	KE::AudioManager::Instance()->PlaySource(MONSTER_DAMAGE_SOURCE);
+
+	if(!_alive)
+	{
+		_deathAudioSource.Play();
 	}
 }
 

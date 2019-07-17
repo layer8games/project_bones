@@ -117,7 +117,7 @@ void Battleground::v_Update(void)
 		return;
 	}
 
-	//KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC);
+	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	if(_canSpawn)
 	{
@@ -216,20 +216,22 @@ void Battleground::v_Update(void)
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
 {
+	KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f)};
+	
 	for(U32 i = 0; i < amount; ++i)
-	{
-		KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f)};
-		
+	{		
 		U32 spawnZoneToUse = KM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
 
 		for(auto monster : _monsterPool)
 		{
 			if(!monster->GetActive())
 			{
-				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);	
+				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);
+				KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
 				break;
 			}
 			//update rand
+			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f));
 		}
 	}
 }
