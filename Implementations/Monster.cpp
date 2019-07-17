@@ -19,10 +19,12 @@ Monster::Monster(void)
 	_aiState(NO_STATE),
 	_aiType(NO_TYPE),
 	_target(nullptr),
-	_deathAudioSource()
+	_deathAudioSource(),
+	_walkAudioSource()
 {
 	GameObject::MakeSprite();
 	_deathAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_DIE_CLIP));
+	_walkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
 }
 
 Monster::~Monster(void)
@@ -148,7 +150,7 @@ void Monster::Seek(void)
 		else
 		{
 			targetVec.Normalize();
-			AddScaledPosition(targetVec, _speed * KM::Timer::Instance()->DeltaTime());
+			AddScaledPosition(targetVec, _speed * KM::Timer::Instance()->DeltaTime());	
 		}
 
 		if(!_target->GetActive())

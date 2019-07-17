@@ -123,6 +123,7 @@ private:
 	p_Actor				_target;
 	KM::Vector3			_movementDirection;
 	KE::AudioSource		_deathAudioSource;
+	KE::AudioSource		_walkAudioSource;
 };//end Class
 
 typedef shared_ptr<Monster> p_Monster;
