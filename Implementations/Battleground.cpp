@@ -13,13 +13,16 @@ Battleground::Battleground(void)
 	_settlementListSize(6),
 	_spawnRate(2.0f),
 	_lastSpawn(0.0f),
+	_monsterWalkTimer(0.1f),
+	_monsterWalkCountdown(0.0f),
 	_canSpawn(true),
 	_spawnAmount(2),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
 	_settlementList(),
-	_spawnZones()
+	_spawnZones(),
+	_monsterWalkAudioSource()
 { }
 
 Battleground::~Battleground(void)
@@ -56,6 +59,9 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
+
+	//Audio setup
+	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
 
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
@@ -117,7 +123,7 @@ void Battleground::v_Update(void)
 		return;
 	}
 
-	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
+	//KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	if(_canSpawn)
 	{
@@ -201,6 +207,18 @@ void Battleground::v_Update(void)
 			else if(monster->GetAIState() == SEEK)
 			{
 				monster->Seek();
+
+				if(_monsterWalkCountdown <= 0.0f)
+				{
+					std::cout << "playing walk\n";
+					_monsterWalkAudioSource.Play();
+					_monsterWalkCountdown = _monsterWalkTimer;
+				}
+				else
+				{
+					std::cout << "counting down to play walk\n" << _monsterWalkCountdown << std::endl;
+					_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
+				}
 			}
 			else if(monster->GetAIState() == ATTACK)
 			{
@@ -227,7 +245,7 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 			if(!monster->GetActive())
 			{
 				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);
-				KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
+				//KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
 				break;
 			}
 			//update rand

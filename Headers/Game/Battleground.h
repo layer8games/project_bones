@@ -11,6 +11,7 @@
 #include <Engine/Point.h>
 #include <Engine/Random.h>
 #include <Engine/AudioManager.h>
+#include <Engine/AudioSource.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
@@ -70,6 +71,8 @@ private:
 	U32			   _settlementListSize;
 	F32			   _spawnRate;
 	F32			   _lastSpawn;
+	F32			   _monsterWalkTimer;
+	F32			   _monsterWalkCountdown;
 	bool		   _canSpawn;
 	U32			   _spawnAmount;
 	p_Soldier	   _player;
@@ -77,6 +80,7 @@ private:
 	MonsterPool	   _monsterPool;
 	SettlementList _settlementList;
 	MonsterSpawnZones _spawnZones;
+	KE::AudioSource		_monsterWalkAudioSource;
 
 };//end Class
 
