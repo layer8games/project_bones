@@ -73,7 +73,7 @@ int main()
 	KE::AudioManager::Instance()->AddClip(PLAYER_DAMAGE_CLIP, playerDamage);
 
 	KE::p_AudioClip playerDeath = make_shared<KE::AudioClip>();
-	playerDeath->LoadWAV("./Assets/Audio/player_damage.wav");
+	playerDeath->LoadWAV("./Assets/Audio/player_death.wav");
 	KE::AudioManager::Instance()->AddClip(PLAYER_DIE_CLIP, playerDeath);
 
 	KE::p_AudioClip playerDefaultFire = make_shared<KE::AudioClip>();

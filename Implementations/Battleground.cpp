@@ -13,7 +13,7 @@ Battleground::Battleground(void)
 	_settlementListSize(6),
 	_spawnRate(2.0f),
 	_lastSpawn(0.0f),
-	_monsterWalkTimer(0.1f),
+	_monsterWalkTimer(0.5f),
 	_monsterWalkCountdown(0.0f),
 	_canSpawn(true),
 	_spawnAmount(2),
@@ -105,13 +105,13 @@ void Battleground::v_Init(void)
 	//Set up Spawn Zones
 	//Can dynamically add more. _Spawn will support that without any additional work.
 	//30% from the left border, 10% from the top of the screen
-	_spawnZones.push_back(KM::Point(GetLeftBorder() * 0.33f, GetTopBorder() * 0.9f));
+	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.33f, GetTopBorder() * 0.9f));
 	//30% from the right border, 10% from the top
-	_spawnZones.push_back(KM::Point(GetRightBorder() * 0.33f, GetTopBorder() * 0.9f));
+	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()) * 0.33f, GetTopBorder() * 0.9f));
 	//Right on the left border, 60% from the top of the screen
-	_spawnZones.push_back(KM::Point(GetLeftBorder(), GetTopBorder() * 0.4f));
+	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()), GetTopBorder() * 0.4f));
 	//Right on the right border, 60% from the top of the screen
-	_spawnZones.push_back(KM::Point(GetRightBorder(), GetTopBorder() * 0.4f));
+	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 }
 
 void Battleground::v_Update(void)
@@ -123,7 +123,7 @@ void Battleground::v_Update(void)
 		return;
 	}
 
-	//KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
+	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	if(_canSpawn)
 	{
@@ -171,6 +171,8 @@ void Battleground::v_Update(void)
 		}
 	}
 
+	//Used later, if it can be made to be interesting
+	//bool playWalk = false;
 	//AI loop
 	for(auto monster : _monsterPool)
 	{
@@ -208,17 +210,7 @@ void Battleground::v_Update(void)
 			{
 				monster->Seek();
 
-				if(_monsterWalkCountdown <= 0.0f)
-				{
-					std::cout << "playing walk\n";
-					_monsterWalkAudioSource.Play();
-					_monsterWalkCountdown = _monsterWalkTimer;
-				}
-				else
-				{
-					std::cout << "counting down to play walk\n" << _monsterWalkCountdown << std::endl;
-					_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
-				}
+				//playWalk = true;
 			}
 			else if(monster->GetAIState() == ATTACK)
 			{
@@ -230,6 +222,20 @@ void Battleground::v_Update(void)
 			}
 		}
 	}
+
+/*
+	This sounds dumb... needs some work and some thought
+
+	if(_monsterWalkCountdown <= 0.0f && playWalk)
+	{
+		_monsterWalkAudioSource.Play();
+		_monsterWalkCountdown = _monsterWalkTimer;
+	}
+	else
+	{
+		_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
+	}
+*/
 }
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
@@ -245,7 +251,7 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 			if(!monster->GetActive())
 			{
 				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);
-				//KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
+				KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
 				break;
 			}
 			//update rand

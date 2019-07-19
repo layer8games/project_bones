@@ -6,8 +6,8 @@
 #include <Engine/Timer.h>
 #include <Engine/ErrorManager.h>
 #include <Engine/AABB.h>
-//Remove later
-#include <Engine/Controller.h>
+#include <Engine/AudioManager.h>
+#include <Engine/AudioSource.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
@@ -35,28 +35,23 @@ public:
 //==========================================================================================================================
 	void v_Update(void) final;
 
-	void v_OnCollision(void);
+	void v_Damage(S32 dmg = 1) final;
 
 //==========================================================================================================================
 //
 //Functions
 //
 //==========================================================================================================================
+	void OnCollision(void);
+	
 	void Fire(p_Projectile projectile);
 
 	inline void Move(F32 xVal)
 	{
 		//Consider stagger for player. May need another timer....
 		AddScaledPosition(KM::Vector3(xVal, 0.0f), _speed * KM::Timer::Instance()->DeltaTime());
-	}
-
-	inline void v_Damage(S32 dmg = 1) final
-	{
-		if(!_tookDamage)
-		{
-			DefaultDamage();
-			_tookDamage = true;
-		}
+		//Need a better clip
+		//_walkAudio.Play();
 	}
 
 //==========================================================================================================================
@@ -99,6 +94,10 @@ private:
 	F32		 _lastDamaged;
 	F32		 _immune;
 	ProjectileType _activeFireType;
+	KE::AudioSource _damageAudio;
+	KE::AudioSource _deathAudio;
+	KE::AudioSource _defaultFireAudio;
+	KE::AudioSource _walkAudio;
 
 };//end Class
 

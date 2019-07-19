@@ -15,10 +15,18 @@ _fireRate(0.2f),
 _lastFire(0.0f),
 _lastDamaged(0.0f),
 _immune(0.5f),
-_activeFireType(BULLET)
+_activeFireType(BULLET),
+_damageAudio(),
+_deathAudio(),
+_defaultFireAudio(),
+_walkAudio()
 {
 	GameObject::MakeSprite();
 	_hp = 3;
+	_damageAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DAMAGE_CLIP));
+	_deathAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DIE_CLIP));
+	_defaultFireAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DEFAULT_FIRE_CLIP));
+	_walkAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_WALK_CLIP));
 }
 
 Soldier::~Soldier(void)
@@ -56,7 +64,22 @@ void Soldier::v_Update(void)
 	}
 }
 
-void Soldier::v_OnCollision(void)
+void Soldier::v_Damage(S32 dmg)
+{
+	if(!_tookDamage)
+	{
+		DefaultDamage();
+		_tookDamage = true;
+		_damageAudio.Play();
+	}
+
+	if(!_alive)
+	{
+		_deathAudio.Play();
+	}
+}
+
+void Soldier::OnCollision(void)
 {
 
 }
@@ -72,6 +95,9 @@ void Soldier::Fire(p_Projectile projectile)
 	{
 		projectile->SetUp(_activeFireType);
 		projectile->Fire(GetPosition());
+
+		_defaultFireAudio.Play();
+
 		_canFire = false;
 	}
 }
