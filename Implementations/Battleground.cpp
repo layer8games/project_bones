@@ -8,9 +8,11 @@
 //==========================================================================================================================
 Battleground::Battleground(void)
 	:
+	_roundNumber(0),
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
 	_settlementListSize(6),
+	_score(0),
 	_spawnRate(2.0f),
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
@@ -22,7 +24,11 @@ Battleground::Battleground(void)
 	_monsterPool(),
 	_settlementList(),
 	_spawnZones(),
-	_monsterWalkAudioSource()
+	_monsterWalkAudioSource(),
+	_font(),
+	_roundText(),
+	_roundNumberText(),
+	_scoreText()
 { }
 
 Battleground::~Battleground(void)
@@ -63,6 +69,25 @@ void Battleground::v_Init(void)
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
 
+	//Setup text
+	_font.Init("bank_gothic", "./Assets/Fonts/bank_gothic.ttf", 12);
+
+	_roundText.SetFont(_font);
+	_roundText.AddText("Round:");
+	_roundText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	Level::AddTextToLevel(_roundText);
+
+	_roundNumberText.SetFont(_font);
+	_roundNumberText.AddText(std::to_string(_roundNumber));
+	//The equation for getting the number into the right place is pretty arbitrary. It was found by guessing pretty much. 
+	_roundNumberText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	Level::AddTextToLevel(_roundNumberText);
+
+	_scoreText.SetFont(_font);
+	_scoreText.AddText(std::to_string(_score));
+	_scoreText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.8f));
+	Level::AddTextToLevel(_scoreText);
+	
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
 	_player->SetPosition(0.0f, -200.0f);
@@ -112,6 +137,8 @@ void Battleground::v_Init(void)
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()), GetTopBorder() * 0.4f));
 	//Right on the right border, 60% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
+
+	
 }
 
 void Battleground::v_Update(void)
@@ -258,6 +285,8 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f));
 		}
 	}
+
+	_UpdateRound();
 }
 
 void Battleground::_ProcessCollisions(void)
@@ -290,4 +319,17 @@ void Battleground::_ProcessCollisions(void)
 			}
 		}
 	}
+}
+
+void Battleground::_UpdateRound(void)
+{
+	++_roundNumber;
+	RemoveTextFromLevel(_roundNumberText);
+	_roundNumberText.AddText(std::to_string(_roundNumber));
+	AddTextToLevel(_roundNumberText);
+
+	_score += 1000;
+	RemoveTextFromLevel(_scoreText);
+	_scoreText.AddText(std::to_string(_score));
+	AddTextToLevel(_scoreText);
 }

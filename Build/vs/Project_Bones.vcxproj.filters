@@ -35,6 +35,9 @@
     <Filter Include="Assets\Audio">
       <UniqueIdentifier>{f40f1f95-369c-41ee-8130-08031a1ce8db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Default Shaders">
+      <UniqueIdentifier>{7392fa92-033f-454b-915c-81a63f7a9bb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -100,6 +103,18 @@
     </None>
     <None Include="..\..\Game\Assets\Shaders\Default\sprite_vertex.glsl">
       <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Assets\Shaders\Default\glyph_fragment.glsl">
+      <Filter>Assets\Default Shaders</Filter>
+    </None>
+    <None Include="..\..\Assets\Shaders\Default\glyph_vertex.glsl">
+      <Filter>Assets\Default Shaders</Filter>
+    </None>
+    <None Include="..\..\Assets\Shaders\Default\sprite_fragment.glsl">
+      <Filter>Assets\Default Shaders</Filter>
+    </None>
+    <None Include="..\..\Assets\Shaders\Default\sprite_vertex.glsl">
+      <Filter>Assets\Default Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

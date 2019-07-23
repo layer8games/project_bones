@@ -186,6 +186,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\Shaders\Default\glyph_fragment.glsl" />
+    <None Include="..\..\Assets\Shaders\Default\glyph_vertex.glsl" />
+    <None Include="..\..\Assets\Shaders\Default\sprite_fragment.glsl" />
+    <None Include="..\..\Assets\Shaders\Default\sprite_vertex.glsl" />
     <None Include="..\..\Game\Assets\Shaders\Default\glyph_fragment.glsl" />
     <None Include="..\..\Game\Assets\Shaders\Default\glyph_vertex.glsl" />
     <None Include="..\..\Game\Assets\Shaders\Default\sprite_fragment.glsl" />

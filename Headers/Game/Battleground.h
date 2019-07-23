@@ -12,6 +12,8 @@
 #include <Engine/Random.h>
 #include <Engine/AudioManager.h>
 #include <Engine/AudioSource.h>
+#include <Engine/Font.h>
+#include <Engine/Text.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
@@ -61,14 +63,18 @@ private:
 
 	void _ProcessCollisions(void);
 
+	void _UpdateRound(void);
+
 //==========================================================================================================================
 //
 //Data
 //
 //==========================================================================================================================
+	U32			   _roundNumber;
 	U32			   _projectilePoolSize;
 	U32			   _monsterPoolSize;
 	U32			   _settlementListSize;
+	U32			   _score;
 	F32			   _spawnRate;
 	F32			   _lastSpawn;
 	F32			   _monsterWalkTimer;
@@ -81,6 +87,10 @@ private:
 	SettlementList _settlementList;
 	MonsterSpawnZones _spawnZones;
 	KE::AudioSource		_monsterWalkAudioSource;
+	KE::Font			_font;
+	KE::Text			_roundText;
+	KE::Text			_roundNumberText;
+	KE::Text			_scoreText;
 
 };//end Class
 
