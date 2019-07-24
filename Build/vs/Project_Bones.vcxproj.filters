@@ -38,6 +38,12 @@
     <Filter Include="Assets\Default Shaders">
       <UniqueIdentifier>{7392fa92-033f-454b-915c-81a63f7a9bb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{dad07f23-7ef1-45e6-bb90-a3f5fd71ee41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event\Manager">
+      <UniqueIdentifier>{7b750535-1281-4126-b8bf-bd6e7da2e7e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -64,6 +70,12 @@
     <ClCompile Include="..\..\Implementations\I_Actor.cpp">
       <Filter>Source Files\I_Actor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Event.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\EventManager.cpp">
+      <Filter>Source Files\Event\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -89,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\I_Actor.h">
       <Filter>Source Files\I_Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Event.h">
+      <Filter>Source Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\EventManager.h">
+      <Filter>Source Files\Event\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

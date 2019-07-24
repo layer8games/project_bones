@@ -128,6 +128,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Event.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\EventManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\I_Actor.cpp">
       <SubType>
       </SubType>
@@ -156,6 +164,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Battleground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Event.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\EventManager.h">
       <SubType>
       </SubType>
     </ClInclude>

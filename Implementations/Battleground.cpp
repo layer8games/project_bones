@@ -252,6 +252,8 @@ void Battleground::v_Update(void)
 
 /*
 	This sounds dumb... needs some work and some thought
+	By sounds dumb, I mean it makes the game hard to play because all the foot steps are distracting. 
+	Note: In diablo 3, enemies do not making a walking sound, the player walking sound is very subtle.
 
 	if(_monsterWalkCountdown <= 0.0f && playWalk)
 	{
@@ -324,12 +326,8 @@ void Battleground::_ProcessCollisions(void)
 void Battleground::_UpdateRound(void)
 {
 	++_roundNumber;
-	RemoveTextFromLevel(_roundNumberText);
-	_roundNumberText.AddText(std::to_string(_roundNumber));
-	AddTextToLevel(_roundNumberText);
+	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 
 	_score += 1000;
-	RemoveTextFromLevel(_scoreText);
-	_scoreText.AddText(std::to_string(_score));
-	AddTextToLevel(_scoreText);
+	Level::UpdateText(_scoreText, std::to_string(_score));
 }
