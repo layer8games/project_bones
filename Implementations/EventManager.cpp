@@ -22,7 +22,7 @@ p_EventManager EventManager::Instance(void)
 {
 	if(_instance == nullptr)
 	{
-		_instance = make_shared<EventManager>();
+	//	_instance = make_shared<EventManager>();
 	}
 	return _instance;
 }
