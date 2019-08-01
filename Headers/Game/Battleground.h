@@ -24,6 +24,7 @@ namespace KM = KillerMath;
 #include <Game/Settlement.h>
 #include <Game/ObjectFactory.h>
 #include <Game/Projectile.h>
+#include <Game/EventManager.h>
 
 #include <vector>
 
@@ -71,6 +72,11 @@ private:
 //
 //==========================================================================================================================
 	U32			   _roundNumber;
+	U32			   _killedThisRound;
+	U32			   _roundLength;
+	U32			   _spawnsThisRound;
+	U32			   _maxSpawn;
+	U32			   _roundLengthIncrease;
 	U32			   _projectilePoolSize;
 	U32			   _monsterPoolSize;
 	U32			   _settlementListSize;
@@ -80,7 +86,6 @@ private:
 	F32			   _monsterWalkTimer;
 	F32			   _monsterWalkCountdown;
 	bool		   _canSpawn;
-	U32			   _spawnAmount;
 	p_Soldier	   _player;
 	BulletPool	   _projectilePool;
 	MonsterPool	   _monsterPool;

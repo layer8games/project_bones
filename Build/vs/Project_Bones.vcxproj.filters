@@ -70,9 +70,6 @@
     <ClCompile Include="..\..\Implementations\I_Actor.cpp">
       <Filter>Source Files\I_Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Implementations\Event.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Implementations\EventManager.cpp">
       <Filter>Source Files\Event\Manager</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\I_Actor.h">
       <Filter>Source Files\I_Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Headers\Game\Event.h">
-      <Filter>Source Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\EventManager.h">
       <Filter>Source Files\Event\Manager</Filter>

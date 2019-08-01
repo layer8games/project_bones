@@ -58,6 +58,8 @@ void Monster::v_Damage(S32 dmg)
 
 	if(!_alive)
 	{
+		EventManager::Instance()->AddEnemyKilled();
+		EventManager::Instance()->AddPoints(_pointValue);
 		_deathAudioSource.Play();
 	}
 }

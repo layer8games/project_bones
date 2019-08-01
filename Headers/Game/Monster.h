@@ -20,6 +20,7 @@ namespace KM = KillerMath;
 //===== Game Includes =====
 #include <Game/I_Actor.h>
 #include <Game/ID_Database.h>
+#include <Game/EventManager.h>
 
 //===== STL Includes =====
 #include <vector>
@@ -84,16 +85,6 @@ public:
 //Accessors
 //
 //==========================================================================================================================
-	inline void SetDamage(U32 val)
-	{
-		_damage = val;
-	}
-
-	inline U32 GetDamage(void)
-	{
-		return _damage;
-	}
-
 	inline U32 GetPointValue(void) const
 	{
 		return _pointValue;

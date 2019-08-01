@@ -9,16 +9,20 @@
 Battleground::Battleground(void)
 	:
 	_roundNumber(0),
+	_killedThisRound(0),
+	_roundLength(10),
+	_spawnsThisRound(0),
+	_maxSpawn(3),
+	_roundLengthIncrease(5),
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
 	_settlementListSize(6),
 	_score(0),
-	_spawnRate(2.0f),
+	_spawnRate(6.0f),
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
 	_monsterWalkCountdown(0.0f),
 	_canSpawn(true),
-	_spawnAmount(2),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
@@ -152,12 +156,15 @@ void Battleground::v_Update(void)
 
 	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
+	// Update Round Logic
+	//_UpdateRound();
+	
 	if(_canSpawn)
 	{
 		_canSpawn = false;
 		_lastSpawn = 0.0f;
-		_Spawn(_spawnAmount, AI_YELLOW_MONSTER);
-		++_spawnAmount;
+		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
+		_UpdateRound();
 	}
 	else
 	{
@@ -249,7 +256,6 @@ void Battleground::v_Update(void)
 			}
 		}
 	}
-
 /*
 	This sounds dumb... needs some work and some thought
 	By sounds dumb, I mean it makes the game hard to play because all the foot steps are distracting. 
@@ -265,6 +271,12 @@ void Battleground::v_Update(void)
 		_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
 	}
 */
+	// Update Round Logic
+	// need to only do this when a death event happens. 
+	// This means that the current event system will not work. It needs to be more standard. 
+	// Or need to check that it only updates when a death happens...
+	//_UpdateRound();
+	
 }
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
@@ -287,13 +299,11 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f));
 		}
 	}
-
-	_UpdateRound();
 }
 
 void Battleground::_ProcessCollisions(void)
 {
-	//Monsters vs Player
+	// Monsters vs Player
 	for(auto monster : _monsterPool)
 	{
 		if(monster->GetActive())
@@ -305,7 +315,7 @@ void Battleground::_ProcessCollisions(void)
 		}
 	}
 
-	//Projectiles vs Monsters
+	// Projectiles vs Monsters
 	for(auto projectile : _projectilePool)
 	{
 		if(projectile->GetActive())
@@ -325,9 +335,34 @@ void Battleground::_ProcessCollisions(void)
 
 void Battleground::_UpdateRound(void)
 {
-	++_roundNumber;
-	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
+	
+	_killedThisRound += EventManager::Instance()->CheckEnemiesKilled();
+	_score += EventManager::Instance()->CheckPointsEarned();
 
-	_score += 1000;
+	std::cout << "round data: " << _killedThisRound << " : " << _score << std::endl;
+	
+	if (_killedThisRound >= _roundLength)
+	{
+		++_roundNumber;
+		_killedThisRound = 0;
+		_roundLength += _roundLengthIncrease;
+	
+		// Needs additional logic
+		_roundLengthIncrease += 3;
+
+		if(_roundNumber % 3 == 1)
+		{
+			++_maxSpawn;
+		}
+	}
+
+	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 	Level::UpdateText(_scoreText, std::to_string(_score));
+	
+
+	//++_roundNumber;
+	//Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
+
+	//_score += 1000;
+	//Level::UpdateText(_scoreText, std::to_string(_score));
 }
