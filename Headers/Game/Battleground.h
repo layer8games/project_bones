@@ -64,7 +64,7 @@ private:
 
 	void _ProcessCollisions(void);
 
-	void _UpdateRound(void);
+	void _ProcessEvents(void);
 
 //==========================================================================================================================
 //
@@ -93,7 +93,8 @@ private:
 	MonsterSpawnZones _spawnZones;
 	KE::AudioSource		_monsterWalkAudioSource;
 	KE::Font			_font;
-	KE::Text			_roundText;
+	KE::Text			_roundTitleText;
+	KE::Text			_scoreTitleText;
 	KE::Text			_roundNumberText;
 	KE::Text			_scoreText;
 

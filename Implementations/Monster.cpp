@@ -58,8 +58,7 @@ void Monster::v_Damage(S32 dmg)
 
 	if(!_alive)
 	{
-		EventManager::Instance()->AddEnemyKilled();
-		EventManager::Instance()->AddPoints(_pointValue);
+		EventManager::Instance()->AddEnemyKilled(_pointValue);
 		_deathAudioSource.Play();
 	}
 }
@@ -78,7 +77,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_speed = 80.0f;
 			_damage = 1;
 			_attackRate = 1.0f;
-			_pointValue = 1;
+			_pointValue = 100;
 			SetScale(32.0f, 32.0f);
 			SetTexture(KE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
 			SetActive(true);

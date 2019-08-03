@@ -18,7 +18,7 @@ Battleground::Battleground(void)
 	_monsterPoolSize(30),
 	_settlementListSize(6),
 	_score(0),
-	_spawnRate(6.0f),
+	_spawnRate(4.0f),
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
 	_monsterWalkCountdown(0.0f),
@@ -30,7 +30,8 @@ Battleground::Battleground(void)
 	_spawnZones(),
 	_monsterWalkAudioSource(),
 	_font(),
-	_roundText(),
+	_roundTitleText(),
+	_scoreTitleText(),
 	_roundNumberText(),
 	_scoreText()
 { }
@@ -76,20 +77,25 @@ void Battleground::v_Init(void)
 	//Setup text
 	_font.Init("bank_gothic", "./Assets/Fonts/bank_gothic.ttf", 12);
 
-	_roundText.SetFont(_font);
-	_roundText.AddText("Round:");
-	_roundText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
-	Level::AddTextToLevel(_roundText);
+	_roundTitleText.SetFont(_font);
+	_roundTitleText.AddText("Round:");
+	_roundTitleText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	Level::AddTextToLevel(_roundTitleText);
+
+	_scoreTitleText.SetFont(_font);
+	_scoreTitleText.AddText("Score:");
+	_scoreTitleText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.85f));
+	Level::AddTextToLevel(_scoreTitleText);
 
 	_roundNumberText.SetFont(_font);
 	_roundNumberText.AddText(std::to_string(_roundNumber));
 	//The equation for getting the number into the right place is pretty arbitrary. It was found by guessing pretty much. 
-	_roundNumberText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	_roundNumberText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
 	Level::AddTextToLevel(_roundNumberText);
 
 	_scoreText.SetFont(_font);
 	_scoreText.AddText(std::to_string(_score));
-	_scoreText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.8f));
+	_scoreText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.85f));
 	Level::AddTextToLevel(_scoreText);
 	
 	//Set up player
@@ -157,14 +163,16 @@ void Battleground::v_Update(void)
 	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	// Update Round Logic
-	//_UpdateRound();
+	if (EventManager::Instance()->HasEvent())
+	{
+		_ProcessEvents();
+	}
 	
 	if(_canSpawn)
 	{
 		_canSpawn = false;
 		_lastSpawn = 0.0f;
 		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
-		_UpdateRound();
 	}
 	else
 	{
@@ -333,7 +341,7 @@ void Battleground::_ProcessCollisions(void)
 	}
 }
 
-void Battleground::_UpdateRound(void)
+void Battleground::_ProcessEvents(void)
 {
 	
 	_killedThisRound += EventManager::Instance()->CheckEnemiesKilled();

@@ -32,18 +32,24 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	inline void AddEnemyKilled(void)
+	inline bool HasEvent(void)
+	{
+		if (_event)
+		{
+			_event = false;
+			return true;
+		}
+		return _event;
+	}
+	
+	inline void AddEnemyKilled(U32 points)
 	{
 		++_enemiesKilled;
+		_pointsEarned += points;
+		_event = true;
 	}
 
 	U32 CheckEnemiesKilled(void);
-
-	inline void AddPoints(U32 points)
-	{
-		_pointsEarned += points;
-	}
-
 	U32 CheckPointsEarned(void);
 
 protected:
@@ -52,6 +58,7 @@ protected:
 private:
 	static shared_ptr<EventManager> _instance;
 
+	bool _event;
 	U32 _enemiesKilled;
 	U32 _pointsEarned;
 
