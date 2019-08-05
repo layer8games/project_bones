@@ -10,7 +10,7 @@ Soldier::Soldier(void)
 :
 _canFire(true),
 _tookDamage(false),
-_speed(300.0f),
+_speed(350.0f),
 _fireRate(0.2f),
 _lastFire(0.0f),
 _lastDamaged(0.0f),

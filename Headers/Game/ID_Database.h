@@ -6,6 +6,7 @@ enum TextureID
 	YELLOW_MONSTER	= 2,
 	SETTLEMENT		= 3,
 	DEFAULT_BULLET	= 4,
+	HEALTH_PACK		= 5,
 };
 
 enum LevelID

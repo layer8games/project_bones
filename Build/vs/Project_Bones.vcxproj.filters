@@ -44,6 +44,9 @@
     <Filter Include="Source Files\Event\Manager">
       <UniqueIdentifier>{7b750535-1281-4126-b8bf-bd6e7da2e7e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Item">
+      <UniqueIdentifier>{3beb66c2-50cf-4529-b4db-f1cda603982a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -73,6 +76,9 @@
     <ClCompile Include="..\..\Implementations\EventManager.cpp">
       <Filter>Source Files\Event\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Item.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -101,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\EventManager.h">
       <Filter>Source Files\Event\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Item.h">
+      <Filter>Source Files\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
