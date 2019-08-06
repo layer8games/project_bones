@@ -22,7 +22,8 @@ _defaultFireAudio(),
 _walkAudio()
 {
 	GameObject::MakeSprite();
-	_hp = 3;
+	_maxHP = 3;
+	_hp = _maxHP;
 	_damageAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DAMAGE_CLIP));
 	_deathAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DIE_CLIP));
 	_defaultFireAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DEFAULT_FIRE_CLIP));

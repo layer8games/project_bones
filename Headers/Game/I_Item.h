@@ -34,7 +34,7 @@ public:
 //Virtual Functions
 //
 //==========================================================================================================================
-	virtual void v_PickupAction(I_Actor& actor)=0;
+	virtual void v_PickupAction(p_Actor actor)=0;
 
 	virtual void v_SetUp(ItemType type)=0;
 
@@ -55,4 +55,4 @@ protected:
 	KC::AABB   _boundingBox;
 
 };//end Class
-typedef shared_ptr<I_Item> p_I_Item;
+typedef shared_ptr<I_Item> p_Item;

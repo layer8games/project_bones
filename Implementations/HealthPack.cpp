@@ -8,7 +8,7 @@
 HealthPack::HealthPack(void)
 	:
 	_hpToRestore(1),
-	_maxTimeAlive(5.0f),
+	_maxTimeAlive(10.0f),
 	_timeAlive(0.0f)
 {  }
 
@@ -30,9 +30,10 @@ void HealthPack::v_Update(void)
 	}
 }
 
-void HealthPack::v_PickupAction(I_Actor& actor)
+void HealthPack::v_PickupAction(p_Actor actor)
 {
-	actor.Heal(_hpToRestore);
+	actor->Heal(_hpToRestore);
+	SetActive(false);
 }
 
 void HealthPack::v_SetUp(ItemType type)

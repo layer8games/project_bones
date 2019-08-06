@@ -162,8 +162,6 @@ void Battleground::v_Init(void)
 
 		_healthPackPool.push_back(pack);
 	}
-
-	_SpawnHealthPack();
 }
 
 void Battleground::v_Update(void)
@@ -226,6 +224,12 @@ void Battleground::v_Update(void)
 				_player->Fire(p);
 			}
 		}
+	}
+
+	// make a percentage call that it will spawn health pack
+	if(KE::Controller::Instance()->GetKeyDown(KE::ONE))
+	{
+		_SpawnHealthPack();
 	}
 
 	//Used later, if it can be made to be interesting
@@ -355,7 +359,16 @@ void Battleground::_ProcessCollisions(void)
 		}
 	}
 
-
+	for(auto pack : _healthPackPool)
+	{
+		if(pack->GetActive())
+		{
+			if(pack->OverlapCheck(_player))
+			{
+				pack->v_PickupAction(_player);
+			}
+		}
+	}
 }
 
 void Battleground::_ProcessEvents(void)
@@ -390,14 +403,29 @@ void Battleground::_ProcessEvents(void)
 	//Level::UpdateText(_scoreText, std::to_string(_score));
 }
 
+
+//rename spawn item
 bool Battleground::_SpawnHealthPack(void)
 {
+	//nest inside of if or switch, based on type
 	for(auto pack : _healthPackPool)
 	{
 		if(!pack->GetActive())
 		{
-			//replace x with rand
-			pack->SetPosition(0.0f, _player->GetPosition()[y]);
+			// Move to a function to be called
+			F32 padding = 50.0f;
+			F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
+			
+			if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
+			{
+				xPos += padding;
+			}
+			else if(xPos >= static_cast<F32>(GetRightBorder()) - padding)
+			{
+				xPos -= padding;
+			}
+			
+			pack->SetPosition(xPos, _player->GetPosition()[y]);
 			pack->SetActive(true);
 			return true;
 		}

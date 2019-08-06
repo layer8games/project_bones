@@ -35,7 +35,7 @@ public:
 
 	void v_Update(void) final;
 
-	void v_PickupAction(I_Actor& actor) final;
+	void v_PickupAction(p_Actor actor) final;
 
 	void v_SetUp(ItemType type) final;
 

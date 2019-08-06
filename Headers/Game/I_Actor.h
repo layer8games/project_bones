@@ -9,6 +9,8 @@
 namespace KE = KillerEngine;
 namespace KC = KillerCollisions;
 
+#include <iostream>
+
 class I_Actor : public KE::GameObject
 {
 public:
@@ -40,7 +42,10 @@ public:
 
 	inline void Heal(S32 heal)
 	{
-		_hp += heal;
+		if(_hp < _maxHP)
+		{
+			_hp += heal;
+		}
 	}
 
 	inline S32 GetHP(void) const
@@ -55,6 +60,7 @@ protected:
 
 	bool	  _alive;
 	S32 	  _hp;
+	S32		  _maxHP;
 	bool	  _isDmg;
 	F32		  _dmgTime;
 	F32		  _dmgCounter;

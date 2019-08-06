@@ -9,6 +9,7 @@ I_Actor::I_Actor(void)
 	:
 	_alive(true),
 	_hp(1),
+	_maxHP(1),
 	_isDmg(false),
 	_dmgTime(0.1f),
 	_dmgCounter(0.0f),
