@@ -25,11 +25,13 @@ namespace KM = KillerMath;
 #include <Game/ObjectFactory.h>
 #include <Game/Projectile.h>
 #include <Game/EventManager.h>
+#include <Game/HealthPack.h>
 
 #include <vector>
 
 typedef std::vector<p_Projectile> BulletPool;
 typedef std::vector<p_Monster> MonsterPool;
+typedef std::vector<p_HealthPack> HealthPackPool;
 typedef std::vector<p_Settlement> SettlementList;
 typedef std::vector<KM::Point> MonsterSpawnZones;
 
@@ -66,6 +68,8 @@ private:
 
 	void _ProcessEvents(void);
 
+	bool _SpawnHealthPack(void);
+
 //==========================================================================================================================
 //
 //Data
@@ -81,6 +85,7 @@ private:
 	U32			   _monsterPoolSize;
 	U32			   _settlementListSize;
 	U32			   _score;
+	U32			   _healthPackPoolSize;
 	F32			   _spawnRate;
 	F32			   _lastSpawn;
 	F32			   _monsterWalkTimer;
@@ -89,6 +94,7 @@ private:
 	p_Soldier	   _player;
 	BulletPool	   _projectilePool;
 	MonsterPool	   _monsterPool;
+	HealthPackPool _healthPackPool;
 	SettlementList _settlementList;
 	MonsterSpawnZones _spawnZones;
 	KE::AudioSource		_monsterWalkAudioSource;

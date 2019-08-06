@@ -132,11 +132,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\HealthPack.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\I_Actor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="..\..\Implementations\Item.cpp">
+    <ClCompile Include="..\..\Implementations\I_Item.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -171,12 +175,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\HealthPack.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\Headers\Game\ID_Database.h" />
     <ClInclude Include="..\..\Headers\Game\I_Actor.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="..\..\Headers\Game\Item.h">
+    <ClInclude Include="..\..\Headers\Game\I_Item.h">
       <SubType>
       </SubType>
     </ClInclude>

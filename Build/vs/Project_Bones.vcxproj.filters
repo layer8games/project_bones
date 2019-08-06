@@ -44,8 +44,14 @@
     <Filter Include="Source Files\Event\Manager">
       <UniqueIdentifier>{7b750535-1281-4126-b8bf-bd6e7da2e7e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Item">
+    <Filter Include="Source Files\Items">
+      <UniqueIdentifier>{30d7a956-0e6b-4153-8c55-a60b81182d0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\I_Item">
       <UniqueIdentifier>{3beb66c2-50cf-4529-b4db-f1cda603982a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\HealthPack">
+      <UniqueIdentifier>{dc277314-f6fa-4d06-9cae-ad1fce09b7f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,8 +82,11 @@
     <ClCompile Include="..\..\Implementations\EventManager.cpp">
       <Filter>Source Files\Event\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Implementations\Item.cpp">
-      <Filter>Source Files\Item</Filter>
+    <ClCompile Include="..\..\Implementations\I_Item.cpp">
+      <Filter>Source Files\Items\I_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\HealthPack.cpp">
+      <Filter>Source Files\Items\HealthPack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +117,11 @@
     <ClInclude Include="..\..\Headers\Game\EventManager.h">
       <Filter>Source Files\Event\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Headers\Game\Item.h">
-      <Filter>Source Files\Item</Filter>
+    <ClInclude Include="..\..\Headers\Game\I_Item.h">
+      <Filter>Source Files\Items\I_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\HealthPack.h">
+      <Filter>Source Files\Items\HealthPack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

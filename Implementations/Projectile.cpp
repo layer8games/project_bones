@@ -35,17 +35,17 @@ void Projectile::v_Update(void)
 
 	if(_distTraveled >= _range)
 	{
-		SetActive(false);
+		
 		SetPosition(0.0f, -1000.0f);
-		_distTraveled = 0.0f;
 		UpdateInternals();
+		SetActive(false);
+		_distTraveled = 0.0f;
 	}
 }
 
 void Projectile::Fire(const KM::Point& pos)
 {	
 	SetPosition(pos);
-	UpdateInternals();
 	SetActive(true);
 }
 

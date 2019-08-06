@@ -9,6 +9,7 @@
 #include <Game/Monster.h>
 #include <Game/Settlement.h>
 #include <Game/Projectile.h>
+#include <Game/HealthPack.h>
 
 
 class ObjectFactory
@@ -51,6 +52,15 @@ public:
 	p_Projectile MakeProjectile(void)
 	{
 		return p_Projectile(new Projectile());
+	}
+
+	p_HealthPack MakeHealthPack(void)
+	{
+		p_HealthPack pack = make_shared<HealthPack>();
+		pack->SetScale(32.0f, 32.0f);
+		pack->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_PACK));
+
+		return pack;
 	}
 
 //==========================================================================================================================

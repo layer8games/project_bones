@@ -18,6 +18,7 @@ Battleground::Battleground(void)
 	_monsterPoolSize(30),
 	_settlementListSize(6),
 	_score(0),
+	_healthPackPoolSize(5),
 	_spawnRate(4.0f),
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
@@ -26,6 +27,7 @@ Battleground::Battleground(void)
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
+	_healthPackPool(),
 	_settlementList(),
 	_spawnZones(),
 	_monsterWalkAudioSource(),
@@ -111,6 +113,9 @@ void Battleground::v_Init(void)
 	for(U32 i = 0; i < _projectilePoolSize; ++i)
 	{
 		p_Projectile p = ObjectFactory::Instance()->MakeProjectile();
+		p->SetPosition(1000.0f, 1000.0f);
+		p->UpdateInternals();
+		p->SetActive(false);
 		_projectilePool.push_back(p);
 		AddObjectToLevel(p);
 	}
@@ -149,7 +154,16 @@ void Battleground::v_Init(void)
 	//Right on the right border, 60% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 
-	
+	for(U32 i = 0; i < _healthPackPoolSize; ++i)
+	{
+		p_HealthPack pack = ObjectFactory::Instance()->MakeHealthPack();
+		pack->SetActive(false);
+		Level::AddObjectToLevel(pack);
+
+		_healthPackPool.push_back(pack);
+	}
+
+	_SpawnHealthPack();
 }
 
 void Battleground::v_Update(void)
@@ -340,6 +354,8 @@ void Battleground::_ProcessCollisions(void)
 			}
 		}
 	}
+
+
 }
 
 void Battleground::_ProcessEvents(void)
@@ -347,8 +363,6 @@ void Battleground::_ProcessEvents(void)
 	
 	_killedThisRound += EventManager::Instance()->CheckEnemiesKilled();
 	_score += EventManager::Instance()->CheckPointsEarned();
-
-	std::cout << "round data: " << _killedThisRound << " : " << _score << std::endl;
 	
 	if (_killedThisRound >= _roundLength)
 	{
@@ -374,4 +388,19 @@ void Battleground::_ProcessEvents(void)
 
 	//_score += 1000;
 	//Level::UpdateText(_scoreText, std::to_string(_score));
+}
+
+bool Battleground::_SpawnHealthPack(void)
+{
+	for(auto pack : _healthPackPool)
+	{
+		if(!pack->GetActive())
+		{
+			//replace x with rand
+			pack->SetPosition(0.0f, _player->GetPosition()[y]);
+			pack->SetActive(true);
+			return true;
+		}
+	}
+	return false;
 }
