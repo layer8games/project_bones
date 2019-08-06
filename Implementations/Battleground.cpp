@@ -226,12 +226,6 @@ void Battleground::v_Update(void)
 		}
 	}
 
-	// make a percentage call that it will spawn health pack
-	if(KE::Controller::Instance()->GetKeyDown(KE::ONE))
-	{
-		_SpawnHealthPack();
-	}
-
 	//Used later, if it can be made to be interesting
 	//bool playWalk = false;
 	//AI loop
@@ -372,10 +366,12 @@ void Battleground::_ProcessCollisions(void)
 }
 
 void Battleground::_ProcessEvents(void)
-{
-	
+{	
 	_killedThisRound += EventManager::Instance()->CheckEnemiesKilled();
 	_score += EventManager::Instance()->CheckPointsEarned();
+
+	// Chance to spawn item on kill
+	S32 itemSpawnChance = KM::Random::Instance()->RandomInt(1, 100);
 	
 	if (_killedThisRound >= _roundLength)
 	{
@@ -388,47 +384,55 @@ void Battleground::_ProcessEvents(void)
 
 		if(_roundNumber % 3 == 1)
 		{
-			++_maxSpawn;
+			_maxSpawn += 2;
 		}
+
+		// Make health spanw 30% more likely
+		itemSpawnChance += 30;
+	}
+
+	// 5% chance to spawn a health pack
+	if(itemSpawnChance >= 95)
+	{
+		_SpawnItem(HEALTH_ITEM);
 	}
 
 	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 	Level::UpdateText(_scoreText, std::to_string(_score));
-	
-
-	//++_roundNumber;
-	//Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
-
-	//_score += 1000;
-	//Level::UpdateText(_scoreText, std::to_string(_score));
 }
 
 
 //rename spawn item
-bool Battleground::_SpawnHealthPack(void)
-{
-	//nest inside of if or switch, based on type
-	for(auto pack : _healthPackPool)
+bool Battleground::_SpawnItem(ItemType type)
+{	
+	switch(type)
 	{
-		if(!pack->GetActive())
-		{
-			// Move to a function to be called
-			F32 padding = 50.0f;
-			F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
-			
-			if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
+		case HEALTH_ITEM :
+			for(auto pack : _healthPackPool)
 			{
-				xPos += padding;
+				if(!pack->GetActive())
+				{
+					// Move to a function to be called
+					F32 padding = 50.0f;
+					F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
+
+					if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
+					{
+						xPos += padding;
+					}
+					else if(xPos >= static_cast<F32>(GetRightBorder()) - padding)
+					{
+						xPos -= padding;
+					}
+
+					pack->SetPosition(xPos, _player->GetPosition()[y]);
+					pack->SetActive(true);
+					return true;
+				}
 			}
-			else if(xPos >= static_cast<F32>(GetRightBorder()) - padding)
-			{
-				xPos -= padding;
-			}
-			
-			pack->SetPosition(xPos, _player->GetPosition()[y]);
-			pack->SetActive(true);
-			return true;
-		}
+		break;
 	}
+	
+	//No item spawned
 	return false;
 }

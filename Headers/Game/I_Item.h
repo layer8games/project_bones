@@ -13,7 +13,7 @@ namespace KC = KillerCollisions;
 
 enum ItemType
 {
-	HEALTH_I_Item = 1,
+	HEALTH_ITEM = 1,
 
 };
 

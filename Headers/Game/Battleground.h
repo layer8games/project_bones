@@ -68,7 +68,7 @@ private:
 
 	void _ProcessEvents(void);
 
-	bool _SpawnHealthPack(void);
+	bool _SpawnItem(ItemType type);
 
 //==========================================================================================================================
 //
