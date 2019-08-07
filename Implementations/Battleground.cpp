@@ -23,6 +23,7 @@ Battleground::Battleground(void)
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
 	_monsterWalkCountdown(0.0f),
+	_settlementXOffset(150.0f),
 	_canSpawn(true),
 	_gameover(false),
 	_player(nullptr),
@@ -71,6 +72,8 @@ void Battleground::v_Init(void)
 	SetTopBorder(Level::GetHeight() / 2);
 	SetBottomBorder(-Level::GetHeight() / 2);
 
+	_defaultSettlementPos.Set(Level::GetLeftBorder() + 128.0f, Level::GetBottomBorder() + 64.0f);
+	
 	//Load Textures
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
@@ -136,7 +139,7 @@ void Battleground::v_Init(void)
 		AddObjectToLevel(p);
 	}
 
-	KM::Point settlementPos{Level::GetLeftBorder() + 128.0f, Level::GetBottomBorder() + 64.0f};
+	KM::Point settlementPos = _defaultSettlementPos;
 
 	//Create Monster Pool
 	for(U32 i = 0; i < _monsterPoolSize; ++i)
@@ -156,7 +159,7 @@ void Battleground::v_Init(void)
 		s->v_Awake();
 		_settlementList.push_back(s);
 		AddObjectToLevel(s);
-		settlementPos[x] += 150.0f;
+		settlementPos[x] += _settlementXOffset;
 	}
 
 	//Set up Spawn Zones
@@ -494,10 +497,16 @@ void Battleground::_ResetLevel(void)
 	_player->SetPosition(_playerDefaultPos);
 	_player->v_Reset();
 
+	KM::Point settlementPos = _defaultSettlementPos;
+
 	//Settlements
 	for(auto settlement : _settlementList)
 	{
+		std::cout << "Settlement pos: " << settlementPos[x] << "," << settlementPos[y] << std::endl;
+		
 		settlement->v_Reset();
+		settlement->SetPosition(settlementPos);
+		settlementPos[x] += _settlementXOffset;
 	}
 
 	//Monsters

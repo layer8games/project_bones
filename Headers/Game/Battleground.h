@@ -96,6 +96,7 @@ private:
 	F32			   _lastSpawn;
 	F32			   _monsterWalkTimer;
 	F32			   _monsterWalkCountdown;
+	F32			   _settlementXOffset;
 	bool		   _canSpawn;
 	bool		   _gameover;
 	p_Soldier	   _player;
@@ -113,6 +114,7 @@ private:
 	KE::Text			_gameOverTitle;
 	KE::Text			_retryText;
 	KM::Point			_playerDefaultPos;
+	KM::Point			_defaultSettlementPos;
 
 };//end Class
 
