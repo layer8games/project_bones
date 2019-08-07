@@ -527,6 +527,10 @@ void Battleground::_ResetLevel(void)
 	_roundLengthIncrease = 5;
 	_canSpawn			 = true;
 	_lastSpawn			 = 0.0f;
+	_score				 = 0;
+
+	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
+	Level::UpdateText(_scoreText, std::to_string(_score));
 
 	//Game Over text
 	_gameOverTitle.SetActive(false);
