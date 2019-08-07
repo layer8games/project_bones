@@ -28,7 +28,10 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	//virtual void v_OnCollision(void)=0;
+	inline virtual void v_Reset(void)
+	{
+		DefaultReset();
+	}
 	
 	inline virtual void v_Damage(S32 dmg=1)
 	{
@@ -57,6 +60,8 @@ protected:
 	void DefaultDamage(S32 dmg=1);
 
 	void DefaultUpdate(void);
+
+	void DefaultReset(void);
 
 	bool	  _alive;
 	S32 	  _hp;

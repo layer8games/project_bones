@@ -68,7 +68,13 @@ private:
 
 	void _ProcessEvents(void);
 
+	void _ProcessInput(void);
+	
+	void _ProcessAI(void);
+
 	bool _SpawnItem(ItemType type);
+
+	void _ResetLevel(void);
 
 //==========================================================================================================================
 //
@@ -91,6 +97,7 @@ private:
 	F32			   _monsterWalkTimer;
 	F32			   _monsterWalkCountdown;
 	bool		   _canSpawn;
+	bool		   _gameover;
 	p_Soldier	   _player;
 	BulletPool	   _projectilePool;
 	MonsterPool	   _monsterPool;
@@ -103,6 +110,9 @@ private:
 	KE::Text			_scoreTitleText;
 	KE::Text			_roundNumberText;
 	KE::Text			_scoreText;
+	KE::Text			_gameOverTitle;
+	KE::Text			_retryText;
+	KM::Point			_playerDefaultPos;
 
 };//end Class
 

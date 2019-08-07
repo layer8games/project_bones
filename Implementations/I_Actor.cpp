@@ -57,3 +57,13 @@ void I_Actor::DefaultUpdate(void)
 		}
 	}
 }
+
+void I_Actor::DefaultReset(void)
+{
+	_hp = _maxHP;
+	_alive = true;
+	_isDmg = false;
+	_dmgCounter = 0.0f;
+	SetColor(KE::Color(1.0f));
+	SetActive(true);
+}

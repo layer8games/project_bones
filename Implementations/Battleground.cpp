@@ -8,7 +8,7 @@
 //==========================================================================================================================
 Battleground::Battleground(void)
 	:
-	_roundNumber(0),
+	_roundNumber(1),
 	_killedThisRound(0),
 	_roundLength(10),
 	_spawnsThisRound(0),
@@ -24,6 +24,7 @@ Battleground::Battleground(void)
 	_monsterWalkTimer(0.5f),
 	_monsterWalkCountdown(0.0f),
 	_canSpawn(true),
+	_gameover(false),
 	_player(nullptr),
 	_projectilePool(),
 	_monsterPool(),
@@ -35,7 +36,10 @@ Battleground::Battleground(void)
 	_roundTitleText(),
 	_scoreTitleText(),
 	_roundNumberText(),
-	_scoreText()
+	_scoreText(),
+	_gameOverTitle(),
+	_retryText(),
+	_playerDefaultPos(0.0f, -200.0f)
 { }
 
 Battleground::~Battleground(void)
@@ -80,6 +84,18 @@ void Battleground::v_Init(void)
 	//Setup text
 	_font.Init("bank_gothic", "./Assets/Fonts/bank_gothic.ttf", 12);
 
+	_gameOverTitle.SetFont(_font);
+	_gameOverTitle.AddText("Game Over!");
+	_gameOverTitle.SetPosition(0.0f, 0.0f);
+	_gameOverTitle.SetActive(false);
+	AddTextToLevel(_gameOverTitle);
+
+	_retryText.SetFont(_font);
+	_retryText.AddText("Try again? Y/N");
+	_retryText.SetPosition(0.0f, -50.0f);
+	_retryText.SetActive(false);
+	AddTextToLevel(_retryText);
+
 	_roundTitleText.SetFont(_font);
 	_roundTitleText.AddText("Round:");
 	_roundTitleText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
@@ -103,7 +119,7 @@ void Battleground::v_Init(void)
 	
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
-	_player->SetPosition(0.0f, -200.0f);
+	_player->SetPosition(_playerDefaultPos);
 	_player->SetScale(32.0f, 32.0f);
 	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
 	_player->v_Awake();
@@ -173,6 +189,22 @@ void Battleground::v_Update(void)
 		return;
 	}
 
+	if(_gameover)
+	{
+		// Run the AI because its fun
+		_ProcessAI();
+
+		if(KE::Controller::Instance()->GetKeyDown(KE::Y))
+		{
+			_ResetLevel();
+		}
+		else if(KE::Controller::Instance()->GetKeyDown(KE::N))
+		{
+			KE::Engine::Instance()->End();
+		}
+		return;
+	}
+
 	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	// Update Round Logic
@@ -181,102 +213,23 @@ void Battleground::v_Update(void)
 		_ProcessEvents();
 	}
 	
-	if(_canSpawn)
-	{
-		_canSpawn = false;
-		_lastSpawn = 0.0f;
-		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
-	}
-	else
-	{
-		_lastSpawn += KM::Timer::Instance()->DeltaTime();
-
-		if(_lastSpawn >= _spawnRate)
-		{
-			_canSpawn = true;
-		}
-	}
-	
 	_ProcessCollisions();
 
+	if(!_player->Alive())
+	{
+		_gameover = true;
+		_gameOverTitle.SetActive(true);
+		_retryText.SetActive(true);
+	}
+
 	//Player input loop
-	if(KE::Controller::Instance()->GetKeyHeld(KE::LEFT_ARROW))
-	{
-		if(_player->GetPosition()[x] > Level::GetLeftBorder())
-		{
-			_player->Move(-1.0f);
-		}
-	}
-	else if(KE::Controller::Instance()->GetKeyHeld(KE::RIGHT_ARROW))
-	{
-		if(_player->GetPosition()[x] < GetRightBorder())
-		{
-			_player->Move(1.0f);
-		}
-	}
-	
-	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE))
-	{
-		for(auto p : _projectilePool)
-		{
-			if(!p->GetActive())
-			{
-				_player->Fire(p);
-			}
-		}
-	}
+	_ProcessInput();
 
 	//Used later, if it can be made to be interesting
 	//bool playWalk = false;
+	
 	//AI loop
-	for(auto monster : _monsterPool)
-	{
-		if(monster->GetActive())
-		{	
-		//This may not work... the list to send to choose will change from type to type
-			if(monster->GetAIState() == CHOOSE)
-			{
-				PotentialTargetList targets;
-
-				bool foundTarget = false;
-				
-				for(auto settlement : _settlementList)
-				{
-					if(settlement->GetActive())
-					{
-						PotentialTarget target;
-						target.target = settlement;
-						target.weight = 0;
-						targets.push_back(target);
-						foundTarget = true;
-					}
-				}
-				
-				if(!foundTarget)
-				{
-					PotentialTarget target;
-					target.target = _player;
-					targets.push_back(target);
-				}
-
-				monster->Choose(targets);
-			}
-			else if(monster->GetAIState() == SEEK)
-			{
-				monster->Seek();
-
-				//playWalk = true;
-			}
-			else if(monster->GetAIState() == ATTACK)
-			{
-				monster->Attack();
-			}
-			else
-			{
-				KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Battleground::v_Update Monster attempted to update with invalid AI");
-			}
-		}
-	}
+	_ProcessAI();
 /*
 	This sounds dumb... needs some work and some thought
 	By sounds dumb, I mean it makes the game hard to play because all the foot steps are distracting. 
@@ -401,6 +354,104 @@ void Battleground::_ProcessEvents(void)
 	Level::UpdateText(_scoreText, std::to_string(_score));
 }
 
+void Battleground::_ProcessInput(void)
+{
+	if(KE::Controller::Instance()->GetKeyHeld(KE::LEFT_ARROW))
+	{
+		if(_player->GetPosition()[x] > Level::GetLeftBorder())
+		{
+			_player->Move(-1.0f);
+		}
+	}
+	else if(KE::Controller::Instance()->GetKeyHeld(KE::RIGHT_ARROW))
+	{
+		if(_player->GetPosition()[x] < GetRightBorder())
+		{
+			_player->Move(1.0f);
+		}
+	}
+
+	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE))
+	{
+		for(auto p : _projectilePool)
+		{
+			if(!p->GetActive())
+			{
+				_player->Fire(p);
+			}
+		}
+	}
+}
+
+void Battleground::_ProcessAI(void)
+{
+	// Check if we can spawn more
+	if(_canSpawn)
+	{
+		_canSpawn = false;
+		_lastSpawn = 0.0f;
+		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
+	}
+	else
+	{
+		_lastSpawn += KM::Timer::Instance()->DeltaTime();
+
+		if(_lastSpawn >= _spawnRate)
+		{
+			_canSpawn = true;
+		}
+	}
+	
+	// Run through AI states
+	for(auto monster : _monsterPool)
+	{
+		if(monster->GetActive())
+		{
+		//This may not work... the list to send to choose will change from type to type
+			if(monster->GetAIState() == CHOOSE)
+			{
+				PotentialTargetList targets;
+
+				bool foundTarget = false;
+
+				for(auto settlement : _settlementList)
+				{
+					if(settlement->GetActive())
+					{
+						PotentialTarget target;
+						target.target = settlement;
+						target.weight = 0;
+						targets.push_back(target);
+						foundTarget = true;
+					}
+				}
+
+				if(!foundTarget)
+				{
+					PotentialTarget target;
+					target.target = _player;
+					targets.push_back(target);
+				}
+
+				monster->Choose(targets);
+			}
+			else if(monster->GetAIState() == SEEK)
+			{
+				monster->Seek();
+
+				//playWalk = true;
+			}
+			else if(monster->GetAIState() == ATTACK)
+			{
+				monster->Attack();
+			}
+			else
+			{
+				KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Battleground::v_Update Monster attempted to update with invalid AI");
+			}
+		}
+	}
+}
 
 //rename spawn item
 bool Battleground::_SpawnItem(ItemType type)
@@ -435,4 +486,53 @@ bool Battleground::_SpawnItem(ItemType type)
 	
 	//No item spawned
 	return false;
+}
+
+void Battleground::_ResetLevel(void)
+{
+	//Player
+	_player->SetPosition(_playerDefaultPos);
+	_player->v_Reset();
+
+	//Settlements
+	for(auto settlement : _settlementList)
+	{
+		settlement->v_Reset();
+	}
+
+	//Monsters
+	for(auto monster : _monsterPool)
+	{
+		if(monster->GetActive())
+		{
+			monster->SetActive(false);
+		}
+	}
+	
+	//Items
+	for(auto healthPack : _healthPackPool)
+	{
+		if(healthPack->GetActive())
+		{
+			healthPack->SetActive(false);
+		}
+	}
+
+	//Score and Rounds
+	_roundNumber		 = 1;
+	_killedThisRound	 = 0;
+	_roundLength		 = 10;
+	_spawnsThisRound	 = 0;
+	_maxSpawn		 	 = 3;
+	_roundLengthIncrease = 5;
+	_canSpawn			 = true;
+	_lastSpawn			 = 0.0f;
+
+	//Game Over text
+	_gameOverTitle.SetActive(false);
+	_retryText.SetActive(false);
+	_gameover = false;
+
+	//Restart Audio
+	KE::AudioManager::Instance()->StopSource(BACKGROUND_MUSIC_SOURCE);
 }
