@@ -72,7 +72,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
-	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));

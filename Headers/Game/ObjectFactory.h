@@ -57,7 +57,7 @@ public:
 	p_HealthPack MakeHealthPack(void)
 	{
 		p_HealthPack pack = make_shared<HealthPack>();
-		pack->SetScale(32.0f, 32.0f);
+		pack->SetScale(16.0f, 16.0f);
 		pack->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_PACK));
 
 		return pack;
