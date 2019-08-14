@@ -1,42 +1,38 @@
-#include <Game/HealthPack.h>
+#pragma once
 
+//=====Engine Includes=====
+#include <Engine/Atom.h>
+#include <Engine/GameObject.h>
+#include <Engine/TextureManager.h>
+
+namespace KE = KillerEngine;
+
+#include <Game/ID_Database.h>
+
+
+class HealthBar : public KE::GameObject
+{
+public:
 //==========================================================================================================================
 //
 //Constructors	 	
 //
 //==========================================================================================================================
-HealthPack::HealthPack(void)
-	:
-	_hpToRestore(1),
-	_maxTimeAlive(10.0f),
-	_timeAlive(0.0f)
-{  }
+	HealthBar(void);
 
-HealthPack::~HealthPack(void)
-{  }
+	~HealthBar(void);
 
 //==========================================================================================================================
 //
-//Virtual Functions
+//Functions
 //
 //==========================================================================================================================
-void HealthPack::v_Update(void)
-{
-	_timeAlive += KM::Timer::Instance()->DeltaTime();
+	void v_Update(void)
+	{  }
 
-	if(_timeAlive >= _maxTimeAlive)
-	{
-		SetActive(false);
-	}
-}
 
-void HealthPack::v_PickupAction(p_Actor actor)
-{
-	actor->v_Heal(_hpToRestore);
-	SetActive(false);
-}
+private:
 
-void HealthPack::v_SetUp(ItemType type)
-{
+};//end Class
 
-}
+typedef shared_ptr<HealthBar> p_HealthBar;

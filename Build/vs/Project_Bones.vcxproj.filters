@@ -88,6 +88,9 @@
     <ClCompile Include="..\..\Implementations\HealthPack.cpp">
       <Filter>Source Files\Items\HealthPack</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\HealthBar.cpp">
+      <Filter>Source Files\Soldier</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -122,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\HealthPack.h">
       <Filter>Source Files\Items\HealthPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\HealthBar.h">
+      <Filter>Source Files\Soldier</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

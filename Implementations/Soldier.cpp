@@ -19,7 +19,8 @@ _activeFireType(BULLET),
 _damageAudio(),
 _deathAudio(),
 _defaultFireAudio(),
-_walkAudio()
+_walkAudio(),
+_healthBar()
 {
 	GameObject::MakeSprite();
 	_maxHP = 3;
@@ -72,6 +73,16 @@ void Soldier::v_Damage(S32 dmg)
 		DefaultDamage();
 		_tookDamage = true;
 		_damageAudio.Play();
+
+		//Back to front, turn off a bar
+		for(U32 i = _healthBar.size() - 1; i > 0; --i)
+		{
+			if(_healthBar[i]->GetActive())
+			{
+				_healthBar[i]->SetActive(false);
+				break;
+			}
+		}
 	}
 
 	if(!_alive)
@@ -80,16 +91,36 @@ void Soldier::v_Damage(S32 dmg)
 	}
 }
 
+void Soldier::v_Heal(S32 heal)
+{
+	DefaultHeal(heal);
+
+	//front to back, turn on a bar
+	for(U32 i = 0; i < _healthBar.size(); ++i)
+	{
+		if(!_healthBar[i]->GetActive())
+		{
+			_healthBar[i]->SetActive(true);
+			break;
+		}
+	}
+}
+
+void Soldier::v_Reset(void)
+{
+	DefaultReset();
+	//Make sure all hp bars on on
+	for(U32 i = 0; i < _healthBar.size(); ++i)
+	{
+		_healthBar[i]->SetActive(true);
+	}
+}
+
 void Soldier::OnCollision(void)
 {
 
 }
 
-//==========================================================================================================================
-//
-//Functions
-//
-//==========================================================================================================================
 void Soldier::Fire(p_Projectile projectile)
 {
 	if(_canFire)

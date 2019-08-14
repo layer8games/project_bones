@@ -8,6 +8,8 @@
 #include <Engine/AABB.h>
 #include <Engine/AudioManager.h>
 #include <Engine/AudioSource.h>
+#include <Engine/GameWindow.h>
+#include <Engine/LevelManager.h>
 
 namespace KE = KillerEngine;
 namespace KM = KillerMath;
@@ -15,6 +17,11 @@ namespace KC = KillerCollisions;
 
 #include <Game/I_Actor.h>
 #include <Game/Projectile.h>
+#include <Game/HealthBar.h>
+
+#include <vector>
+
+typedef std::vector<p_HealthBar> HealthList;
 
 class Soldier : public I_Actor
 {
@@ -36,6 +43,10 @@ public:
 	void v_Update(void) final;
 
 	void v_Damage(S32 dmg = 1) final;
+
+	void v_Heal(S32 heal=1) final;
+
+	void v_Reset(void);
 
 //==========================================================================================================================
 //
@@ -85,6 +96,11 @@ public:
 		_activeFireType = type;
 	}
 
+	inline void AddHealthBar(HealthList bar)
+	{
+		_healthBar = bar;
+	}
+
 private:
 	bool	 _canFire;
 	bool	 _tookDamage;
@@ -98,6 +114,7 @@ private:
 	KE::AudioSource _deathAudio;
 	KE::AudioSource _defaultFireAudio;
 	KE::AudioSource _walkAudio;
+	HealthList		_healthBar;
 
 };//end Class
 

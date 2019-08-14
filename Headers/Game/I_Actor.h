@@ -38,12 +38,17 @@ public:
 		DefaultDamage(dmg);
 	}
 
+	inline virtual void v_Heal(S32 heal=1)
+	{
+		DefaultHeal(heal);
+	}
+
 	inline bool Alive(void)
 	{
 		return _alive;
 	}
 
-	inline void Heal(S32 heal)
+	inline void DefaultHeal(S32 heal)
 	{
 		if(_hp < _maxHP)
 		{

@@ -50,6 +50,8 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
 	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
 	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
+	KE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
+	KE::TextureManager::Instance()->RemoveTexture(HEALTH_BAR);
 
 	_projectilePool.clear();
 	_monsterPool.clear();
@@ -80,6 +82,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
+	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
@@ -119,14 +122,34 @@ void Battleground::v_Init(void)
 	_scoreText.AddText(std::to_string(_score));
 	_scoreText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.85f));
 	Level::AddTextToLevel(_scoreText);
-	
+		
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
 	_player->SetPosition(_playerDefaultPos);
 	_player->SetScale(32.0f, 32.0f);
 	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
 	_player->v_Awake();
-	AddObjectToLevel(_player);	
+	AddObjectToLevel(_player);
+
+	//Setup Player HealthBar
+	KM::Point barPos{ static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.35f,
+					  static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.4f };
+
+	F32 barWidth = 16.0f;
+	F32 barOffset = 12.0f;
+	S32 maxHP = _player->GetHP();
+	HealthList healthBar{};
+
+	for(S32 i = 0; i < maxHP; ++i)
+	{
+		p_HealthBar bar = make_shared<HealthBar>();
+		bar->SetScale(barWidth, barWidth);
+		bar->SetPosition(barPos);
+		barPos[x] += barWidth + barOffset;
+		AddObjectToLevel(bar);
+		healthBar.push_back(bar);
+	}
+	_player->AddHealthBar(healthBar);
 
 	//Create Projectile Pool
 	for(U32 i = 0; i < _projectilePoolSize; ++i)
