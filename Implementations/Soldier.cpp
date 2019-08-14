@@ -74,8 +74,10 @@ void Soldier::v_Damage(S32 dmg)
 		_tookDamage = true;
 		_damageAudio.Play();
 
+		std::cout << "size = " << _healthBar.size() << std::endl;
+		
 		//Back to front, turn off a bar
-		for(U32 i = _healthBar.size() - 1; i > 0; --i)
+		for(U32 i = _healthBar.size() - 1; i >= 0; --i)
 		{
 			if(_healthBar[i]->GetActive())
 			{
