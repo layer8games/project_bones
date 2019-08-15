@@ -19,6 +19,7 @@ Battleground::Battleground(void)
 	_settlementListSize(6),
 	_score(0),
 	_healthPackPoolSize(5),
+	_redSpawnRate(97),
 	_spawnRate(4.0f),
 	_lastSpawn(0.0f),
 	_monsterWalkTimer(0.5f),
@@ -49,6 +50,8 @@ Battleground::~Battleground(void)
 	//Unload Texture
 	KE::TextureManager::Instance()->RemoveTexture(SOLDIER);
 	KE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
+	KE::TextureManager::Instance()->RemoveTexture(RED_MONSTER);
+	KE::TextureManager::Instance()->RemoveTexture(BLUE_MONSTER);
 	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
 	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
 	KE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
@@ -80,6 +83,7 @@ void Battleground::v_Init(void)
 	//Load Textures
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(RED_MONSTER, "./Assets/Textures/monster_red_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(BLUE_MONSTER, "./Assets/Textures/monster_blue_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
@@ -372,10 +376,17 @@ void Battleground::_ProcessEvents(void)
 		// Make health spanw 30% more likely
 		itemSpawnChance += 30;
 
+		//Make red more likely to spawn
+		_redSpawnRate -= 2;
+
+		if(_roundNumber == 5 || _roundNumber == 8)
+		{
+			_redSpawnRate -= 10;
+		}
+		
 		//Check if we should spawn a blue
 		if(_roundNumber == 5 || _roundNumber == 8)
 		{
-			std::cout << "setting spawn blue to true\n";
 			_spawnBlue = true;
 		}
 		else if(_roundNumber > 10)
@@ -438,6 +449,14 @@ void Battleground::_ProcessAI(void)
 		_lastSpawn = 0.0f;
 		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
 		
+		//Chance to spawn red every time
+		S32 chance = KM::Random::Instance()->RandomInt(0, 99);
+		
+		if(chance > _redSpawnRate)
+		{
+			_Spawn(1, AI_RED_MONSTER);
+		}
+
 		if(_spawnBlue)
 		{
 			_Spawn(1, AI_BLUE_MONSTER);
@@ -459,13 +478,19 @@ void Battleground::_ProcessAI(void)
 	{
 		if(monster->GetActive())
 		{
-		//This may not work... the list to send to choose will change from type to type
 			if(monster->GetAIState() == CHOOSE)
 			{
 				PotentialTargetList targets;
 
 				bool foundTarget = false;
 
+				if(monster->GetType() == AI_RED_MONSTER)
+				{
+					monster->SetTarget(_player);
+					monster->SetAIState(SEEK);
+					continue;
+				}
+				
 				for(auto settlement : _settlementList)
 				{
 					if(settlement->GetActive())

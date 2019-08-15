@@ -84,7 +84,20 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			SetActive(true);
 		break;
 		case AI_RED_MONSTER :
-			
+			_alive = true;
+			_maxHP = 1;
+			_hp = _maxHP;
+			_aiType = type;
+			_aiState = CHOOSE;
+			SetColor(1.0f);
+			SetPosition(pos);
+			_speed = 140.0f;
+			_damage = 1;
+			_attackRate = 5.0f;
+			_pointValue = 200;
+			SetScale(32.0f, 32.0f);
+			SetTexture(KE::TextureManager::Instance()->GetTexture(RED_MONSTER));
+			SetActive(true);
 		break;
 		case AI_BLUE_MONSTER :
 			_alive = true;
@@ -160,8 +173,16 @@ void Monster::Seek(void)
 
 void Monster::Attack(void)
 {
-	if(_canAttack)
+	KM::Vector3 targetVec = _target->GetPosition() - GetPosition();
+
+	if(targetVec.SqrMagnitude() >= _attackRange * _attackRange && _target->GetActive())
 	{
+		_aiState = SEEK;
+		return;
+	}
+	
+	if(_canAttack)
+	{		
 		_target->v_Damage(_damage);
 		_canAttack = false;
 		

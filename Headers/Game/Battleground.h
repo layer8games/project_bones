@@ -92,6 +92,7 @@ private:
 	U32			   _settlementListSize;
 	U32			   _score;
 	U32			   _healthPackPoolSize;
+	S32			   _redSpawnRate;
 	F32			   _spawnRate;
 	F32			   _lastSpawn;
 	F32			   _monsterWalkTimer;

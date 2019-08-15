@@ -73,6 +73,11 @@ public:
 //
 //==========================================================================================================================
 	void Choose(PotentialTargetList targetList);
+
+	inline void SetTarget(p_Actor target)
+	{
+		_target = target;
+	}
 	
 	void Seek(void);
 
@@ -95,6 +100,11 @@ public:
 		_pointValue = val;
 	}
 
+	inline void SetAIState(MonsterAIState state)
+	{
+		_aiState = state;
+	}
+	
 	inline MonsterAIState GetAIState(void) const
 	{
 		return _aiState;
