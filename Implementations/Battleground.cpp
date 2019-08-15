@@ -25,6 +25,7 @@ Battleground::Battleground(void)
 	_monsterWalkCountdown(0.0f),
 	_settlementXOffset(150.0f),
 	_canSpawn(true),
+	_spawnBlue(false),
 	_gameover(false),
 	_player(nullptr),
 	_projectilePool(),
@@ -79,6 +80,7 @@ void Battleground::v_Init(void)
 	//Load Textures
 	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(BLUE_MONSTER, "./Assets/Textures/monster_blue_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
@@ -281,14 +283,15 @@ void Battleground::v_Update(void)
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
 {
-	KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f)};
+	F32 offset = 32.0f;
+	
+	KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-offset, offset), KM::Random::Instance()->RandomFloat(-offset, offset)};
 	
 	for(U32 i = 0; i < amount; ++i)
 	{		
-		U32 spawnZoneToUse = KM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
-
 		for(auto monster : _monsterPool)
 		{
+			U32 spawnZoneToUse = KM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
 			if(!monster->GetActive())
 			{
 				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);
@@ -296,7 +299,7 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 				break;
 			}
 			//update rand
-			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-10.0f, 10.0f), KM::Random::Instance()->RandomFloat(-10.0f, 10.0f));
+			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-offset, offset), KM::Random::Instance()->RandomFloat(-offset, offset));
 		}
 	}
 }
@@ -368,6 +371,23 @@ void Battleground::_ProcessEvents(void)
 
 		// Make health spanw 30% more likely
 		itemSpawnChance += 30;
+
+		//Check if we should spawn a blue
+		if(_roundNumber == 5 || _roundNumber == 8)
+		{
+			std::cout << "setting spawn blue to true\n";
+			_spawnBlue = true;
+		}
+		else if(_roundNumber > 10)
+		{
+			//10% chance to spawn a blue
+			S32 chance = KM::Random::Instance()->RandomInt(0, 99);
+
+			if(chance > 89)
+			{
+				_spawnBlue = true;
+			}
+		}
 	}
 
 	// 5% chance to spawn a health pack
@@ -397,7 +417,7 @@ void Battleground::_ProcessInput(void)
 		}
 	}
 
-	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE))
+	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE) || KE::Controller::Instance()->GetKeyDown(KE::UP_ARROW))
 	{
 		for(auto p : _projectilePool)
 		{
@@ -417,6 +437,12 @@ void Battleground::_ProcessAI(void)
 		_canSpawn = false;
 		_lastSpawn = 0.0f;
 		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
+		
+		if(_spawnBlue)
+		{
+			_Spawn(1, AI_BLUE_MONSTER);
+			_spawnBlue = false;
+		}
 	}
 	else
 	{
@@ -459,6 +485,14 @@ void Battleground::_ProcessAI(void)
 					targets.push_back(target);
 				}
 
+				if(monster->GetType() == AI_BLUE_MONSTER)
+				{
+					PotentialTarget target;
+					target.target = _player;
+					target.weight = 50;
+					targets.push_back(target);
+				}
+				
 				monster->Choose(targets);
 			}
 			else if(monster->GetAIState() == SEEK)
@@ -558,6 +592,7 @@ void Battleground::_ResetLevel(void)
 	_maxSpawn		 	 = 3;
 	_roundLengthIncrease = 5;
 	_canSpawn			 = true;
+	_spawnBlue			 = false;
 	_lastSpawn			 = 0.0f;
 	_score				 = 0;
 

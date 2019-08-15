@@ -69,7 +69,8 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 	{
 		case AI_YELLOW_MONSTER :
 			_alive = true;
-			_hp = 1;
+			_maxHP = 1;
+			_hp = _maxHP;
 			_aiType = type;
 			_aiState = CHOOSE;
 			SetColor(1.0f);
@@ -86,7 +87,20 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			
 		break;
 		case AI_BLUE_MONSTER :
-
+			_alive = true;
+			_maxHP = 5;
+			_hp = _maxHP;
+			_aiType = type;
+			_aiState = CHOOSE;
+			SetColor(1.0f);
+			SetPosition(pos);
+			_speed = 35.0f;
+			_damage = 2;
+			_attackRate = 1.0f;
+			_pointValue = 300;
+			SetScale(36.0f, 46.0f);
+			SetTexture(KE::TextureManager::Instance()->GetTexture(BLUE_MONSTER));
+			SetActive(true);
 		break;
 		default : 
 			KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Monster:Setup Attempted to create a Monster with an invalid type " + type);
@@ -101,37 +115,22 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 //==========================================================================================================================
 void Monster::Choose(PotentialTargetList targetList)
 {
-	if(_aiType == AI_YELLOW_MONSTER)
+	S32 maxChance = 0;
+	U32 currentIndex = 0;
+	U32 useIndex = currentIndex;
+	for(auto potential : targetList)
 	{
-		S32 maxChance = 0;
-		U32 currentIndex = 0;
-		U32 useIndex = currentIndex;
-		for(auto potential : targetList)
+		S32 chance = KM::Random::Instance()->RandomInt(0, 100) + potential.weight;
+
+		if(chance > maxChance)
 		{
-			S32 chance = KM::Random::Instance()->RandomInt(0, 100) + potential.weight;
-
-			if(chance > maxChance)
-			{
-				maxChance = chance;
-				useIndex = currentIndex;
-			}
-			++currentIndex;
+			maxChance = chance;
+			useIndex = currentIndex;
 		}
+		++currentIndex;
+	}
 
-		_target = targetList[useIndex].target;
-	}
-	else if(_aiType == AI_RED_MONSTER)
-	{
-
-	}
-	else if(_aiType == AI_BLUE_MONSTER)
-	{
-
-	}
-	else
-	{
-		KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Monster::Choose No such AI present with id " + _aiType);
-	}
+	_target = targetList[useIndex].target;
 	
 	_aiState = SEEK;
 }

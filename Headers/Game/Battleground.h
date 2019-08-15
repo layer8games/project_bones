@@ -98,6 +98,7 @@ private:
 	F32			   _monsterWalkCountdown;
 	F32			   _settlementXOffset;
 	bool		   _canSpawn;
+	bool		   _spawnBlue;
 	bool		   _gameover;
 	p_Soldier	   _player;
 	BulletPool	   _projectilePool;

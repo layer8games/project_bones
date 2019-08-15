@@ -100,6 +100,11 @@ public:
 		return _aiState;
 	}
 
+	inline MonsterAIType GetType(void) const
+	{
+		return _aiType;
+	}
+
 private:
 	U32					_damage;
 	F32					_speed;
