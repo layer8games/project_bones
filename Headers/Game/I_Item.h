@@ -14,6 +14,7 @@ namespace KC = KillerCollisions;
 enum ItemType
 {
 	HEALTH_ITEM = 1,
+	ARMOR_ITEM = 2,
 
 };
 
@@ -34,9 +35,9 @@ public:
 //Virtual Functions
 //
 //==========================================================================================================================
+	void v_Update(void) final;
+	
 	virtual void v_PickupAction(p_Actor actor)=0;
-
-	virtual void v_SetUp(ItemType type)=0;
 
 //==========================================================================================================================
 //
@@ -51,6 +52,8 @@ public:
 	void CollisionCheck(const KC::AABB& other);
 
 protected:
+	F32		   _maxTimeAlive;
+	F32		   _timeAlive;
 	ItemType   _type;
 	KC::AABB   _boundingBox;
 

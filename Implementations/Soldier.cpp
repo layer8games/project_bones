@@ -10,6 +10,8 @@ Soldier::Soldier(void)
 :
 _canFire(true),
 _tookDamage(false),
+_maxArmor(3),
+_armor(0),
 _speed(450.0f),
 _fireRate(0.2f),
 _lastFire(0.0f),
@@ -70,19 +72,39 @@ void Soldier::v_Damage(S32 dmg)
 {
 	if(!_tookDamage)
 	{
-		DefaultDamage();
+		bool armor = false;
 		_tookDamage = true;
 		_damageAudio.Play();
 
-		std::cout << "size = " << _healthBar.size() << std::endl;
-		
-		//Back to front, turn off a bar
-		for(U32 i = _healthBar.size() - 1; i >= 0; --i)
+		if(_armor > 0)
 		{
-			if(_healthBar[i]->GetActive())
+			armor = true;
+			--_armor;
+
+			for(S32 i = _armorBar.size() - 1; i >= 0; --i)
 			{
-				_healthBar[i]->SetActive(false);
-				break;
+				if(_armorBar[i]->GetActive())
+				{
+
+					_armorBar[i]->SetActive(false);
+					break;
+				}
+			}
+		}
+		
+		
+		if(!armor)
+		{
+			DefaultDamage();
+
+			//Back to front, turn off a bar
+			for(S32 i = _healthBar.size() - 1; i >= 0; --i)
+			{
+				if(_healthBar[i]->GetActive())
+				{
+					_healthBar[i]->SetActive(false);
+					break;
+				}
 			}
 		}
 	}
@@ -104,6 +126,23 @@ void Soldier::v_Heal(S32 heal)
 		{
 			_healthBar[i]->SetActive(true);
 			break;
+		}
+	}
+}
+
+void Soldier::v_AddArmor(void)
+{
+	if(_armor < _maxArmor)
+	{
+		++_armor;
+
+		for(U32 i = 0; i < _armorBar.size(); ++i)
+		{
+			if(!_armorBar[i]->GetActive())
+			{
+				_armorBar[i]->SetActive(true);
+				break;
+			}
 		}
 	}
 }

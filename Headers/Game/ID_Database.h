@@ -10,6 +10,7 @@ enum TextureID
 	DEFAULT_BULLET	= 6,
 	HEALTH_PACK		= 7,
 	HEALTH_BAR		= 8,
+	ARMOR			= 9,
 };
 
 enum LevelID

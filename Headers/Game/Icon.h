@@ -10,7 +10,7 @@ namespace KE = KillerEngine;
 #include <Game/ID_Database.h>
 
 
-class HealthBar : public KE::GameObject
+class Icon : public KE::GameObject
 {
 public:
 //==========================================================================================================================
@@ -18,9 +18,9 @@ public:
 //Constructors	 	
 //
 //==========================================================================================================================
-	HealthBar(void);
+	Icon(void);
 
-	~HealthBar(void);
+	~Icon(void);
 
 //==========================================================================================================================
 //
@@ -35,4 +35,4 @@ private:
 
 };//end Class
 
-typedef shared_ptr<HealthBar> p_HealthBar;
+typedef shared_ptr<Icon> p_Icon;

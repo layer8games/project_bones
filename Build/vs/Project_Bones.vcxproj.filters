@@ -53,6 +53,12 @@
     <Filter Include="Source Files\Items\HealthPack">
       <UniqueIdentifier>{dc277314-f6fa-4d06-9cae-ad1fce09b7f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Items\Armor">
+      <UniqueIdentifier>{42c2ee27-03d5-4d11-8c8c-7c08b8336d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Icon">
+      <UniqueIdentifier>{6d83ad98-ef05-486c-b103-4ee6c011b87f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -88,8 +94,11 @@
     <ClCompile Include="..\..\Implementations\HealthPack.cpp">
       <Filter>Source Files\Items\HealthPack</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Implementations\HealthBar.cpp">
-      <Filter>Source Files\Soldier</Filter>
+    <ClCompile Include="..\..\Implementations\Armor.cpp">
+      <Filter>Source Files\Items\Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Implementations\Icon.cpp">
+      <Filter>Source Files\Items\Icon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,8 +135,11 @@
     <ClInclude Include="..\..\Headers\Game\HealthPack.h">
       <Filter>Source Files\Items\HealthPack</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Headers\Game\HealthBar.h">
-      <Filter>Source Files\Soldier</Filter>
+    <ClInclude Include="..\..\Headers\Game\Armor.h">
+      <Filter>Source Files\Items\Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Icon.h">
+      <Filter>Source Files\Items\Icon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

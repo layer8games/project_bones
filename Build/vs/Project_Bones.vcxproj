@@ -124,6 +124,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Implementations\Armor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Battleground.cpp">
       <SubType>
       </SubType>
@@ -132,7 +136,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="..\..\Implementations\HealthBar.cpp">
+    <ClCompile Include="..\..\Implementations\Icon.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -171,6 +175,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Headers\Game\Armor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Battleground.h">
       <SubType>
       </SubType>
@@ -179,7 +187,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="..\..\Headers\Game\HealthBar.h">
+    <ClInclude Include="..\..\Headers\Game\Icon.h">
       <SubType>
       </SubType>
     </ClInclude>

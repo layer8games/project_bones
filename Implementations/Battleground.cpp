@@ -17,8 +17,9 @@ Battleground::Battleground(void)
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
 	_settlementListSize(6),
-	_score(0),
 	_healthPackPoolSize(5),
+	_armorPoolSize(5),
+	_score(0),
 	_redSpawnRate(97),
 	_spawnRate(4.0f),
 	_lastSpawn(0.0f),
@@ -32,6 +33,7 @@ Battleground::Battleground(void)
 	_projectilePool(),
 	_monsterPool(),
 	_healthPackPool(),
+	_armorPool(),
 	_settlementList(),
 	_spawnZones(),
 	_monsterWalkAudioSource(),
@@ -56,6 +58,7 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
 	KE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
 	KE::TextureManager::Instance()->RemoveTexture(HEALTH_BAR);
+	KE::TextureManager::Instance()->RemoveTexture(ARMOR);
 
 	_projectilePool.clear();
 	_monsterPool.clear();
@@ -89,6 +92,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
@@ -148,14 +152,37 @@ void Battleground::v_Init(void)
 
 	for(S32 i = 0; i < maxHP; ++i)
 	{
-		p_HealthBar bar = make_shared<HealthBar>();
+		p_Icon bar = make_shared<Icon>();
 		bar->SetScale(barWidth, barWidth);
+		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_BAR));
 		bar->SetPosition(barPos);
 		barPos[x] += barWidth + barOffset;
 		AddObjectToLevel(bar);
 		healthBar.push_back(bar);
 	}
 	_player->AddHealthBar(healthBar);
+
+	//Setup Player ArmorBar
+	barPos.Set(static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.35f,
+			   static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.35f);
+
+	barWidth = 16.0f;
+	barOffset = 32.0f;
+	maxHP = _player->GetMaxArmor();
+	ArmorList armorBar{};
+
+	for(S32 i = 0; i < maxHP; ++i)
+	{
+		p_Icon bar = make_shared<Icon>();
+		bar->SetScale(barWidth, barWidth);
+		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(ARMOR));
+		bar->SetPosition(barPos);
+		barPos[x] += barWidth + barOffset;
+		bar->SetActive(false);
+		AddObjectToLevel(bar);
+		armorBar.push_back(bar);
+	}
+	_player->AddArmorBar(armorBar);
 
 	//Create Projectile Pool
 	for(U32 i = 0; i < _projectilePoolSize; ++i)
@@ -202,13 +229,22 @@ void Battleground::v_Init(void)
 	//Right on the right border, 60% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 
+	// Create Health Pack Pool
 	for(U32 i = 0; i < _healthPackPoolSize; ++i)
 	{
 		p_HealthPack pack = ObjectFactory::Instance()->MakeHealthPack();
 		pack->SetActive(false);
 		Level::AddObjectToLevel(pack);
-
 		_healthPackPool.push_back(pack);
+	}
+
+	// Create Armor Pool
+	for(U32 i = 0; i < _armorPoolSize; ++i)
+	{
+		p_Armor armor = ObjectFactory::Instance()->MakeArmor();
+		armor->SetActive(false);
+		Level::AddObjectToLevel(armor);
+		_armorPool.push_back(armor);
 	}
 }
 
@@ -339,6 +375,7 @@ void Battleground::_ProcessCollisions(void)
 		}
 	}
 
+	// Power ups vs Player
 	for(auto pack : _healthPackPool)
 	{
 		if(pack->GetActive())
@@ -346,6 +383,17 @@ void Battleground::_ProcessCollisions(void)
 			if(pack->OverlapCheck(_player))
 			{
 				pack->v_PickupAction(_player);
+			}
+		}
+	}
+
+	for(auto armor : _armorPool)
+	{
+		if(armor->GetActive())
+		{
+			if(armor->OverlapCheck(_player))
+			{
+				armor->v_PickupAction(_player);
 			}
 		}
 	}
@@ -405,6 +453,11 @@ void Battleground::_ProcessEvents(void)
 	if(itemSpawnChance >= 95)
 	{
 		_SpawnItem(HEALTH_ITEM);
+	}
+	//Always spawn for testing
+	else if(itemSpawnChance >= 90)
+	{
+		_SpawnItem(ARMOR_ITEM);
 	}
 
 	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
@@ -548,21 +601,19 @@ bool Battleground::_SpawnItem(ItemType type)
 			{
 				if(!pack->GetActive())
 				{
-					// Move to a function to be called
-					F32 padding = 50.0f;
-					F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
-
-					if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
-					{
-						xPos += padding;
-					}
-					else if(xPos >= static_cast<F32>(GetRightBorder()) - padding)
-					{
-						xPos -= padding;
-					}
-
-					pack->SetPosition(xPos, _player->GetPosition()[y]);
+					pack->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
 					pack->SetActive(true);
+					return true;
+				}
+			}
+		break;
+		case ARMOR_ITEM :
+			for(auto armor : _armorPool)
+			{
+				if(!armor->GetActive())
+				{
+					armor->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
+					armor->SetActive(true);
 					return true;
 				}
 			}
@@ -631,4 +682,21 @@ void Battleground::_ResetLevel(void)
 
 	//Restart Audio
 	KE::AudioManager::Instance()->StopSource(BACKGROUND_MUSIC_SOURCE);
+}
+
+F32 Battleground::_GetRandomXPos(void)
+{
+	F32 padding = 50.0f;
+	F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
+
+	if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
+	{
+		xPos += padding;
+	}
+	else if(xPos >= static_cast<F32>(GetRightBorder()) - padding)
+	{
+		xPos -= padding;
+	}
+
+	return xPos;
 }

@@ -1,25 +1,23 @@
-#include <Game/HealthPack.h>
+#include <Game/Armor.h>
 
 //==========================================================================================================================
 //
 //Constructors	 	
 //
 //==========================================================================================================================
-HealthPack::HealthPack(void)
-	:
-	_hpToRestore(1)
+Armor::Armor(void)
 {  }
 
-HealthPack::~HealthPack(void)
+Armor::~Armor(void)
 {  }
 
 //==========================================================================================================================
 //
-//Virtual Functions
+//Functions
 //
 //==========================================================================================================================
-void HealthPack::v_PickupAction(p_Actor actor)
+void Armor::v_PickupAction(p_Actor actor)
 {
-	actor->v_Heal(_hpToRestore);
+	actor->v_AddArmor();
 	SetActive(false);
 }

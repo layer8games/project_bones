@@ -17,11 +17,13 @@ namespace KC = KillerCollisions;
 
 #include <Game/I_Actor.h>
 #include <Game/Projectile.h>
-#include <Game/HealthBar.h>
+#include <Game/Icon.h>
+#include <Game/Armor.h>
 
 #include <vector>
 
-typedef std::vector<p_HealthBar> HealthList;
+typedef std::vector<p_Icon> HealthList;
+typedef std::vector<p_Icon> ArmorList;
 
 class Soldier : public I_Actor
 {
@@ -45,6 +47,8 @@ public:
 	void v_Damage(S32 dmg = 1) final;
 
 	void v_Heal(S32 heal=1) final;
+
+	void v_AddArmor(void) final;
 
 	void v_Reset(void);
 
@@ -70,6 +74,11 @@ public:
 //Accessors
 //
 //==========================================================================================================================
+	inline S32 GetMaxArmor(void) const
+	{
+		return _maxArmor;
+	}
+	
 	inline void SetSpeed(F32 speed)
 	{
 		if(speed < 0.0f)
@@ -101,9 +110,16 @@ public:
 		_healthBar = bar;
 	}
 
+	inline void AddArmorBar(ArmorList bar)
+	{
+		_armorBar = bar;
+	}
+
 private:
 	bool	 _canFire;
 	bool	 _tookDamage;
+	S32		 _maxArmor;
+	S32		 _armor;
 	F32 	 _speed;
 	F32 	 _fireRate;
 	F32		 _lastFire;
@@ -115,6 +131,7 @@ private:
 	KE::AudioSource _defaultFireAudio;
 	KE::AudioSource _walkAudio;
 	HealthList		_healthBar;
+	ArmorList		_armorBar;
 
 };//end Class
 

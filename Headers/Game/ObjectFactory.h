@@ -10,6 +10,7 @@
 #include <Game/Settlement.h>
 #include <Game/Projectile.h>
 #include <Game/HealthPack.h>
+#include <Game/Armor.h>
 
 
 class ObjectFactory
@@ -29,17 +30,17 @@ public:
 //Factories
 //
 //==========================================================================================================================
-	p_Soldier MakeSoldier(void)
+	inline p_Soldier MakeSoldier(void)
 	{
 		return p_Soldier(new Soldier());
 	}
 
-	p_Monster MakeMonster(void)
+	inline p_Monster MakeMonster(void)
 	{
 		return p_Monster(new Monster());
 	}
 
-	p_Settlement MakeSettlement(void)
+	inline p_Settlement MakeSettlement(void)
 	{
 		p_Settlement p = make_shared<Settlement>();
 		
@@ -49,18 +50,27 @@ public:
 		return p;
 	}
 
-	p_Projectile MakeProjectile(void)
+	inline p_Projectile MakeProjectile(void)
 	{
 		return p_Projectile(new Projectile());
 	}
 
-	p_HealthPack MakeHealthPack(void)
+	inline p_HealthPack MakeHealthPack(void)
 	{
 		p_HealthPack pack = make_shared<HealthPack>();
 		pack->SetScale(16.0f, 16.0f);
 		pack->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_PACK));
 
 		return pack;
+	}
+
+	inline p_Armor MakeArmor(void)
+	{
+		p_Armor armor = make_shared<Armor>();
+		armor->SetScale(16.0f, 16.0f);
+		armor->SetTexture(KE::TextureManager::Instance()->GetTexture(ARMOR));
+
+		return armor;
 	}
 
 //==========================================================================================================================

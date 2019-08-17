@@ -43,6 +43,9 @@ public:
 		DefaultHeal(heal);
 	}
 
+	virtual void v_AddArmor(void)
+	{ }
+
 	inline bool Alive(void)
 	{
 		return _alive;

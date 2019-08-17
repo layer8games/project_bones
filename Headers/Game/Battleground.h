@@ -26,12 +26,14 @@ namespace KM = KillerMath;
 #include <Game/Projectile.h>
 #include <Game/EventManager.h>
 #include <Game/HealthPack.h>
+#include <Game/Armor.h>
 
 #include <vector>
 
 typedef std::vector<p_Projectile> BulletPool;
 typedef std::vector<p_Monster> MonsterPool;
 typedef std::vector<p_HealthPack> HealthPackPool;
+typedef std::vector<p_Armor> ArmorPool;
 typedef std::vector<p_Settlement> SettlementList;
 typedef std::vector<KM::Point> MonsterSpawnZones;
 
@@ -76,47 +78,51 @@ private:
 
 	void _ResetLevel(void);
 
+	F32 _GetRandomXPos(void);
+
 //==========================================================================================================================
 //
 //Data
 //
 //==========================================================================================================================
-	U32			   _roundNumber;
-	U32			   _killedThisRound;
-	U32			   _roundLength;
-	U32			   _spawnsThisRound;
-	U32			   _maxSpawn;
-	U32			   _roundLengthIncrease;
-	U32			   _projectilePoolSize;
-	U32			   _monsterPoolSize;
-	U32			   _settlementListSize;
-	U32			   _score;
-	U32			   _healthPackPoolSize;
-	S32			   _redSpawnRate;
-	F32			   _spawnRate;
-	F32			   _lastSpawn;
-	F32			   _monsterWalkTimer;
-	F32			   _monsterWalkCountdown;
-	F32			   _settlementXOffset;
-	bool		   _canSpawn;
-	bool		   _spawnBlue;
-	bool		   _gameover;
-	p_Soldier	   _player;
-	BulletPool	   _projectilePool;
-	MonsterPool	   _monsterPool;
-	HealthPackPool _healthPackPool;
-	SettlementList _settlementList;
-	MonsterSpawnZones _spawnZones;
-	KE::AudioSource		_monsterWalkAudioSource;
-	KE::Font			_font;
-	KE::Text			_roundTitleText;
-	KE::Text			_scoreTitleText;
-	KE::Text			_roundNumberText;
-	KE::Text			_scoreText;
-	KE::Text			_gameOverTitle;
-	KE::Text			_retryText;
-	KM::Point			_playerDefaultPos;
-	KM::Point			_defaultSettlementPos;
+	U32					 _killedThisRound;
+	U32					 _roundNumber;
+	U32					 _roundLength;
+	U32					 _spawnsThisRound;
+	U32					 _maxSpawn;
+	U32					 _roundLengthIncrease;
+	U32					 _projectilePoolSize;
+	U32					 _monsterPoolSize;
+	U32					 _settlementListSize;
+	U32					 _healthPackPoolSize;
+	U32					 _armorPoolSize;
+	U32					 _score;
+	S32					 _redSpawnRate;
+	F32					 _spawnRate;
+	F32					 _lastSpawn;
+	F32					 _monsterWalkTimer;
+	F32					 _monsterWalkCountdown;
+	F32					 _settlementXOffset;
+	bool				 _canSpawn;
+	bool				 _spawnBlue;
+	bool				 _gameover;
+	p_Soldier			 _player;
+	BulletPool			 _projectilePool;
+	MonsterPool			 _monsterPool;
+	SettlementList		 _settlementList;
+	HealthPackPool		 _healthPackPool;
+	ArmorPool			 _armorPool;
+	MonsterSpawnZones	 _spawnZones;
+	KE::AudioSource		 _monsterWalkAudioSource;
+	KE::Font			 _font;
+	KE::Text			 _roundTitleText;
+	KE::Text			 _scoreTitleText;
+	KE::Text			 _roundNumberText;
+	KE::Text			 _scoreText;
+	KE::Text			 _gameOverTitle;
+	KE::Text			 _retryText;
+	KM::Point			 _playerDefaultPos;
+	KM::Point			 _defaultSettlementPos;
 
 };//end Class
 
