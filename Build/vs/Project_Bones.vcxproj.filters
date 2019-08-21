@@ -59,6 +59,9 @@
     <Filter Include="Source Files\Items\Icon">
       <UniqueIdentifier>{6d83ad98-ef05-486c-b103-4ee6c011b87f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Items\Haste">
+      <UniqueIdentifier>{7150de8f-1bd4-4693-bf5c-ed4957c6de28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -100,6 +103,9 @@
     <ClCompile Include="..\..\Implementations\Icon.cpp">
       <Filter>Source Files\Items\Icon</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Haste.cpp">
+      <Filter>Source Files\Items\Haste</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -140,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Icon.h">
       <Filter>Source Files\Items\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Haste.h">
+      <Filter>Source Files\Items\Haste</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -136,6 +136,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Haste.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Icon.cpp">
       <SubType>
       </SubType>
@@ -184,6 +188,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\EventManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Haste.h">
       <SubType>
       </SubType>
     </ClInclude>

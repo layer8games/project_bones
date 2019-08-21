@@ -24,12 +24,6 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	inline void v_Awake(void) final
-	{
-		_timeAlive = 0.0f;
-		UpdateInternals();
-	}
-
 	void v_PickupAction(p_Actor actor) final;
 
 private:

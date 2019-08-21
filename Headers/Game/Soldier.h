@@ -69,6 +69,7 @@ public:
 		//_walkAudio.Play();
 	}
 
+
 //==========================================================================================================================
 //
 //Accessors
@@ -78,21 +79,15 @@ public:
 	{
 		return _maxArmor;
 	}
-	
-	inline void SetSpeed(F32 speed)
-	{
-		if(speed < 0.0f)
-		{
-			KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Soldier::SetSpeed: Attempted to set speed less than 0");
-			return;
-		}
 
-		_speed = speed; 
+	void ResetDefaultSpeed(void)
+	{
+		_speed = _defaultSpeed;
 	}
-
-	inline void SetFireRate(F32 rate)
+	
+	inline void SetSpeedBoost(F32 boost)
 	{
-		_fireRate = rate;
+		_speed *= boost;
 	}
 
 	inline ProjectileType GetActiveFireType(void) const
@@ -118,13 +113,16 @@ public:
 private:
 	bool	 _canFire;
 	bool	 _tookDamage;
+	bool	 _haste;
 	S32		 _maxArmor;
 	S32		 _armor;
+	F32		 _defaultSpeed;
 	F32 	 _speed;
 	F32 	 _fireRate;
 	F32		 _lastFire;
 	F32		 _lastDamaged;
 	F32		 _immune;
+	F32		 _hasteTimer;
 	ProjectileType _activeFireType;
 	KE::AudioSource _damageAudio;
 	KE::AudioSource _deathAudio;

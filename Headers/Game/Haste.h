@@ -8,9 +8,10 @@ namespace KM = KillerMath;
 
 //===== Game Includes =====
 #include <Game/I_Item.h>
+#include <Game/Soldier.h>
 
 
-class HealthPack : public I_Item
+class Haste : public I_Item
 {
 public:
 //==========================================================================================================================
@@ -18,26 +19,24 @@ public:
 //Constructors	 	
 //
 //==========================================================================================================================
-	HealthPack(void);
+	Haste(void);
 
-	~HealthPack(void);
-
-//==========================================================================================================================
-//
-//Virtual Functions
-//
-//==========================================================================================================================
-	void v_PickupAction(p_Actor actor) final;
+	~Haste(void);
 
 //==========================================================================================================================
 //
 //Functions
 //
 //==========================================================================================================================
-
+	void v_Update(void) final;
+	
+	void v_PickupAction(p_Actor actor) final;
 
 private:
-	S32 _hpToRestore;	
+	bool _on;
+	F32 _timeActive;
+	F32 _onTimer;
+	F32 _speedBoost;
+	p_Soldier _target;
 
 };//end Class
-typedef shared_ptr<HealthPack> p_HealthPack;

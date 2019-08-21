@@ -35,7 +35,16 @@ public:
 //Virtual Functions
 //
 //==========================================================================================================================
-	void v_Update(void) final;
+	inline void v_Awake(void) final
+	{
+		_timeAlive = 0.0f;
+		UpdateInternals();
+	}
+	
+	void v_Update(void)
+	{
+		ItemUpdate();
+	}
 	
 	virtual void v_PickupAction(p_Actor actor)=0;
 
@@ -49,9 +58,13 @@ public:
 		return _type;
 	}
 
-	void CollisionCheck(const KC::AABB& other);
-
 protected:
+	void ItemUpdate(void);
+//==========================================================================================================================
+//
+//Data
+//
+//==========================================================================================================================
 	F32		   _maxTimeAlive;
 	F32		   _timeAlive;
 	ItemType   _type;

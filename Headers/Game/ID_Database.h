@@ -11,6 +11,7 @@ enum TextureID
 	HEALTH_PACK		= 7,
 	HEALTH_BAR		= 8,
 	ARMOR			= 9,
+	HASTE			= 10,
 };
 
 enum LevelID

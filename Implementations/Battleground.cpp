@@ -59,6 +59,7 @@ Battleground::~Battleground(void)
 	KE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
 	KE::TextureManager::Instance()->RemoveTexture(HEALTH_BAR);
 	KE::TextureManager::Instance()->RemoveTexture(ARMOR);
+	KE::TextureManager::Instance()->RemoveTexture(HASTE);
 
 	_projectilePool.clear();
 	_monsterPool.clear();
@@ -93,6 +94,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/hast_v1.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
