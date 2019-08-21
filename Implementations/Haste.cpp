@@ -29,7 +29,7 @@ void Haste::v_Update(void)
 
 	if(_onTimer >= _timeActive)
 	{
-		_target->ResetDefaultSpeed();
+		_target->v_ResetDefaultSpeed();
 		_target = nullptr;
 		_on = false;
 		SetActive(false);
@@ -42,7 +42,7 @@ void Haste::v_PickupAction(p_Actor actor)
 	{
 		_on = true;
 		_target = actor;
-		_target->SetSpeedBoost(_speedBoost);
+		_target->v_SetSpeedBoost(_speedBoost);
 		SetActiveRender(false);
 	}
 }

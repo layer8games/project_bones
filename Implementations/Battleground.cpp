@@ -19,6 +19,7 @@ Battleground::Battleground(void)
 	_settlementListSize(6),
 	_healthPackPoolSize(5),
 	_armorPoolSize(5),
+	_hastePoolSize(5),
 	_score(0),
 	_redSpawnRate(97),
 	_spawnRate(4.0f),
@@ -34,6 +35,7 @@ Battleground::Battleground(void)
 	_monsterPool(),
 	_healthPackPool(),
 	_armorPool(),
+	_hastePool(),
 	_settlementList(),
 	_spawnZones(),
 	_monsterWalkAudioSource(),
@@ -64,6 +66,9 @@ Battleground::~Battleground(void)
 	_projectilePool.clear();
 	_monsterPool.clear();
 	_settlementList.clear();
+	_healthPackPool.clear();
+	_armorPool.clear();
+	_hastePool.clear();
 }
 
 //==========================================================================================================================
@@ -247,6 +252,14 @@ void Battleground::v_Init(void)
 		armor->SetActive(false);
 		Level::AddObjectToLevel(armor);
 		_armorPool.push_back(armor);
+	}
+
+	// Create Haste Pool
+	for(U32 i = 0; i < _hastePool.size(); ++i)
+	{
+		p_Haste haste = ObjectFactory::Instance()->MakeHaste();
+		Level::AddObjectToLevel(haste);
+		_hastePool.push_back(haste);
 	}
 }
 

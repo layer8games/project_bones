@@ -11,6 +11,7 @@
 #include <Game/Projectile.h>
 #include <Game/HealthPack.h>
 #include <Game/Armor.h>
+#include <Game/Haste.h>
 
 
 class ObjectFactory
@@ -71,6 +72,14 @@ public:
 		armor->SetTexture(KE::TextureManager::Instance()->GetTexture(ARMOR));
 
 		return armor;
+	}
+
+	inline p_Haste MakeHaste(void)
+	{
+		p_Haste haste = make_shared<Haste>();
+		haste->SetScale(16.0f, 16.0f);
+		haste->SetTexture(KE::TextureManager::Instance()->GetTexture(HASTE));
+		return haste;
 	}
 
 //==========================================================================================================================

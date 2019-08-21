@@ -46,6 +46,12 @@ public:
 	virtual void v_AddArmor(void)
 	{ }
 
+	virtual void v_ResetDefaultSpeed(void)
+	{ }
+
+	virtual void v_SetSpeedBoost(F32)
+	{ }
+
 	inline bool Alive(void)
 	{
 		return _alive;

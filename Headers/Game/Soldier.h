@@ -52,6 +52,17 @@ public:
 
 	void v_Reset(void);
 
+	void v_ResetDefaultSpeed(void) final
+	{
+		_speed = _defaultSpeed;
+	}
+
+	inline void v_SetSpeedBoost(F32 boost) final
+	{
+		_speed *= boost;
+	}
+
+
 //==========================================================================================================================
 //
 //Functions
@@ -78,16 +89,6 @@ public:
 	inline S32 GetMaxArmor(void) const
 	{
 		return _maxArmor;
-	}
-
-	void ResetDefaultSpeed(void)
-	{
-		_speed = _defaultSpeed;
-	}
-	
-	inline void SetSpeedBoost(F32 boost)
-	{
-		_speed *= boost;
 	}
 
 	inline ProjectileType GetActiveFireType(void) const
