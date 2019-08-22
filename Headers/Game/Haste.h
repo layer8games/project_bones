@@ -32,6 +32,11 @@ public:
 	
 	void v_PickupAction(p_Actor actor) final;
 
+	bool GetOn(void) const
+	{
+		return _on;
+	}
+
 private:
 	bool _on;
 	F32 _timeActive;

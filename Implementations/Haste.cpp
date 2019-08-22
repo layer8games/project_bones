@@ -38,11 +38,8 @@ void Haste::v_Update(void)
 
 void Haste::v_PickupAction(p_Actor actor)
 {
-	if(!_on)
-	{
-		_on = true;
-		_target = actor;
-		_target->v_SetSpeedBoost(_speedBoost);
-		SetActiveRender(false);
-	}
+	_on = true;
+	_target = actor;
+	_target->v_SetSpeedBoost(_speedBoost);
+	SetActiveRender(false);
 }

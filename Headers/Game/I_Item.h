@@ -15,7 +15,7 @@ enum ItemType
 {
 	HEALTH_ITEM = 1,
 	ARMOR_ITEM = 2,
-
+	HASTE_ITEM = 3,
 };
 
 class I_Item : public KE::GameObject

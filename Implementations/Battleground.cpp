@@ -99,7 +99,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/hast_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/haste_v1.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
@@ -412,6 +412,17 @@ void Battleground::_ProcessCollisions(void)
 			}
 		}
 	}
+
+	for(auto haste : _hastePool)
+	{
+		if(haste->GetActive() && !haste->GetOn())
+		{
+			if(haste->OverlapCheck(_player))
+			{
+				haste->v_PickupAction(_player);
+			}
+		}
+	}
 }
 
 void Battleground::_ProcessEvents(void)
@@ -420,7 +431,7 @@ void Battleground::_ProcessEvents(void)
 	_score += EventManager::Instance()->CheckPointsEarned();
 
 	// Chance to spawn item on kill
-	S32 itemSpawnChance = KM::Random::Instance()->RandomInt(1, 100);
+	S32 healthPackSpawnChance = KM::Random::Instance()->RandomInt(1, 100);
 	
 	if (_killedThisRound >= _roundLength)
 	{
@@ -437,7 +448,7 @@ void Battleground::_ProcessEvents(void)
 		}
 
 		// Make health spanw 30% more likely
-		itemSpawnChance += 30;
+		healthPackSpawnChance += 30;
 
 		//Make red more likely to spawn
 		_redSpawnRate -= 2;
@@ -465,14 +476,26 @@ void Battleground::_ProcessEvents(void)
 	}
 
 	// 5% chance to spawn a health pack
-	if(itemSpawnChance >= 95)
+	if(healthPackSpawnChance >= 95)
 	{
 		_SpawnItem(HEALTH_ITEM);
 	}
-	//Always spawn for testing
-	else if(itemSpawnChance >= 90)
+	
+	S32 powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+	
+	if(powerupSpawnChance >= 95)
 	{
 		_SpawnItem(ARMOR_ITEM);
+	}
+
+	if(powerupSpawnChance >= 90)
+	{
+		_SpawnItem(ARMOR_ITEM);
+	}
+
+	if(powerupSpawnChance >= 0)
+	{
+		_SpawnItem(HASTE_ITEM);
 	}
 
 	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
@@ -609,6 +632,7 @@ void Battleground::_ProcessAI(void)
 //rename spawn item
 bool Battleground::_SpawnItem(ItemType type)
 {	
+	bool spawnedItem = false;
 	switch(type)
 	{
 		case HEALTH_ITEM :
@@ -618,7 +642,8 @@ bool Battleground::_SpawnItem(ItemType type)
 				{
 					pack->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
 					pack->SetActive(true);
-					return true;
+					spawnedItem = true;
+					break;
 				}
 			}
 		break;
@@ -629,14 +654,27 @@ bool Battleground::_SpawnItem(ItemType type)
 				{
 					armor->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
 					armor->SetActive(true);
-					return true;
+					spawnedItem = true;
+					break;
+				}
+			}
+		break;
+		case HASTE_ITEM :
+			for(auto haste : _hastePool)
+			{
+				if(!haste->GetActive())
+				{
+					haste->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
+					haste->SetActive(true);
+					spawnedItem = true;
+					break;
 				}
 			}
 		break;
 	}
 	
 	//No item spawned
-	return false;
+	return spawnedItem;
 }
 
 void Battleground::_ResetLevel(void)
