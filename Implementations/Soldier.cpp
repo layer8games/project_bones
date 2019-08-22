@@ -10,6 +10,7 @@ Soldier::Soldier(void)
 :
 _canFire(true),
 _tookDamage(false),
+_haste(false),
 _maxArmor(3),
 _armor(0),
 _defaultSpeed(450.0f),
@@ -155,6 +156,15 @@ void Soldier::v_Reset(void)
 	for(U32 i = 0; i < _healthBar.size(); ++i)
 	{
 		_healthBar[i]->SetActive(true);
+	}
+}
+
+void Soldier::v_SetSpeedBoost(F32 boost)
+{
+	if(!_haste)
+	{
+		_speed *= boost;
+		_haste = true;
 	}
 }
 

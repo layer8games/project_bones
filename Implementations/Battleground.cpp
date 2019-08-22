@@ -255,9 +255,10 @@ void Battleground::v_Init(void)
 	}
 
 	// Create Haste Pool
-	for(U32 i = 0; i < _hastePool.size(); ++i)
+	for(U32 i = 0; i < _hastePoolSize; ++i)
 	{
 		p_Haste haste = ObjectFactory::Instance()->MakeHaste();
+		haste->SetActive(false);
 		Level::AddObjectToLevel(haste);
 		_hastePool.push_back(haste);
 	}
@@ -380,7 +381,7 @@ void Battleground::_ProcessCollisions(void)
 		{
 			for(auto monster : _monsterPool)
 			{
-				if(projectile->OverlapCheck(monster))
+				if(monster->GetActive() && projectile->OverlapCheck(monster))
 				{
 					monster->v_Damage(projectile->GetDamage());
 					projectile->HitEnemy();
@@ -415,7 +416,7 @@ void Battleground::_ProcessCollisions(void)
 
 	for(auto haste : _hastePool)
 	{
-		if(haste->GetActive() && !haste->GetOn())
+		if(haste->GetActive())
 		{
 			if(haste->OverlapCheck(_player))
 			{
@@ -488,12 +489,9 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(ARMOR_ITEM);
 	}
 
-	if(powerupSpawnChance >= 90)
-	{
-		_SpawnItem(ARMOR_ITEM);
-	}
+	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
 
-	if(powerupSpawnChance >= 0)
+	if(powerupSpawnChance >= 90)
 	{
 		_SpawnItem(HASTE_ITEM);
 	}
@@ -688,8 +686,6 @@ void Battleground::_ResetLevel(void)
 	//Settlements
 	for(auto settlement : _settlementList)
 	{
-		std::cout << "Settlement pos: " << settlementPos[x] << "," << settlementPos[y] << std::endl;
-		
 		settlement->v_Reset();
 		settlement->SetPosition(settlementPos);
 		settlementPos[x] += _settlementXOffset;

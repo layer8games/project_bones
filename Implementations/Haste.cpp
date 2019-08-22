@@ -8,9 +8,9 @@
 Haste::Haste(void)
 	:
 	_on(false),
-	_timeActive(10.0f),
+	_timeActive(5.0f),
 	_onTimer(0.0f),
-	_speedBoost(2.5f),
+	_speedBoost(2.0f),
 	_target(nullptr)
 {  }
 
@@ -32,14 +32,22 @@ void Haste::v_Update(void)
 		_target->v_ResetDefaultSpeed();
 		_target = nullptr;
 		_on = false;
+		_onTimer = 0.0f;
 		SetActive(false);
 	}
 }
 
 void Haste::v_PickupAction(p_Actor actor)
 {
-	_on = true;
-	_target = actor;
-	_target->v_SetSpeedBoost(_speedBoost);
-	SetActiveRender(false);
+	if(!_on)
+	{
+		_on = true;
+		_target = actor;
+		_target->v_SetSpeedBoost(_speedBoost);
+		SetActiveRender(false);
+	}
+	else
+	{
+		SetActive(false);
+	}
 }

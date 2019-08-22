@@ -55,12 +55,10 @@ public:
 	void v_ResetDefaultSpeed(void) final
 	{
 		_speed = _defaultSpeed;
+		_haste = false;
 	}
 
-	inline void v_SetSpeedBoost(F32 boost) final
-	{
-		_speed *= boost;
-	}
+	void v_SetSpeedBoost(F32 boost) final;
 
 
 //==========================================================================================================================
@@ -123,7 +121,6 @@ private:
 	F32		 _lastFire;
 	F32		 _lastDamaged;
 	F32		 _immune;
-	F32		 _hasteTimer;
 	ProjectileType _activeFireType;
 	KE::AudioSource _damageAudio;
 	KE::AudioSource _deathAudio;
