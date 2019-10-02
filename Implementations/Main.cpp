@@ -1,4 +1,8 @@
+#if DEBUG
 #pragma comment(lib, "Killer_Engine_Win32_Debug.lib")
+#else
+#pragma comment(lib, "Killer_Engine_Win32_Release.lib")
+#endif
 
 //===== Engine Includes =====
 #include <Engine/Atom.h>
