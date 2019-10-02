@@ -9,7 +9,7 @@
 *.sln.docstates
 
 # Build results
-
+*.exe
 
 [Oo]bj/
 [Tt]emp/
