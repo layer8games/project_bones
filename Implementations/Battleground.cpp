@@ -227,15 +227,15 @@ void Battleground::v_Init(void)
 		settlementPos[x] += _settlementXOffset;
 	}
 
-	//Set up Spawn Zones
-	//Can dynamically add more. _Spawn will support that without any additional work.
-	//30% from the left border, 10% from the top of the screen
+	// Set up Spawn Zones
+	// Can dynamically add more. _Spawn will support that without any additional work.
+	// 30% from the left border, 10% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.33f, GetTopBorder() * 0.9f));
-	//30% from the right border, 10% from the top
+	// 30% from the right border, 10% from the top
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()) * 0.33f, GetTopBorder() * 0.9f));
-	//Right on the left border, 60% from the top of the screen
+	// Right on the left border, 60% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()), GetTopBorder() * 0.4f));
-	//Right on the right border, 60% from the top of the screen
+	// Right on the right border, 60% from the top of the screen
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 
 	// Create Health Pack Pool
@@ -268,7 +268,7 @@ void Battleground::v_Init(void)
 
 void Battleground::v_Update(void)
 {
-	//Exit or Menu check
+	// Exit or Menu check
 	if(KE::Controller::Instance()->GetKeyDown(KE::ESCAPE))
 	{
 		KE::Engine::Instance()->End();
@@ -330,13 +330,7 @@ void Battleground::v_Update(void)
 	{
 		_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
 	}
-*/
-	// Update Round Logic
-	// need to only do this when a death event happens. 
-	// This means that the current event system will not work. It needs to be more standard. 
-	// Or need to check that it only updates when a death happens...
-	//_UpdateRound();
-	
+*/	
 }
 
 void Battleground::_Spawn(U32 amount, MonsterAIType type)
