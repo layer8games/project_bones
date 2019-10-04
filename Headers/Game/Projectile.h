@@ -19,6 +19,7 @@ enum ProjectileType
 {
 	DO_NOTHING = 0,
 	BULLET = 1,
+	LAZER  = 2,
 };
 
 class Projectile : public KE::GameObject

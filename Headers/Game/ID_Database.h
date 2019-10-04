@@ -12,6 +12,8 @@ enum TextureID
 	HEALTH_BAR		= 8,
 	ARMOR			= 9,
 	HASTE			= 10,
+	LAZER_BULLET	= 11,
+	LAZER_PICKUP	= 12,
 };
 
 enum LevelID

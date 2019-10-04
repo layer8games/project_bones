@@ -96,6 +96,8 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(BLUE_MONSTER, "./Assets/Textures/monster_blue_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
+	KE::TextureManager::Instance()->LoadTexture(LAZER_BULLET, "./Assets/Textures/lazer_projectile_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(LAZER_PICKUP, "./Assets/Textures/lazer_pickup_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");

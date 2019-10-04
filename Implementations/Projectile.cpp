@@ -61,6 +61,15 @@ void Projectile::SetUp(ProjectileType type)
 			_forwardVelocity = 60.0f;
 			SetScale(8.0f, 8.0f);
 			SetTexture(KE::TextureManager::Instance()->GetTexture(DEFAULT_BULLET));
+		break; 
+		case LAZER:
+			_damage = 1;
+			_numEnemies = 100;
+			_range = 250.0f;
+			_distTraveled = 0.0f;
+			_forwardVelocity = 90.0f;
+			SetScale(8.0f, 8.0f);
+			SetTexture(KE::TextureManager::Instance()->GetTexture(LAZER_BULLET));
 		break;
 		default:
 		
