@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project_Bones", "Project_Bones.vcxproj", "{C7A195A4-13F5-42CA-93D2-06882FC55800}"
-	ProjectSection(ProjectDependencies) = postProject
-		{27850EA3-AA75-4669-AF23-80B8F950F31F} = {27850EA3-AA75-4669-AF23-80B8F950F31F}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Killer_Engine", "..\..\..\Killer_Engine\Build\vs\Killer_Engine.vcxproj", "{27850EA3-AA75-4669-AF23-80B8F950F31F}"
 EndProject

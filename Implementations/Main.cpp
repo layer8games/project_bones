@@ -29,7 +29,6 @@ int main()
 	const bool wndFullScreen = false;
 
 	KE::Engine::Instance()->Init(wndWidth, wndHeight, wndTitle, wndFullScreen);
-	KE::ErrorManager::Instance()->DisplayErrors();
 
 	//If User indicated they want to close they Game
 	if(KE::ErrorManager::Instance()->DisplayErrors())
