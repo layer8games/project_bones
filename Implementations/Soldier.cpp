@@ -11,6 +11,7 @@ Soldier::Soldier(void)
 _canFire(true),
 _tookDamage(false),
 _haste(false),
+_knife(false),
 _maxArmor(3),
 _armor(0),
 _defaultSpeed(450.0f),
@@ -19,12 +20,17 @@ _fireRate(0.2f),
 _lastFire(0.0f),
 _lastDamaged(0.0f),
 _immune(0.5f),
+_knifeTimer(0.0f),
+_knifeTimeAlive(0.0f),
+_knifeDmg(0),
+_maxKnives(1),
 _activeFireType(BULLET),
 _damageAudio(),
 _deathAudio(),
 _defaultFireAudio(),
 _walkAudio(),
-_healthBar()
+_healthBar(),
+_knifeBar()
 {
 	GameObject::MakeSprite();
 	_maxHP = 3;
@@ -66,6 +72,17 @@ void Soldier::v_Update(void)
 		{
 			_canFire = true;
 			_lastFire = 0.0f;
+		}
+	}
+
+	if(_knife)
+	{
+		_knifeTimeAlive += KM::Timer::Instance()->DeltaTime();
+
+		if(_knifeTimeAlive >= _knifeTimer)
+		{
+			_knife = false;
+			_knifeBar[0]->SetActive(false);
 		}
 	}
 }
@@ -132,23 +149,6 @@ void Soldier::v_Heal(S32 heal)
 	}
 }
 
-void Soldier::v_AddArmor(void)
-{
-	if(_armor < _maxArmor)
-	{
-		++_armor;
-
-		for(U32 i = 0; i < _armorBar.size(); ++i)
-		{
-			if(!_armorBar[i]->GetActive())
-			{
-				_armorBar[i]->SetActive(true);
-				break;
-			}
-		}
-	}
-}
-
 void Soldier::v_Reset(void)
 {
 	DefaultReset();
@@ -156,15 +156,6 @@ void Soldier::v_Reset(void)
 	for(U32 i = 0; i < _healthBar.size(); ++i)
 	{
 		_healthBar[i]->SetActive(true);
-	}
-}
-
-void Soldier::v_SetSpeedBoost(F32 boost)
-{
-	if(!_haste)
-	{
-		_speed *= boost;
-		_haste = true;
 	}
 }
 
@@ -183,5 +174,44 @@ void Soldier::Fire(p_Projectile projectile)
 		_defaultFireAudio.Play();
 
 		_canFire = false;
+	}
+}
+
+void Soldier::AddArmor(void)
+{
+	if(_armor < _maxArmor)
+	{
+		++_armor;
+
+		for(U32 i = 0; i < _armorBar.size(); ++i)
+		{
+			if(!_armorBar[i]->GetActive())
+			{
+				_armorBar[i]->SetActive(true);
+				break;
+			}
+		}
+	}
+}
+
+void Soldier::SetSpeedBoost(F32 boost)
+{
+	if(!_haste)
+	{
+		_speed *= boost;
+		_haste = true;
+	}
+}
+
+void Soldier::AddKnife(F32 timer, U32 dmg)
+{
+	if(!_knife)
+	{
+		_knife = true;
+		_knifeTimer = timer;
+		_knifeTimeAlive = 0.0f;
+		_knifeDmg = dmg;
+
+		_knifeBar[0]->SetActive(true);
 	}
 }

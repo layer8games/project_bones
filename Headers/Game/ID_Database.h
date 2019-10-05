@@ -12,6 +12,7 @@ enum TextureID
 	HEALTH_BAR		= 8,
 	ARMOR			= 9,
 	HASTE			= 10,
+	KNIFE			= 11,
 };
 
 enum LevelID

@@ -6,7 +6,6 @@
 //===== Game Includes =====
 #include <Game/I_Item.h>
 
-
 class Armor : public I_Item
 {
 public:
@@ -24,7 +23,7 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	void v_PickupAction(p_Actor actor) final;
+	void v_PickupAction(p_Soldier actor) final;
 
 private:
 

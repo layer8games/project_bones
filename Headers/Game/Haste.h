@@ -30,7 +30,7 @@ public:
 //==========================================================================================================================
 	void v_Update(void) final;
 	
-	void v_PickupAction(p_Actor actor) final;
+	void v_PickupAction(p_Soldier actor) final;
 
 	bool GetOn(void) const
 	{
@@ -42,7 +42,7 @@ private:
 	F32 _timeActive;
 	F32 _onTimer;
 	F32 _speedBoost;
-	p_Actor _target;
+	p_Soldier _target;
 
 };//end Class
 typedef shared_ptr<Haste> p_Haste;

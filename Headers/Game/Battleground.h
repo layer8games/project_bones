@@ -28,6 +28,7 @@ namespace KM = KillerMath;
 #include <Game/HealthPack.h>
 #include <Game/Armor.h>
 #include <Game/Haste.h>
+#include <Game/Knife.h>
 
 #include <vector>
 
@@ -36,6 +37,7 @@ typedef std::vector<p_Monster> MonsterPool;
 typedef std::vector<p_HealthPack> HealthPackPool;
 typedef std::vector<p_Armor> ArmorPool;
 typedef std::vector<p_Haste> HastePool;
+typedef std::vector<p_Knife> KnifePool;
 typedef std::vector<p_Settlement> SettlementList;
 typedef std::vector<KM::Point> MonsterSpawnZones;
 
@@ -96,9 +98,7 @@ private:
 	U32					 _projectilePoolSize;
 	U32					 _monsterPoolSize;
 	U32					 _settlementListSize;
-	U32					 _healthPackPoolSize;
-	U32					 _armorPoolSize;
-	U32					 _hastePoolSize;
+	U32					 _defaultPoolSize;
 	U32					 _score;
 	S32					 _redSpawnRate;
 	F32					 _spawnRate;
@@ -116,6 +116,7 @@ private:
 	HealthPackPool		 _healthPackPool;
 	ArmorPool			 _armorPool;
 	HastePool			 _hastePool;
+	KnifePool			 _knifePool;
 	MonsterSpawnZones	 _spawnZones;
 	KE::AudioSource		 _monsterWalkAudioSource;
 	KE::Font			 _font;
