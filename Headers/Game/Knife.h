@@ -25,13 +25,11 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	void v_Update(void) final;
-
 	void v_PickupAction(p_Soldier actor) final;
 
 private:
-	F32 _timeAlive;
 	U32 _dmg;
+	F32 _effectActive;
 
 };//end Class
 typedef shared_ptr<Knife> p_Knife;

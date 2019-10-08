@@ -9,8 +9,7 @@ I_Item::I_Item(void)
 	:
 	_maxTimeAlive(10.0f),
 	_timeAlive(0.0f),
-	_type(),
-	_boundingBox()
+	_type()
 {
 	GameObject::MakeSprite();
 }

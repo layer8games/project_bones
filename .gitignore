@@ -57,6 +57,8 @@ LocalMachine.props
 *.scc
 *.idb
 *.exe
+*.iobj
+*.ipdb
 
 # Visual C++ cache files
 ipch/
