@@ -12,6 +12,7 @@
 #include <Game/HealthPack.h>
 #include <Game/Armor.h>
 #include <Game/Haste.h>
+#include <Game/Knife.h>
 
 
 class ObjectFactory
@@ -80,6 +81,14 @@ public:
 		haste->SetScale(16.0f, 16.0f);
 		haste->SetTexture(KE::TextureManager::Instance()->GetTexture(HASTE));
 		return haste;
+	}
+
+	inline p_Knife MakeKnife(void)
+	{
+		p_Knife knife = make_shared<Knife>();
+		knife->SetScale(16.0f, 32.0f);
+		knife->SetTexture(KE::TextureManager::Instance()->GetTexture(KNIFE));
+		return knife;
 	}
 
 //==========================================================================================================================

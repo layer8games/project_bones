@@ -18,12 +18,12 @@ namespace KC = KillerCollisions;
 #include <Game/I_Actor.h>
 #include <Game/Projectile.h>
 #include <Game/Icon.h>
-#include <Game/Armor.h>
 
 #include <vector>
 
 typedef std::vector<p_Icon> HealthList;
 typedef std::vector<p_Icon> ArmorList;
+typedef std::vector<p_Icon> KnifeList;
 
 class Soldier : public I_Actor
 {
@@ -48,18 +48,7 @@ public:
 
 	void v_Heal(S32 heal=1) final;
 
-	void v_AddArmor(void) final;
-
 	void v_Reset(void);
-
-	void v_ResetDefaultSpeed(void) final
-	{
-		_speed = _defaultSpeed;
-		_haste = false;
-	}
-
-	void v_SetSpeedBoost(F32 boost) final;
-
 
 //==========================================================================================================================
 //
@@ -78,6 +67,33 @@ public:
 		//_walkAudio.Play();
 	}
 
+	void SetSpeedBoost(F32 boost);
+	
+	inline void ResetDefaultSpeed(void)
+	{
+		_speed = _defaultSpeed;
+		_haste = false;
+	}
+
+	void AddArmor(void);
+
+	void AddKnife(F32 timer, U32 dmg);
+
+	inline bool HasKnife(void)
+	{
+		return _knife;
+	}
+
+	inline void UseKnife(void)
+	{
+		_knife = false;
+		_knifeBar[0]->SetActive(false);
+	}
+
+	inline U32 GetKnifeDmg(void)
+	{
+		return _knifeDmg;
+	}
 
 //==========================================================================================================================
 //
@@ -87,6 +103,11 @@ public:
 	inline S32 GetMaxArmor(void) const
 	{
 		return _maxArmor;
+	}
+
+	inline U32 GetMaxKnives(void) const
+	{
+		return _maxKnives;
 	}
 
 	inline ProjectileType GetActiveFireType(void) const
@@ -109,10 +130,16 @@ public:
 		_armorBar = bar;
 	}
 
+	inline void AddKnifeBar(KnifeList bar)
+	{
+		_knifeBar = bar;
+	}
+
 private:
 	bool	 _canFire;
 	bool	 _tookDamage;
 	bool	 _haste;
+	bool	 _knife;
 	S32		 _maxArmor;
 	S32		 _armor;
 	F32		 _defaultSpeed;
@@ -121,6 +148,10 @@ private:
 	F32		 _lastFire;
 	F32		 _lastDamaged;
 	F32		 _immune;
+	F32		 _knifeTimer;
+	F32		 _knifeTimeAlive;
+	U32		 _knifeDmg;
+	U32		 _maxKnives;
 	ProjectileType _activeFireType;
 	KE::AudioSource _damageAudio;
 	KE::AudioSource _deathAudio;
@@ -128,6 +159,7 @@ private:
 	KE::AudioSource _walkAudio;
 	HealthList		_healthBar;
 	ArmorList		_armorBar;
+	KnifeList		_knifeBar;
 
 };//end Class
 

@@ -9,13 +9,14 @@ namespace KE = KillerEngine;
 namespace KC = KillerCollisions;
 
 //===== Game Includes =====
-#include <Game/I_Actor.h>
+#include <Game/Soldier.h>
 
 enum ItemType
 {
 	HEALTH_ITEM = 1,
 	ARMOR_ITEM = 2,
 	HASTE_ITEM = 3,
+	KNIFE_ITEM = 4,
 };
 
 class I_Item : public KE::GameObject
@@ -46,7 +47,7 @@ public:
 		ItemUpdate();
 	}
 	
-	virtual void v_PickupAction(p_Actor actor)=0;
+	virtual void v_PickupAction(p_Soldier actor)=0;
 
 //==========================================================================================================================
 //

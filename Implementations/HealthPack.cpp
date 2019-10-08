@@ -18,7 +18,7 @@ HealthPack::~HealthPack(void)
 //Virtual Functions
 //
 //==========================================================================================================================
-void HealthPack::v_PickupAction(p_Actor actor)
+void HealthPack::v_PickupAction(p_Soldier actor)
 {
 	actor->v_Heal(_hpToRestore);
 	SetActive(false);

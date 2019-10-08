@@ -14,6 +14,8 @@ enum TextureID
 	HASTE			= 10,
 	LAZER_BULLET	= 11,
 	LAZER_PICKUP	= 12,
+	KNIFE			= 13,
+
 };
 
 enum LevelID

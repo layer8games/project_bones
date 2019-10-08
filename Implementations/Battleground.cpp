@@ -17,9 +17,7 @@ Battleground::Battleground(void)
 	_projectilePoolSize(25),
 	_monsterPoolSize(30),
 	_settlementListSize(6),
-	_healthPackPoolSize(5),
-	_armorPoolSize(5),
-	_hastePoolSize(5),
+	_defaultPoolSize(5),
 	_score(0),
 	_redSpawnRate(97),
 	_spawnRate(4.0f),
@@ -36,6 +34,7 @@ Battleground::Battleground(void)
 	_healthPackPool(),
 	_armorPool(),
 	_hastePool(),
+	_knifePool(),
 	_settlementList(),
 	_spawnZones(),
 	_monsterWalkAudioSource(),
@@ -102,6 +101,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/haste_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(KNIFE, "./Assets/Textures/knife_v1.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
@@ -193,6 +193,29 @@ void Battleground::v_Init(void)
 	}
 	_player->AddArmorBar(armorBar);
 
+	// Setup Player KnifeBar
+	barPos.Set(static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.3f,
+			   static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.4f);
+
+	barWidth = 16.0f;
+	S32 barHeight = 32.0f;
+	barOffset = 32.0f;
+	maxHP = _player->GetMaxKnives();
+	KnifeList knifeBar{};
+
+	for(S32 i = 0; i < maxHP; ++i)
+	{
+		p_Icon bar = make_shared<Icon>();
+		bar->SetScale(barWidth, barHeight);
+		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(KNIFE));
+		bar->SetPosition(barPos);
+		barPos[x] += barWidth + barOffset;
+		bar->SetActive(false);
+		AddObjectToLevel(bar);
+		knifeBar.push_back(bar);
+	}
+	_player->AddKnifeBar(knifeBar);
+
 	//Create Projectile Pool
 	for(U32 i = 0; i < _projectilePoolSize; ++i)
 	{
@@ -239,7 +262,7 @@ void Battleground::v_Init(void)
 	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 
 	// Create Health Pack Pool
-	for(U32 i = 0; i < _healthPackPoolSize; ++i)
+	for(U32 i = 0; i < _defaultPoolSize; ++i)
 	{
 		p_HealthPack pack = ObjectFactory::Instance()->MakeHealthPack();
 		pack->SetActive(false);
@@ -248,7 +271,7 @@ void Battleground::v_Init(void)
 	}
 
 	// Create Armor Pool
-	for(U32 i = 0; i < _armorPoolSize; ++i)
+	for(U32 i = 0; i < _defaultPoolSize; ++i)
 	{
 		p_Armor armor = ObjectFactory::Instance()->MakeArmor();
 		armor->SetActive(false);
@@ -257,13 +280,24 @@ void Battleground::v_Init(void)
 	}
 
 	// Create Haste Pool
-	for(U32 i = 0; i < _hastePoolSize; ++i)
+	for(U32 i = 0; i < _defaultPoolSize; ++i)
 	{
 		p_Haste haste = ObjectFactory::Instance()->MakeHaste();
 		haste->SetActive(false);
 		Level::AddObjectToLevel(haste);
 		_hastePool.push_back(haste);
 	}
+
+	// Create Knife Pool
+	for(U32 i = 0; i < _defaultPoolSize; ++i)
+	{
+		p_Knife haste = ObjectFactory::Instance()->MakeKnife();
+		haste->SetActive(false);
+		Level::AddObjectToLevel(haste);
+		_knifePool.push_back(haste);
+	}
+
+
 }
 
 void Battleground::v_Update(void)
@@ -365,6 +399,13 @@ void Battleground::_ProcessCollisions(void)
 		{
 			if(_player->OverlapCheck(monster))
 			{
+				if(_player->HasKnife())
+				{
+					_player->UseKnife();
+					monster->v_Damage(_player->GetKnifeDmg());
+					continue;
+				}
+
 				monster->Attack(_player);
 			}
 		}
@@ -417,6 +458,17 @@ void Battleground::_ProcessCollisions(void)
 			if(haste->OverlapCheck(_player))
 			{
 				haste->v_PickupAction(_player);
+			}
+		}
+	}
+
+	for(auto knife : _knifePool)
+	{
+		if(knife->GetActive())
+		{
+			if(knife->OverlapCheck(_player))
+			{
+				knife->v_PickupAction(_player);
 			}
 		}
 	}
@@ -490,6 +542,13 @@ void Battleground::_ProcessEvents(void)
 	if(powerupSpawnChance >= 90)
 	{
 		_SpawnItem(HASTE_ITEM);
+	}
+
+	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+
+	if(powerupSpawnChance >= 95)
+	{
+		_SpawnItem(KNIFE_ITEM);
 	}
 
 	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
@@ -665,6 +724,18 @@ bool Battleground::_SpawnItem(ItemType type)
 				}
 			}
 		break;
+		case KNIFE_ITEM :
+			for(auto knife : _knifePool)
+			{
+				if(!knife->GetActive())
+				{
+					knife->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
+					knife->SetActive(true);
+					spawnedItem = true;
+					break;
+				}
+			}
+		break;
 	}
 	
 	//No item spawned
@@ -704,6 +775,31 @@ void Battleground::_ResetLevel(void)
 			healthPack->SetActive(false);
 		}
 	}
+
+	for(auto armor : _armorPool)
+	{
+		if(armor->GetActive())
+		{
+			armor->SetActive(false);
+		}
+	}
+
+	for(auto haste : _hastePool)
+	{
+		if(haste->GetActive())
+		{
+			haste->SetActive(false);
+		}
+	}
+
+	for(auto knife : _knifePool)
+	{
+		if(knife->GetActive())
+		{
+			knife->SetActive(false);
+		}
+	}
+
 
 	//Score and Rounds
 	_roundNumber		 = 1;

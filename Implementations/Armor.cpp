@@ -16,8 +16,8 @@ Armor::~Armor(void)
 //Functions
 //
 //==========================================================================================================================
-void Armor::v_PickupAction(p_Actor actor)
+void Armor::v_PickupAction(p_Soldier actor)
 {
-	actor->v_AddArmor();
+	actor->AddArmor();
 	SetActive(false);
 }

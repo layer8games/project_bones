@@ -29,7 +29,7 @@ void Haste::v_Update(void)
 
 	if(_onTimer >= _timeActive)
 	{
-		_target->v_ResetDefaultSpeed();
+		_target->ResetDefaultSpeed();
 		_target = nullptr;
 		_on = false;
 		_onTimer = 0.0f;
@@ -37,13 +37,13 @@ void Haste::v_Update(void)
 	}
 }
 
-void Haste::v_PickupAction(p_Actor actor)
+void Haste::v_PickupAction(p_Soldier actor)
 {
 	if(!_on)
 	{
 		_on = true;
 		_target = actor;
-		_target->v_SetSpeedBoost(_speedBoost);
+		_target->SetSpeedBoost(_speedBoost);
 		SetActiveRender(false);
 	}
 	else
