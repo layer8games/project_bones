@@ -3,10 +3,8 @@
 //=====Engine Includes=====
 #include <Engine/Atom.h>
 #include <Engine/GameObject.h>
-#include <Engine/AABB.h>
 
 namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
 
 //===== Game Includes =====
 #include <Game/Soldier.h>
@@ -29,7 +27,7 @@ public:
 //==========================================================================================================================
 	I_Item(void);
 
-	~I_Item(void);
+	virtual ~I_Item(void);
 
 //==========================================================================================================================
 //
@@ -69,7 +67,6 @@ protected:
 	F32		   _maxTimeAlive;
 	F32		   _timeAlive;
 	ItemType   _type;
-	KC::AABB   _boundingBox;
 
 };//end Class
 typedef shared_ptr<I_Item> p_Item;
