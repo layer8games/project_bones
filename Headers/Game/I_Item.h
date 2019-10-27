@@ -15,6 +15,7 @@ enum ItemType
 	ARMOR_ITEM = 2,
 	HASTE_ITEM = 3,
 	KNIFE_ITEM = 4,
+	LAZER_ITEM = 5,
 };
 
 class I_Item : public KE::GameObject
@@ -36,7 +37,6 @@ public:
 //==========================================================================================================================
 	inline void v_Awake(void) final
 	{
-		_timeAlive = 0.0f;
 		UpdateInternals();
 	}
 	

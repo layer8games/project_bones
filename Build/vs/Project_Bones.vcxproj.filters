@@ -65,6 +65,9 @@
     <Filter Include="Source Files\Items\Knife">
       <UniqueIdentifier>{46a8078a-2eef-4262-aa6a-4d426dddcc65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Items\Lazer">
+      <UniqueIdentifier>{7b778352-10bf-4227-9091-d836d19a76f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Implementations\Main.cpp">
@@ -112,6 +115,9 @@
     <ClCompile Include="..\..\Implementations\Knife.cpp">
       <Filter>Source Files\Items\Knife</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Lazer.cpp">
+      <Filter>Source Files\Items\Lazer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Headers\Game\Soldier.h">
@@ -158,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Knife.h">
       <Filter>Source Files\Items\Knife</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Lazer.h">
+      <Filter>Source Files\Items\Lazer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

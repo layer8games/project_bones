@@ -115,9 +115,11 @@ public:
 		return _activeFireType;
 	}
 
-	inline void SetActiveFireType(ProjectileType type)
+	inline void SetActiveFireType(ProjectileType type, F32 timer)
 	{
 		_activeFireType = type;
+		_fireTypeTimeAlive = 0.0f;
+		_fireTypeTimer = timer;
 	}
 
 	inline void AddHealthBar(HealthList bar)
@@ -148,6 +150,8 @@ private:
 	F32		 _lastFire;
 	F32		 _lastDamaged;
 	F32		 _immune;
+	F32		 _fireTypeTimer;
+	F32		 _fireTypeTimeAlive;
 	F32		 _knifeTimer;
 	F32		 _knifeTimeAlive;
 	U32		 _knifeDmg;

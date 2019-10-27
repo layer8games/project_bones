@@ -85,6 +85,16 @@ void Soldier::v_Update(void)
 			_knifeBar[0]->SetActive(false);
 		}
 	}
+
+	if(_activeFireType != BULLET)
+	{
+		_fireTypeTimeAlive += KM::Timer::Instance()->DeltaTime();
+
+		if(_fireTypeTimeAlive >= _fireTypeTimer)
+		{
+			_activeFireType = BULLET;
+		}
+	}
 }
 
 void Soldier::v_Damage(S32 dmg)

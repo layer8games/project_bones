@@ -35,6 +35,7 @@ Battleground::Battleground(void)
 	_armorPool(),
 	_hastePool(),
 	_knifePool(),
+	_lazerPool(),
 	_settlementList(),
 	_spawnZones(),
 	_monsterWalkAudioSource(),
@@ -291,12 +292,20 @@ void Battleground::v_Init(void)
 	// Create Knife Pool
 	for(U32 i = 0; i < _defaultPoolSize; ++i)
 	{
-		p_Knife haste = ObjectFactory::Instance()->MakeKnife();
-		haste->SetActive(false);
-		Level::AddObjectToLevel(haste);
-		_knifePool.push_back(haste);
+		p_Knife knife = ObjectFactory::Instance()->MakeKnife();
+		knife->SetActive(false);
+		Level::AddObjectToLevel(knife);
+		_knifePool.push_back(knife);
 	}
 
+	// Create Lazer Pool
+	for(U32 i = 0; i < _defaultPoolSize; ++i)
+	{
+		p_Lazer lazer = ObjectFactory::Instance()->MakeLazer();
+		lazer->SetActive(false);
+		Level::AddObjectToLevel(lazer);
+		_lazerPool.push_back(lazer);
+	}
 
 }
 
@@ -472,6 +481,17 @@ void Battleground::_ProcessCollisions(void)
 			}
 		}
 	}
+
+	for(auto lazer : _lazerPool)
+	{
+		if(lazer->GetActive())
+		{
+			if(lazer->OverlapCheck(_player))
+			{
+				lazer->v_PickupAction(_player);
+			}
+		}
+	}
 }
 
 void Battleground::_ProcessEvents(void)
@@ -551,6 +571,13 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(KNIFE_ITEM);
 	}
 
+	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+
+	if(powerupSpawnChance >= 98)
+	{
+		_SpawnItem(LAZER_ITEM);
+	}
+	
 	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 	Level::UpdateText(_scoreText, std::to_string(_score));
 }
@@ -731,6 +758,18 @@ bool Battleground::_SpawnItem(ItemType type)
 				{
 					knife->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
 					knife->SetActive(true);
+					spawnedItem = true;
+					break;
+				}
+			}
+		break;
+		case LAZER_ITEM :
+			for(auto lazer : _lazerPool)
+			{
+				if(!lazer->GetActive())
+				{
+					lazer->SetPosition(_GetRandomXPos(), _player->GetPosition()[y]);
+					lazer->SetActive(true);
 					spawnedItem = true;
 					break;
 				}

@@ -13,6 +13,7 @@
 #include <Game/Armor.h>
 #include <Game/Haste.h>
 #include <Game/Knife.h>
+#include <Game/Lazer.h>
 
 
 class ObjectFactory
@@ -89,6 +90,14 @@ public:
 		knife->SetScale(16.0f, 32.0f);
 		knife->SetTexture(KE::TextureManager::Instance()->GetTexture(KNIFE));
 		return knife;
+	}
+
+	inline p_Lazer MakeLazer(void)
+	{
+		p_Lazer lazer = make_shared<Lazer>();
+		lazer->SetScale(16.0f, 16.0f);
+		lazer->SetTexture(KE::TextureManager::Instance()->GetTexture(LAZER_PICKUP));
+		return lazer;
 	}
 
 //==========================================================================================================================

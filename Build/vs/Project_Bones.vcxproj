@@ -160,6 +160,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="..\..\Implementations\Lazer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\Implementations\Main.cpp" />
     <ClCompile Include="..\..\Implementations\Monster.cpp">
       <SubType>
@@ -217,6 +221,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="..\..\Headers\Game\Knife.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\Headers\Game\Lazer.h">
       <SubType>
       </SubType>
     </ClInclude>

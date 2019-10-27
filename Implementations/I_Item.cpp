@@ -25,5 +25,6 @@ void I_Item::ItemUpdate(void)
 	if(_timeAlive >= _maxTimeAlive)
 	{
 		SetActive(false);
+		_timeAlive = 0.0f;
 	}
 }
