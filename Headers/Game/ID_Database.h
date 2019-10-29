@@ -15,6 +15,7 @@ enum TextureID
 	LAZER_BULLET	= 11,
 	LAZER_PICKUP	= 12,
 	KNIFE			= 13,
+	BACKGROUND1		= 14,
 
 };
 

@@ -30,6 +30,7 @@ namespace KM = KillerMath;
 #include <Game/Haste.h>
 #include <Game/Knife.h>
 #include <Game/Lazer.h>
+#include <Game/Icon.h>
 
 #include <vector>
 
@@ -112,6 +113,7 @@ private:
 	bool				 _spawnBlue;
 	bool				 _gameover;
 	p_Soldier			 _player;
+	p_Icon				 _background;
 	BulletPool			 _projectilePool;
 	MonsterPool			 _monsterPool;
 	SettlementList		 _settlementList;
