@@ -16,7 +16,7 @@ enum TextureID
 	LAZER_PICKUP	= 12,
 	KNIFE			= 13,
 	BACKGROUND1		= 14,
-
+	BACKGROUND_PLAYER_PATH = 15,
 };
 
 enum LevelID

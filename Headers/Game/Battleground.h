@@ -114,6 +114,7 @@ private:
 	bool				 _gameover;
 	p_Soldier			 _player;
 	p_Icon				 _background;
+	p_Icon				 _playerPath;
 	BulletPool			 _projectilePool;
 	MonsterPool			 _monsterPool;
 	SettlementList		 _settlementList;

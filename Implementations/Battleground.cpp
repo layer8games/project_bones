@@ -30,6 +30,7 @@ Battleground::Battleground(void)
 	_gameover(false),
 	_player(nullptr),
 	_background(nullptr),
+	_playerPath(nullptr),
 	_projectilePool(),
 	_monsterPool(),
 	_healthPackPool(),
@@ -105,6 +106,7 @@ void Battleground::v_Init(void)
 	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/haste_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(KNIFE, "./Assets/Textures/knife_v1.png");
 	KE::TextureManager::Instance()->LoadTexture(BACKGROUND1, "./Assets/Textures/background_v1.png");
+	KE::TextureManager::Instance()->LoadTexture(BACKGROUND_PLAYER_PATH, "./Assets/Textures/player_path_v2.png");
 
 	//Audio setup
 	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
@@ -309,13 +311,21 @@ void Battleground::v_Init(void)
 		_lazerPool.push_back(lazer);
 	}
 
+	// Player path in the background
+	_playerPath = make_shared<Icon>();
+	_playerPath->SetPosition(_playerDefaultPos);
+	// Values found by trial and error. If the screen changes size, this will not work
+	_playerPath->SetScale(575.0f, 64.0f);
+	_playerPath->SetTexture(KE::TextureManager::Instance()->GetTexture(BACKGROUND_PLAYER_PATH));
+	AddObjectToLevel(_playerPath);
+
+	// Main background
 	_background = make_shared<Icon>();
 	_background->SetPosition(0.0f, 0.0f);
 	// Values found by trial and error. If the screen changes size, this will not work
 	_background->SetScale(510.0f, 385.0f);
 	_background->SetTexture(KE::TextureManager::Instance()->GetTexture(BACKGROUND1));
 	AddObjectToLevel(_background);
-
 }
 
 void Battleground::v_Update(void)
