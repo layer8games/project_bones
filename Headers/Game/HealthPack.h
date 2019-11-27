@@ -4,7 +4,7 @@
 #include <Engine/Atom.h>
 #include <Engine/Timer.h>
 
-namespace KM = KillerMath;
+namespace TM = TempestMath;
 
 //===== Game Includes =====
 #include <Game/I_Item.h>

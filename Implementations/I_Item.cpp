@@ -20,7 +20,7 @@ I_Item::~I_Item(void)
 
 void I_Item::ItemUpdate(void)
 {
-	_timeAlive += KM::Timer::Instance()->DeltaTime();
+	_timeAlive += TM::Timer::Instance()->DeltaTime();
 
 	if(_timeAlive >= _maxTimeAlive)
 	{

@@ -13,8 +13,8 @@ Settlement::Settlement(void)
 	GameObject::MakeSprite();
 	_maxHP = 10;
 	_hp = _maxHP;
-	_damageAudio.AddClip(KE::AudioManager::Instance()->GetClip(SETTLEMENT_DAMAGE_CLIP));
-	_deathAudio.AddClip(KE::AudioManager::Instance()->GetClip(SETTLEMENT_DIE_CLIP));
+	_damageAudio.AddClip(TE::AudioManager::Instance()->GetClip(SETTLEMENT_DAMAGE_CLIP));
+	_deathAudio.AddClip(TE::AudioManager::Instance()->GetClip(SETTLEMENT_DIE_CLIP));
 }
 
 Settlement::~Settlement(void)

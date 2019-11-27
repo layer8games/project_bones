@@ -8,9 +8,9 @@
 #include <Engine/Point.h>
 #include <Engine/TextureManager.h>
 
-namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
-namespace KM = KillerMath;
+namespace TE = Tempest;
+namespace TC = TempestCollisions;
+namespace TM = TempestMath;
 
 #include <Game/ID_Database.h>
 #include <Game/I_Actor.h>
@@ -22,7 +22,7 @@ enum ProjectileType
 	LAZER  = 2,
 };
 
-class Projectile : public KE::GameObject
+class Projectile : public TE::GameObject
 {
 public:
 //==========================================================================================================================
@@ -53,7 +53,7 @@ public:
 //==========================================================================================================================
 	void SetUp(ProjectileType type);
 
-	void Fire(const KM::Point& pos);
+	void Fire(const TM::Point& pos);
 
 	void HitEnemy(void);
 	

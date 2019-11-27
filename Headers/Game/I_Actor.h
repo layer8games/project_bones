@@ -6,12 +6,12 @@
 #include <Engine/AABB.h>
 #include <Engine/Timer.h>
 
-namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
+namespace TE = Tempest;
+namespace TC = TempestCollisions;
 
 #include <iostream>
 
-class I_Actor : public KE::GameObject
+class I_Actor : public TE::GameObject
 {
 public:
 //==========================================================================================================================
@@ -74,7 +74,7 @@ protected:
 	bool	  _isDmg;
 	F32		  _dmgTime;
 	F32		  _dmgCounter;
-	KE::Color _dmgColor;
+	TE::Color _dmgColor;
 
 };//end Class
 typedef shared_ptr<I_Actor> p_Actor;

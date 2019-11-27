@@ -48,7 +48,7 @@ public:
 		p_Settlement p = make_shared<Settlement>();
 		
 		p->SetScale(64.0f, 64.0f);
-		p->SetTexture(KE::TextureManager::Instance()->GetTexture(SETTLEMENT));
+		p->SetTexture(TE::TextureManager::Instance()->GetTexture(SETTLEMENT));
 		
 		return p;
 	}
@@ -62,7 +62,7 @@ public:
 	{
 		p_HealthPack pack = make_shared<HealthPack>();
 		pack->SetScale(16.0f, 16.0f);
-		pack->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_PACK));
+		pack->SetTexture(TE::TextureManager::Instance()->GetTexture(HEALTH_PACK));
 
 		return pack;
 	}
@@ -71,7 +71,7 @@ public:
 	{
 		p_Armor armor = make_shared<Armor>();
 		armor->SetScale(16.0f, 16.0f);
-		armor->SetTexture(KE::TextureManager::Instance()->GetTexture(ARMOR));
+		armor->SetTexture(TE::TextureManager::Instance()->GetTexture(ARMOR));
 
 		return armor;
 	}
@@ -80,7 +80,7 @@ public:
 	{
 		p_Haste haste = make_shared<Haste>();
 		haste->SetScale(16.0f, 16.0f);
-		haste->SetTexture(KE::TextureManager::Instance()->GetTexture(HASTE));
+		haste->SetTexture(TE::TextureManager::Instance()->GetTexture(HASTE));
 		return haste;
 	}
 
@@ -88,7 +88,7 @@ public:
 	{
 		p_Knife knife = make_shared<Knife>();
 		knife->SetScale(16.0f, 32.0f);
-		knife->SetTexture(KE::TextureManager::Instance()->GetTexture(KNIFE));
+		knife->SetTexture(TE::TextureManager::Instance()->GetTexture(KNIFE));
 		return knife;
 	}
 
@@ -96,7 +96,7 @@ public:
 	{
 		p_Lazer lazer = make_shared<Lazer>();
 		lazer->SetScale(16.0f, 16.0f);
-		lazer->SetTexture(KE::TextureManager::Instance()->GetTexture(LAZER_PICKUP));
+		lazer->SetTexture(TE::TextureManager::Instance()->GetTexture(LAZER_PICKUP));
 		return lazer;
 	}
 

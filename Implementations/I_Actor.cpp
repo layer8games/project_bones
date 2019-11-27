@@ -29,7 +29,7 @@ void I_Actor::DefaultDamage(S32 dmg)
 		_alive = false;
 		_isDmg = false;
 		_dmgCounter = 0.0f;
-		SetColor(KE::Color(1.0f));
+		SetColor(TE::Color(1.0f));
 		SetPosition(0.0f, -1000.0f);
 		UpdateInternals();
 	}
@@ -46,14 +46,14 @@ void I_Actor::DefaultUpdate(void)
 {
 	if(_isDmg)
 	{
-		_dmgCounter += KM::Timer::Instance()->DeltaTime();
+		_dmgCounter += TM::Timer::Instance()->DeltaTime();
 
 		if(_dmgCounter >= _dmgTime)
 		{
 			_isDmg = false;
 			_dmgCounter = 0.0f;
 			//Later this will maybe set other animations to run
-			SetColor(KE::Color(1.0f, 1.0f, 1.0));
+			SetColor(TE::Color(1.0f, 1.0f, 1.0));
 		}
 	}
 }
@@ -64,6 +64,6 @@ void I_Actor::DefaultReset(void)
 	_alive = true;
 	_isDmg = false;
 	_dmgCounter = 0.0f;
-	SetColor(KE::Color(1.0f));
+	SetColor(TE::Color(1.0f));
 	SetActive(true);
 }

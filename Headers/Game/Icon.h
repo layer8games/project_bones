@@ -5,12 +5,12 @@
 #include <Engine/GameObject.h>
 #include <Engine/TextureManager.h>
 
-namespace KE = KillerEngine;
+namespace TE = Tempest;
 
 #include <Game/ID_Database.h>
 
 
-class Icon : public KE::GameObject
+class Icon : public TE::GameObject
 {
 public:
 //==========================================================================================================================
