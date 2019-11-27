@@ -1,6 +1,7 @@
 OutFile "install_bones.exe"
 
 !define pathToGame ".\ProjectBonesRelease"
+!define regKeyName "Software\Microsoft\Windows\CurrentVersion\Uninstall\ProjectBone"
 InstallDir "C:\Program Files (x86)\Project_Bones" 
  
 Section 
@@ -12,7 +13,8 @@ SectionEnd
 Section Desktop
 	MessageBox MB_YESNO "Create a Desktop Shortcut?" /SD IDYES IDNO end
 	CreateShortcut "$desktop\ProjectBones.lnk" "$instdir\project_bones.exe"
-	# add registry entry
+	WriteRegStr HKLM ${regKeyName} "Project Bones" "Created by Layer8 Games, this arcade shooter will mystify and terrify."
+	WriteRegStr HKLM ${regKeyName} "Remove Project Bones" "$\"$INSTDIR\uninstaller.exe$\""
 	end:
 SectionEnd
 
@@ -29,7 +31,5 @@ Section "Uninstall"
 	delete "$desktop\ProjectBones.lnk"
 	delete $INSTDIR\*
 	RMdir $INSTDIR
-
-	# delete short cut
-	# delete registry entry
+	DeleteRegKey HKLM ${regKeyName}
 SectionEnd
