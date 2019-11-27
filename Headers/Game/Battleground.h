@@ -15,8 +15,8 @@
 #include <Engine/Font.h>
 #include <Engine/Text.h>
 
-namespace KE = KillerEngine;
-namespace KM = KillerMath;
+namespace TE = Tempest;
+namespace TM = TempestMath;
 
 #include <Game/ID_Database.h>
 #include <Game/Soldier.h>
@@ -42,9 +42,9 @@ typedef std::vector<p_Haste> HastePool;
 typedef std::vector<p_Knife> KnifePool;
 typedef std::vector<p_Lazer> LazerPool;
 typedef std::vector<p_Settlement> SettlementList;
-typedef std::vector<KM::Point> MonsterSpawnZones;
+typedef std::vector<TM::Point> MonsterSpawnZones;
 
-class Battleground : public KE::Level
+class Battleground : public TE::Level
 {
 public:
 //==========================================================================================================================
@@ -124,16 +124,16 @@ private:
 	KnifePool			 _knifePool;
 	LazerPool			 _lazerPool;
 	MonsterSpawnZones	 _spawnZones;
-	KE::AudioSource		 _monsterWalkAudioSource;
-	KE::Font			 _font;
-	KE::Text			 _roundTitleText;
-	KE::Text			 _scoreTitleText;
-	KE::Text			 _roundNumberText;
-	KE::Text			 _scoreText;
-	KE::Text			 _gameOverTitle;
-	KE::Text			 _retryText;
-	KM::Point			 _playerDefaultPos;
-	KM::Point			 _defaultSettlementPos;
+	TE::AudioSource		 _monsterWalkAudioSource;
+	TE::Font			 _font;
+	TE::Text			 _roundTitleText;
+	TE::Text			 _scoreTitleText;
+	TE::Text			 _roundNumberText;
+	TE::Text			 _scoreText;
+	TE::Text			 _gameOverTitle;
+	TE::Text			 _retryText;
+	TM::Point			 _playerDefaultPos;
+	TM::Point			 _defaultSettlementPos;
 
 };//end Class
 

@@ -9,9 +9,9 @@
 #include <Engine/AudioManager.h>
 #include <Engine/AudioSource.h>
 
-namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
-namespace KM = KillerMath;
+namespace TE = Tempest;
+namespace TC = TempestCollisions;
+namespace TM = TempestMath;
 
 //===== Game Includes =====
 #include <Game/ID_Database.h>
@@ -39,8 +39,8 @@ public:
 	void v_Damage(S32 dmg = 1) final;
 
 private:
-	KE::AudioSource _damageAudio;
-	KE::AudioSource _deathAudio;
+	TE::AudioSource _damageAudio;
+	TE::AudioSource _deathAudio;
 
 };//end Class
 

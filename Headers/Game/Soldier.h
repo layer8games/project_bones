@@ -11,9 +11,9 @@
 #include <Engine/GameWindow.h>
 #include <Engine/LevelManager.h>
 
-namespace KE = KillerEngine;
-namespace KM = KillerMath;
-namespace KC = KillerCollisions;
+namespace TE = Tempest;
+namespace TM = TempestMath;
+namespace TC = TempestCollisions;
 
 #include <Game/I_Actor.h>
 #include <Game/Projectile.h>
@@ -62,7 +62,7 @@ public:
 	inline void Move(F32 xVal)
 	{
 		//Consider stagger for player. May need another timer....
-		AddScaledPosition(KM::Vector3(xVal, 0.0f), _speed * KM::Timer::Instance()->DeltaTime());
+		AddScaledPosition(TM::Vector3(xVal, 0.0f), _speed * TM::Timer::Instance()->DeltaTime());
 		//Need a better clip
 		//_walkAudio.Play();
 	}
@@ -157,10 +157,10 @@ private:
 	U32		 _knifeDmg;
 	U32		 _maxKnives;
 	ProjectileType _activeFireType;
-	KE::AudioSource _damageAudio;
-	KE::AudioSource _deathAudio;
-	KE::AudioSource _defaultFireAudio;
-	KE::AudioSource _walkAudio;
+	TE::AudioSource _damageAudio;
+	TE::AudioSource _deathAudio;
+	TE::AudioSource _defaultFireAudio;
+	TE::AudioSource _walkAudio;
 	HealthList		_healthBar;
 	ArmorList		_armorBar;
 	KnifeList		_knifeBar;

@@ -22,7 +22,7 @@ Monster::Monster(void)
 	_deathAudioSource()
 {
 	GameObject::MakeSprite();
-	_deathAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_DIE_CLIP));
+	_deathAudioSource.AddClip(TE::AudioManager::Instance()->GetClip(MONSTER_DIE_CLIP));
 }
 
 Monster::~Monster(void)
@@ -41,7 +41,7 @@ void Monster::v_Update(void)
 
 	if(!_canAttack)
 	{
-		_lastAttack += KM::Timer::Instance()->DeltaTime();
+		_lastAttack += TM::Timer::Instance()->DeltaTime();
 
 		if(_lastAttack >= _attackRate)
 		{
@@ -54,7 +54,7 @@ void Monster::v_Update(void)
 void Monster::v_Damage(S32 dmg)
 {
 	DefaultDamage();
-	KE::AudioManager::Instance()->PlaySource(MONSTER_DAMAGE_SOURCE);
+	TE::AudioManager::Instance()->PlaySource(MONSTER_DAMAGE_SOURCE);
 
 	if(!_alive)
 	{
@@ -63,7 +63,7 @@ void Monster::v_Damage(S32 dmg)
 	}
 }
 
-void Monster::Setup(MonsterAIType type, KM::Point pos)
+void Monster::Setup(MonsterAIType type, TM::Point pos)
 {
 	switch(type)
 	{
@@ -80,7 +80,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_attackRate = 1.0f;
 			_pointValue = 100;
 			SetScale(32.0f, 32.0f);
-			SetTexture(KE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
+			SetTexture(TE::TextureManager::Instance()->GetTexture(YELLOW_MONSTER));
 			SetActive(true);
 		break;
 		case AI_RED_MONSTER :
@@ -96,7 +96,7 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_attackRate = 5.0f;
 			_pointValue = 200;
 			SetScale(32.0f, 32.0f);
-			SetTexture(KE::TextureManager::Instance()->GetTexture(RED_MONSTER));
+			SetTexture(TE::TextureManager::Instance()->GetTexture(RED_MONSTER));
 			SetActive(true);
 		break;
 		case AI_BLUE_MONSTER :
@@ -112,11 +112,11 @@ void Monster::Setup(MonsterAIType type, KM::Point pos)
 			_attackRate = 1.0f;
 			_pointValue = 300;
 			SetScale(36.0f, 46.0f);
-			SetTexture(KE::TextureManager::Instance()->GetTexture(BLUE_MONSTER));
+			SetTexture(TE::TextureManager::Instance()->GetTexture(BLUE_MONSTER));
 			SetActive(true);
 		break;
 		default : 
-			KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Monster:Setup Attempted to create a Monster with an invalid type " + type);
+			TE::ErrorManager::Instance()->SetError(TE::APPLICATION, "Monster:Setup Attempted to create a Monster with an invalid type " + type);
 		break;
 	}
 }
@@ -133,7 +133,7 @@ void Monster::Choose(PotentialTargetList targetList)
 	U32 useIndex = currentIndex;
 	for(auto potential : targetList)
 	{
-		S32 chance = KM::Random::Instance()->RandomInt(0, 100) + potential.weight;
+		S32 chance = TM::Random::Instance()->RandomInt(0, 100) + potential.weight;
 
 		if(chance > maxChance)
 		{
@@ -152,7 +152,7 @@ void Monster::Seek(void)
 {	
 	if(_target != nullptr)
 	{
-		KM::Vector3 targetVec = _target->GetPosition() - GetPosition();
+		TM::Vector3 targetVec = _target->GetPosition() - GetPosition();
 
 		if(targetVec.SqrMagnitude() <= _attackRange * _attackRange)
 		{
@@ -161,7 +161,7 @@ void Monster::Seek(void)
 		else
 		{
 			targetVec.Normalize();
-			AddScaledPosition(targetVec, _speed * KM::Timer::Instance()->DeltaTime());	
+			AddScaledPosition(targetVec, _speed * TM::Timer::Instance()->DeltaTime());	
 		}
 
 		if(!_target->GetActive())
@@ -173,7 +173,7 @@ void Monster::Seek(void)
 
 void Monster::Attack(void)
 {
-	KM::Vector3 targetVec = _target->GetPosition() - GetPosition();
+	TM::Vector3 targetVec = _target->GetPosition() - GetPosition();
 
 	if(targetVec.SqrMagnitude() >= _attackRange * _attackRange && _target->GetActive())
 	{
@@ -186,7 +186,7 @@ void Monster::Attack(void)
 		_target->v_Damage(_damage);
 		_canAttack = false;
 		
-		U32 shuffleChance = KM::Random::Instance()->RandomInt(0, 100);
+		U32 shuffleChance = TM::Random::Instance()->RandomInt(0, 100);
 
 		if(shuffleChance <= 50)
 		{
@@ -199,7 +199,7 @@ void Monster::Attack(void)
 	}
 	else
 	{
-		AddScaledPosition(KM::Vector3(_shuffleDir, 0.0f), (_speed * 0.12f) * KM::Timer::Instance()->DeltaTime());
+		AddScaledPosition(TM::Vector3(_shuffleDir, 0.0f), (_speed * 0.12f) * TM::Timer::Instance()->DeltaTime());
 	}
 
 	if(!_target->Alive())

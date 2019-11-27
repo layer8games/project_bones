@@ -29,9 +29,9 @@ Projectile::~Projectile(void)
 //==========================================================================================================================
 void Projectile::v_Update(void)
 {
-	_distTraveled += _forwardVelocity * KM::Timer::Instance()->DeltaTime();
+	_distTraveled += _forwardVelocity * TM::Timer::Instance()->DeltaTime();
 
-	AddScaledPosition(KM::Vector3(0.0f, 1.0f), _distTraveled);
+	AddScaledPosition(TM::Vector3(0.0f, 1.0f), _distTraveled);
 
 	if(_distTraveled >= _range)
 	{
@@ -43,7 +43,7 @@ void Projectile::v_Update(void)
 	}
 }
 
-void Projectile::Fire(const KM::Point& pos)
+void Projectile::Fire(const TM::Point& pos)
 {	
 	SetPosition(pos);
 	SetActive(true);
@@ -60,7 +60,7 @@ void Projectile::SetUp(ProjectileType type)
 			_distTraveled = 0.0f;
 			_forwardVelocity = 60.0f;
 			SetScale(8.0f, 8.0f);
-			SetTexture(KE::TextureManager::Instance()->GetTexture(DEFAULT_BULLET));
+			SetTexture(TE::TextureManager::Instance()->GetTexture(DEFAULT_BULLET));
 		break; 
 		case LAZER:
 			_damage = 1;
@@ -69,7 +69,7 @@ void Projectile::SetUp(ProjectileType type)
 			_distTraveled = 0.0f;
 			_forwardVelocity = 90.0f;
 			SetScale(8.0f, 8.0f);
-			SetTexture(KE::TextureManager::Instance()->GetTexture(LAZER_BULLET));
+			SetTexture(TE::TextureManager::Instance()->GetTexture(LAZER_BULLET));
 		break;
 		default:
 		

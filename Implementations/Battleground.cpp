@@ -54,16 +54,16 @@ Battleground::Battleground(void)
 Battleground::~Battleground(void)
 {
 	//Unload Texture
-	KE::TextureManager::Instance()->RemoveTexture(SOLDIER);
-	KE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
-	KE::TextureManager::Instance()->RemoveTexture(RED_MONSTER);
-	KE::TextureManager::Instance()->RemoveTexture(BLUE_MONSTER);
-	KE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
-	KE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
-	KE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
-	KE::TextureManager::Instance()->RemoveTexture(HEALTH_BAR);
-	KE::TextureManager::Instance()->RemoveTexture(ARMOR);
-	KE::TextureManager::Instance()->RemoveTexture(HASTE);
+	TE::TextureManager::Instance()->RemoveTexture(SOLDIER);
+	TE::TextureManager::Instance()->RemoveTexture(YELLOW_MONSTER);
+	TE::TextureManager::Instance()->RemoveTexture(RED_MONSTER);
+	TE::TextureManager::Instance()->RemoveTexture(BLUE_MONSTER);
+	TE::TextureManager::Instance()->RemoveTexture(SETTLEMENT);
+	TE::TextureManager::Instance()->RemoveTexture(DEFAULT_BULLET);
+	TE::TextureManager::Instance()->RemoveTexture(HEALTH_PACK);
+	TE::TextureManager::Instance()->RemoveTexture(HEALTH_BAR);
+	TE::TextureManager::Instance()->RemoveTexture(ARMOR);
+	TE::TextureManager::Instance()->RemoveTexture(HASTE);
 
 	_projectilePool.clear();
 	_monsterPool.clear();
@@ -81,9 +81,9 @@ Battleground::~Battleground(void)
 void Battleground::v_Init(void)
 {
 	SetID(BATTLEGROUND);
-	SetWidth(KE::GameWindow::Instance()->GetWidth());
-	SetHeight(KE::GameWindow::Instance()->GetHeight());
-	SetBackgroundColor(KE::Color(0.2f, 0.2f, 0.2f));
+	SetWidth(TE::GameWindow::Instance()->GetWidth());
+	SetHeight(TE::GameWindow::Instance()->GetHeight());
+	SetBackgroundColor(TE::Color(0.2f, 0.2f, 0.2f));
 	SetLeftBorder(-GetWidth() / 2);
 	SetRightBorder(Level::GetWidth()/ 2);
 	SetTopBorder(Level::GetHeight() / 2);
@@ -92,24 +92,24 @@ void Battleground::v_Init(void)
 	_defaultSettlementPos.Set(Level::GetLeftBorder() + 128.0f, Level::GetBottomBorder() + 64.0f);
 	
 	//Load Textures
-	KE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(RED_MONSTER, "./Assets/Textures/monster_red_v2.png");
-	KE::TextureManager::Instance()->LoadTexture(BLUE_MONSTER, "./Assets/Textures/monster_blue_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
-	KE::TextureManager::Instance()->LoadTexture(LAZER_BULLET, "./Assets/Textures/lazer_projectile_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(LAZER_PICKUP, "./Assets/Textures/lazer_pickup_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
-	KE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/haste_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(KNIFE, "./Assets/Textures/knife_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(BACKGROUND1, "./Assets/Textures/background_v1.png");
-	KE::TextureManager::Instance()->LoadTexture(BACKGROUND_PLAYER_PATH, "./Assets/Textures/player_path_v2.png");
+	TE::TextureManager::Instance()->LoadTexture(SOLDIER, "./Assets/Textures/soldier_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(YELLOW_MONSTER, "./Assets/Textures/monster_yellow_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(RED_MONSTER, "./Assets/Textures/monster_red_v2.png");
+	TE::TextureManager::Instance()->LoadTexture(BLUE_MONSTER, "./Assets/Textures/monster_blue_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(SETTLEMENT, "./Assets/Textures/house_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(DEFAULT_BULLET, "./Assets/Textures/bullet_v2.png");
+	TE::TextureManager::Instance()->LoadTexture(LAZER_BULLET, "./Assets/Textures/lazer_projectile_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(LAZER_PICKUP, "./Assets/Textures/lazer_pickup_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(HEALTH_PACK, "./Assets/Textures/health_v2.png");
+	TE::TextureManager::Instance()->LoadTexture(HEALTH_BAR, "./Assets/Textures/health_bar_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(ARMOR, "./Assets/Textures/armor_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(HASTE, "./Assets/Textures/haste_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(KNIFE, "./Assets/Textures/knife_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(BACKGROUND1, "./Assets/Textures/background_v1.png");
+	TE::TextureManager::Instance()->LoadTexture(BACKGROUND_PLAYER_PATH, "./Assets/Textures/player_path_v2.png");
 
 	//Audio setup
-	_monsterWalkAudioSource.AddClip(KE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
+	_monsterWalkAudioSource.AddClip(TE::AudioManager::Instance()->GetClip(MONSTER_WALK_CLIP));
 
 	//Setup text
 	_font.Init("bank_gothic", "./Assets/Fonts/bank_gothic.ttf", 12);
@@ -128,36 +128,36 @@ void Battleground::v_Init(void)
 
 	_roundTitleText.SetFont(_font);
 	_roundTitleText.AddText("Round:");
-	_roundTitleText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	_roundTitleText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
 	Level::AddTextToLevel(_roundTitleText);
 
 	_scoreTitleText.SetFont(_font);
 	_scoreTitleText.AddText("Score:");
-	_scoreTitleText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.85f));
+	_scoreTitleText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.85f));
 	Level::AddTextToLevel(_scoreTitleText);
 
 	_roundNumberText.SetFont(_font);
 	_roundNumberText.AddText(std::to_string(_roundNumber));
 	//The equation for getting the number into the right place is pretty arbitrary. It was found by guessing pretty much. 
-	_roundNumberText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
+	_roundNumberText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
 	Level::AddTextToLevel(_roundNumberText);
 
 	_scoreText.SetFont(_font);
 	_scoreText.AddText(std::to_string(_score));
-	_scoreText.SetPosition(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.85f));
+	_scoreText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.85f));
 	Level::AddTextToLevel(_scoreText);
 		
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
 	_player->SetPosition(_playerDefaultPos);
 	_player->SetScale(32.0f, 32.0f);
-	_player->SetTexture(KE::TextureManager::Instance()->GetTexture(SOLDIER));
+	_player->SetTexture(TE::TextureManager::Instance()->GetTexture(SOLDIER));
 	_player->v_Awake();
 	AddObjectToLevel(_player);
 
 	//Setup Player HealthBar
-	KM::Point barPos{ static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.35f,
-					  static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.4f };
+	TM::Point barPos{ static_cast<F32>(TE::GameWindow::Instance()->GetWidth()) * 0.35f,
+					  static_cast<F32>(TE::GameWindow::Instance()->GetHeight()) * 0.4f };
 
 	F32 barWidth = 16.0f;
 	F32 barOffset = 12.0f;
@@ -168,7 +168,7 @@ void Battleground::v_Init(void)
 	{
 		p_Icon bar = make_shared<Icon>();
 		bar->SetScale(barWidth, barWidth);
-		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(HEALTH_BAR));
+		bar->SetTexture(TE::TextureManager::Instance()->GetTexture(HEALTH_BAR));
 		bar->SetPosition(barPos);
 		barPos[x] += barWidth + barOffset;
 		AddObjectToLevel(bar);
@@ -177,8 +177,8 @@ void Battleground::v_Init(void)
 	_player->AddHealthBar(healthBar);
 
 	//Setup Player ArmorBar
-	barPos.Set(static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.35f,
-			   static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.35f);
+	barPos.Set(static_cast<F32>(TE::GameWindow::Instance()->GetWidth()) * 0.35f,
+			   static_cast<F32>(TE::GameWindow::Instance()->GetHeight()) * 0.35f);
 
 	barWidth = 16.0f;
 	barOffset = 32.0f;
@@ -189,7 +189,7 @@ void Battleground::v_Init(void)
 	{
 		p_Icon bar = make_shared<Icon>();
 		bar->SetScale(barWidth, barWidth);
-		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(ARMOR));
+		bar->SetTexture(TE::TextureManager::Instance()->GetTexture(ARMOR));
 		bar->SetPosition(barPos);
 		barPos[x] += barWidth + barOffset;
 		bar->SetActive(false);
@@ -199,8 +199,8 @@ void Battleground::v_Init(void)
 	_player->AddArmorBar(armorBar);
 
 	// Setup Player KnifeBar
-	barPos.Set(static_cast<F32>(KE::GameWindow::Instance()->GetWidth()) * 0.3f,
-			   static_cast<F32>(KE::GameWindow::Instance()->GetHeight()) * 0.4f);
+	barPos.Set(static_cast<F32>(TE::GameWindow::Instance()->GetWidth()) * 0.3f,
+			   static_cast<F32>(TE::GameWindow::Instance()->GetHeight()) * 0.4f);
 
 	barWidth = 16.0f;
 	S32 barHeight = 32.0f;
@@ -212,7 +212,7 @@ void Battleground::v_Init(void)
 	{
 		p_Icon bar = make_shared<Icon>();
 		bar->SetScale(barWidth, barHeight);
-		bar->SetTexture(KE::TextureManager::Instance()->GetTexture(KNIFE));
+		bar->SetTexture(TE::TextureManager::Instance()->GetTexture(KNIFE));
 		bar->SetPosition(barPos);
 		barPos[x] += barWidth + barOffset;
 		bar->SetActive(false);
@@ -232,7 +232,7 @@ void Battleground::v_Init(void)
 		AddObjectToLevel(p);
 	}
 
-	KM::Point settlementPos = _defaultSettlementPos;
+	TM::Point settlementPos = _defaultSettlementPos;
 
 	//Create Monster Pool
 	for(U32 i = 0; i < _monsterPoolSize; ++i)
@@ -258,13 +258,13 @@ void Battleground::v_Init(void)
 	// Set up Spawn Zones
 	// Can dynamically add more. _Spawn will support that without any additional work.
 	// 30% from the left border, 10% from the top of the screen
-	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()) * 0.33f, GetTopBorder() * 0.9f));
+	_spawnZones.push_back(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.33f, GetTopBorder() * 0.9f));
 	// 30% from the right border, 10% from the top
-	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()) * 0.33f, GetTopBorder() * 0.9f));
+	_spawnZones.push_back(TM::Point(static_cast<F32>(GetRightBorder()) * 0.33f, GetTopBorder() * 0.9f));
 	// Right on the left border, 60% from the top of the screen
-	_spawnZones.push_back(KM::Point(static_cast<F32>(GetLeftBorder()), GetTopBorder() * 0.4f));
+	_spawnZones.push_back(TM::Point(static_cast<F32>(GetLeftBorder()), GetTopBorder() * 0.4f));
 	// Right on the right border, 60% from the top of the screen
-	_spawnZones.push_back(KM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
+	_spawnZones.push_back(TM::Point(static_cast<F32>(GetRightBorder()), GetTopBorder() * 0.4f));
 
 	// Create Health Pack Pool
 	for(U32 i = 0; i < _defaultPoolSize; ++i)
@@ -316,7 +316,7 @@ void Battleground::v_Init(void)
 	_playerPath->SetPosition(_playerDefaultPos);
 	// Values found by trial and error. If the screen changes size, this will not work
 	_playerPath->SetScale(575.0f, 64.0f);
-	_playerPath->SetTexture(KE::TextureManager::Instance()->GetTexture(BACKGROUND_PLAYER_PATH));
+	_playerPath->SetTexture(TE::TextureManager::Instance()->GetTexture(BACKGROUND_PLAYER_PATH));
 	AddObjectToLevel(_playerPath);
 
 	// Main background
@@ -324,16 +324,16 @@ void Battleground::v_Init(void)
 	_background->SetPosition(0.0f, 0.0f);
 	// Values found by trial and error. If the screen changes size, this will not work
 	_background->SetScale(510.0f, 385.0f);
-	_background->SetTexture(KE::TextureManager::Instance()->GetTexture(BACKGROUND1));
+	_background->SetTexture(TE::TextureManager::Instance()->GetTexture(BACKGROUND1));
 	AddObjectToLevel(_background);
 }
 
 void Battleground::v_Update(void)
 {
 	// Exit or Menu check
-	if(KE::Controller::Instance()->GetKeyDown(KE::ESCAPE))
+	if(TE::Controller::Instance()->GetKeyDown(TE::ESCAPE))
 	{
-		KE::Engine::Instance()->End();
+		TE::Engine::Instance()->End();
 		return;
 	}
 
@@ -342,18 +342,18 @@ void Battleground::v_Update(void)
 		// Run the AI because its fun
 		_ProcessAI();
 
-		if(KE::Controller::Instance()->GetKeyDown(KE::Y))
+		if(TE::Controller::Instance()->GetKeyDown(TE::Y))
 		{
 			_ResetLevel();
 		}
-		else if(KE::Controller::Instance()->GetKeyDown(KE::N))
+		else if(TE::Controller::Instance()->GetKeyDown(TE::N))
 		{
-			KE::Engine::Instance()->End();
+			TE::Engine::Instance()->End();
 		}
 		return;
 	}
 
-	KE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
+	TE::AudioManager::Instance()->PlaySource(BACKGROUND_MUSIC_SOURCE);
 
 	// Update Round Logic
 	if (EventManager::Instance()->HasEvent())
@@ -390,7 +390,7 @@ void Battleground::v_Update(void)
 	}
 	else
 	{
-		_monsterWalkCountdown -= KM::Timer::Instance()->DeltaTime();
+		_monsterWalkCountdown -= TM::Timer::Instance()->DeltaTime();
 	}
 */	
 }
@@ -399,21 +399,21 @@ void Battleground::_Spawn(U32 amount, MonsterAIType type)
 {
 	F32 offset = 32.0f;
 	
-	KM::Point spawnOffset{KM::Random::Instance()->RandomFloat(-offset, offset), KM::Random::Instance()->RandomFloat(-offset, offset)};
+	TM::Point spawnOffset{TM::Random::Instance()->RandomFloat(-offset, offset), TM::Random::Instance()->RandomFloat(-offset, offset)};
 	
 	for(U32 i = 0; i < amount; ++i)
 	{		
 		for(auto monster : _monsterPool)
 		{
-			U32 spawnZoneToUse = KM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
+			U32 spawnZoneToUse = TM::Random::Instance()->RandomInt(1, _spawnZones.size()) - 1;
 			if(!monster->GetActive())
 			{
 				monster->Setup(type, _spawnZones[spawnZoneToUse] + spawnOffset);
-				KE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
+				TE::AudioManager::Instance()->PlaySource(MONSTER_SPAWN_SOURCE);
 				break;
 			}
 			//update rand
-			spawnOffset.Set(KM::Random::Instance()->RandomFloat(-offset, offset), KM::Random::Instance()->RandomFloat(-offset, offset));
+			spawnOffset.Set(TM::Random::Instance()->RandomFloat(-offset, offset), TM::Random::Instance()->RandomFloat(-offset, offset));
 		}
 	}
 }
@@ -519,7 +519,7 @@ void Battleground::_ProcessEvents(void)
 	_score += EventManager::Instance()->CheckPointsEarned();
 
 	// Chance to spawn item on kill
-	S32 healthPackSpawnChance = KM::Random::Instance()->RandomInt(1, 100);
+	S32 healthPackSpawnChance = TM::Random::Instance()->RandomInt(1, 100);
 	
 	if (_killedThisRound >= _roundLength)
 	{
@@ -554,7 +554,7 @@ void Battleground::_ProcessEvents(void)
 		else if(_roundNumber > 10)
 		{
 			//10% chance to spawn a blue
-			S32 chance = KM::Random::Instance()->RandomInt(0, 99);
+			S32 chance = TM::Random::Instance()->RandomInt(0, 99);
 
 			if(chance > 89)
 			{
@@ -569,28 +569,28 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(HEALTH_ITEM);
 	}
 	
-	S32 powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+	S32 powerupSpawnChance = TM::Random::Instance()->RandomInt(0, 99);
 	
 	if(powerupSpawnChance >= 95)
 	{
 		_SpawnItem(ARMOR_ITEM);
 	}
 
-	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+	powerupSpawnChance = TM::Random::Instance()->RandomInt(0, 99);
 
 	if(powerupSpawnChance >= 90)
 	{
 		_SpawnItem(HASTE_ITEM);
 	}
 
-	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+	powerupSpawnChance = TM::Random::Instance()->RandomInt(0, 99);
 
 	if(powerupSpawnChance >= 95)
 	{
 		_SpawnItem(KNIFE_ITEM);
 	}
 
-	powerupSpawnChance = KM::Random::Instance()->RandomInt(0, 99);
+	powerupSpawnChance = TM::Random::Instance()->RandomInt(0, 99);
 
 	if(powerupSpawnChance >= 98)
 	{
@@ -603,14 +603,14 @@ void Battleground::_ProcessEvents(void)
 
 void Battleground::_ProcessInput(void)
 {
-	if(KE::Controller::Instance()->GetKeyHeld(KE::LEFT_ARROW))
+	if(TE::Controller::Instance()->GetKeyHeld(TE::LEFT_ARROW))
 	{
 		if(_player->GetPosition()[x] > Level::GetLeftBorder())
 		{
 			_player->Move(-1.0f);
 		}
 	}
-	else if(KE::Controller::Instance()->GetKeyHeld(KE::RIGHT_ARROW))
+	else if(TE::Controller::Instance()->GetKeyHeld(TE::RIGHT_ARROW))
 	{
 		if(_player->GetPosition()[x] < GetRightBorder())
 		{
@@ -618,7 +618,7 @@ void Battleground::_ProcessInput(void)
 		}
 	}
 
-	if(KE::Controller::Instance()->GetKeyDown(KE::SPACE) || KE::Controller::Instance()->GetKeyDown(KE::UP_ARROW))
+	if(TE::Controller::Instance()->GetKeyDown(TE::SPACE) || TE::Controller::Instance()->GetKeyDown(TE::UP_ARROW))
 	{
 		for(auto p : _projectilePool)
 		{
@@ -640,7 +640,7 @@ void Battleground::_ProcessAI(void)
 		_Spawn(_maxSpawn, AI_YELLOW_MONSTER);
 		
 		//Chance to spawn red every time
-		S32 chance = KM::Random::Instance()->RandomInt(0, 99);
+		S32 chance = TM::Random::Instance()->RandomInt(0, 99);
 		
 		if(chance > _redSpawnRate)
 		{
@@ -655,7 +655,7 @@ void Battleground::_ProcessAI(void)
 	}
 	else
 	{
-		_lastSpawn += KM::Timer::Instance()->DeltaTime();
+		_lastSpawn += TM::Timer::Instance()->DeltaTime();
 
 		if(_lastSpawn >= _spawnRate)
 		{
@@ -722,7 +722,7 @@ void Battleground::_ProcessAI(void)
 			}
 			else
 			{
-				KE::ErrorManager::Instance()->SetError(KE::APPLICATION, "Battleground::v_Update Monster attempted to update with invalid AI");
+				TE::ErrorManager::Instance()->SetError(TE::APPLICATION, "Battleground::v_Update Monster attempted to update with invalid AI");
 			}
 		}
 	}
@@ -806,7 +806,7 @@ void Battleground::_ResetLevel(void)
 	_player->SetPosition(_playerDefaultPos);
 	_player->v_Reset();
 
-	KM::Point settlementPos = _defaultSettlementPos;
+	TM::Point settlementPos = _defaultSettlementPos;
 
 	//Settlements
 	for(auto settlement : _settlementList)
@@ -880,13 +880,13 @@ void Battleground::_ResetLevel(void)
 	_gameover = false;
 
 	//Restart Audio
-	KE::AudioManager::Instance()->StopSource(BACKGROUND_MUSIC_SOURCE);
+	TE::AudioManager::Instance()->StopSource(BACKGROUND_MUSIC_SOURCE);
 }
 
 F32 Battleground::_GetRandomXPos(void)
 {
 	F32 padding = 50.0f;
-	F32 xPos = KM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
+	F32 xPos = TM::Random::Instance()->RandomFloat(static_cast<F32>(GetLeftBorder()), static_cast<F32>(GetRightBorder()));
 
 	if(xPos <= static_cast<F32>(GetLeftBorder()) + padding)
 	{

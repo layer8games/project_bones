@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project_Bones", "Project_Bones.vcxproj", "{C7A195A4-13F5-42CA-93D2-06882FC55800}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Killer_Engine", "..\..\..\Killer_Engine\Build\vs\Killer_Engine.vcxproj", "{27850EA3-AA75-4669-AF23-80B8F950F31F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tempest", "..\..\..\Tempest\Build\visual_studio\Tempest.vcxproj", "{27850EA3-AA75-4669-AF23-80B8F950F31F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,7 +26,6 @@ Global
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Debug|x64.ActiveCfg = Debug|x64
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Debug|x64.Build.0 = Debug|x64
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Debug|x86.ActiveCfg = Debug|Win32
-		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Debug|x86.Build.0 = Debug|Win32
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Release|x64.ActiveCfg = Release|x64
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Release|x64.Build.0 = Release|x64
 		{27850EA3-AA75-4669-AF23-80B8F950F31F}.Release|x86.ActiveCfg = Release|Win32

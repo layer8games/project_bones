@@ -35,10 +35,10 @@ _knifeBar()
 	GameObject::MakeSprite();
 	_maxHP = 3;
 	_hp = _maxHP;
-	_damageAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DAMAGE_CLIP));
-	_deathAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DIE_CLIP));
-	_defaultFireAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_DEFAULT_FIRE_CLIP));
-	_walkAudio.AddClip(KE::AudioManager::Instance()->GetClip(PLAYER_WALK_CLIP));
+	_damageAudio.AddClip(TE::AudioManager::Instance()->GetClip(PLAYER_DAMAGE_CLIP));
+	_deathAudio.AddClip(TE::AudioManager::Instance()->GetClip(PLAYER_DIE_CLIP));
+	_defaultFireAudio.AddClip(TE::AudioManager::Instance()->GetClip(PLAYER_DEFAULT_FIRE_CLIP));
+	_walkAudio.AddClip(TE::AudioManager::Instance()->GetClip(PLAYER_WALK_CLIP));
 }
 
 Soldier::~Soldier(void)
@@ -55,7 +55,7 @@ void Soldier::v_Update(void)
 
 	if(_tookDamage)
 	{
-		_lastDamaged += KM::Timer::Instance()->DeltaTime();
+		_lastDamaged += TM::Timer::Instance()->DeltaTime();
 
 		if(_lastDamaged >= _immune)
 		{
@@ -66,7 +66,7 @@ void Soldier::v_Update(void)
 
 	if(!_canFire)
 	{
-		_lastFire += KM::Timer::Instance()->DeltaTime();
+		_lastFire += TM::Timer::Instance()->DeltaTime();
 
 		if(_lastFire >= _fireRate)
 		{
@@ -77,7 +77,7 @@ void Soldier::v_Update(void)
 
 	if(_knife)
 	{
-		_knifeTimeAlive += KM::Timer::Instance()->DeltaTime();
+		_knifeTimeAlive += TM::Timer::Instance()->DeltaTime();
 
 		if(_knifeTimeAlive >= _knifeTimer)
 		{
@@ -88,7 +88,7 @@ void Soldier::v_Update(void)
 
 	if(_activeFireType != BULLET)
 	{
-		_fireTypeTimeAlive += KM::Timer::Instance()->DeltaTime();
+		_fireTypeTimeAlive += TM::Timer::Instance()->DeltaTime();
 
 		if(_fireTypeTimeAlive >= _fireTypeTimer)
 		{

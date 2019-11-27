@@ -13,9 +13,9 @@
 #include <Engine/AudioManager.h>
 #include <Engine/AudioSource.h>
 
-namespace KE = KillerEngine;
-namespace KC = KillerCollisions;
-namespace KM = KillerMath;
+namespace TE = Tempest;
+namespace TC = TempestCollisions;
+namespace TM = TempestMath;
 
 //===== Game Includes =====
 #include <Game/I_Actor.h>
@@ -65,7 +65,7 @@ public:
 //Functions
 //
 //==========================================================================================================================
-	void Setup(MonsterAIType type, KM::Point pos);
+	void Setup(MonsterAIType type, TM::Point pos);
 
 //==========================================================================================================================
 //
@@ -127,8 +127,8 @@ private:
 	MonsterAIState		_aiState;
 	MonsterAIType		_aiType;
 	p_Actor				_target;
-	KM::Vector3			_movementDirection;
-	KE::AudioSource		_deathAudioSource;
+	TM::Vector3			_movementDirection;
+	TE::AudioSource		_deathAudioSource;
 };//end Class
 
 typedef shared_ptr<Monster> p_Monster;

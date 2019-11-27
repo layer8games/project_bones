@@ -25,7 +25,7 @@ void Haste::v_Update(void)
 		return;
 	}
 
-	_onTimer += KM::Timer::Instance()->DeltaTime();
+	_onTimer += TM::Timer::Instance()->DeltaTime();
 
 	if(_onTimer >= _timeActive)
 	{

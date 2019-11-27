@@ -4,7 +4,7 @@
 #include <Engine/Atom.h>
 #include <Engine/GameObject.h>
 
-namespace KE = KillerEngine;
+namespace TE = Tempest;
 
 //===== Game Includes =====
 #include <Game/Soldier.h>
@@ -18,7 +18,7 @@ enum ItemType
 	LAZER_ITEM = 5,
 };
 
-class I_Item : public KE::GameObject
+class I_Item : public TE::GameObject
 {
 public:
 //==========================================================================================================================
