@@ -603,14 +603,14 @@ void Battleground::_ProcessEvents(void)
 
 void Battleground::_ProcessInput(void)
 {
-	if(TE::Controller::Instance()->GetKeyHeld(TE::LEFT_ARROW))
+	if(TE::Controller::Instance()->GetKeyHeld(TE::LEFT_ARROW) || TE::Controller::Instance()->GetKeyHeld(TE::A))
 	{
 		if(_player->GetPosition()[x] > Level::GetLeftBorder())
 		{
 			_player->Move(-1.0f);
 		}
 	}
-	else if(TE::Controller::Instance()->GetKeyHeld(TE::RIGHT_ARROW))
+	else if(TE::Controller::Instance()->GetKeyHeld(TE::RIGHT_ARROW) || TE::Controller::Instance()->GetKeyHeld(TE::D))
 	{
 		if(_player->GetPosition()[x] < GetRightBorder())
 		{
@@ -618,7 +618,7 @@ void Battleground::_ProcessInput(void)
 		}
 	}
 
-	if(TE::Controller::Instance()->GetKeyDown(TE::SPACE) || TE::Controller::Instance()->GetKeyDown(TE::UP_ARROW))
+	if(TE::Controller::Instance()->GetKeyDown(TE::SPACE) || TE::Controller::Instance()->GetKeyDown(TE::UP_ARROW) || TE::Controller::Instance()->GetKeyDown(TE::W))
 	{
 		for(auto p : _projectilePool)
 		{
