@@ -126,26 +126,27 @@ void Battleground::v_Init(void)
 	_retryText.SetActive(false);
 	AddTextToLevel(_retryText);
 
+	// Removed all text, unable to update the Round or Score, and I want to wrap this project up.
 	_roundTitleText.SetFont(_font);
 	_roundTitleText.AddText("Round:");
 	_roundTitleText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.9f));
-	Level::AddTextToLevel(_roundTitleText);
+	//Level::AddTextToLevel(_roundTitleText);
 
 	_scoreTitleText.SetFont(_font);
 	_scoreTitleText.AddText("Score:");
 	_scoreTitleText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f, static_cast<F32>(GetTopBorder()) * 0.85f));
-	Level::AddTextToLevel(_scoreTitleText);
+	//Level::AddTextToLevel(_scoreTitleText);
 
 	_roundNumberText.SetFont(_font);
 	_roundNumberText.AddText(std::to_string(_roundNumber));
 	//The equation for getting the number into the right place is pretty arbitrary. It was found by guessing pretty much. 
 	_roundNumberText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.9f));
-	Level::AddTextToLevel(_roundNumberText);
+	//Level::AddTextToLevel(_roundNumberText);
 
 	_scoreText.SetFont(_font);
 	_scoreText.AddText(std::to_string(_score));
 	_scoreText.SetPosition(TM::Point(static_cast<F32>(GetLeftBorder()) * 0.9f + _roundTitleText.GetWidth() * 3.25f, static_cast<F32>(GetTopBorder()) * 0.85f));
-	Level::AddTextToLevel(_scoreText);
+	//Level::AddTextToLevel(_scoreText);
 		
 	//Set up player
 	_player = ObjectFactory::Instance()->MakeSoldier();
@@ -597,8 +598,9 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(LAZER_ITEM);
 	}
 	
-	Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
-	Level::UpdateText(_scoreText, std::to_string(_score));
+	// Remove for now. Update not working and I want to wrap up this project
+	//Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
+	//Level::UpdateText(_scoreText, std::to_string(_score));
 }
 
 void Battleground::_ProcessInput(void)
