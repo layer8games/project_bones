@@ -598,21 +598,32 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(LAZER_ITEM);
 	}
 	
+<<<<<<< HEAD
 	// Remove for now. Update not working and I want to wrap up this project
 	//Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 	//Level::UpdateText(_scoreText, std::to_string(_score));
+=======
+	++_roundNumber;
+	UpdateText(_roundNumberText, std::to_string(_roundNumber));
+	//Level::RemoveTextFromLevel(_roundNumberText);
+	//_roundNumberText.AddText(std::to_string(_roundNumber));
+	//Level::AddTextToLevel(_roundNumberText);
+	std::cout << "Level number is " << _roundNumber << std::endl;
+	//Level::UpdateText(_scoreText, std::to_string(_score));
+	std::cout << "score is " << _score << std::endl;
+>>>>>>> 34-polish-pass
 }
 
 void Battleground::_ProcessInput(void)
 {
-	if(TE::Controller::Instance()->GetKeyHeld(TE::LEFT_ARROW))
+	if(TE::Controller::Instance()->GetKeyHeld(TE::LEFT_ARROW) || TE::Controller::Instance()->GetKeyHeld(TE::A))
 	{
 		if(_player->GetPosition()[x] > Level::GetLeftBorder())
 		{
 			_player->Move(-1.0f);
 		}
 	}
-	else if(TE::Controller::Instance()->GetKeyHeld(TE::RIGHT_ARROW))
+	else if(TE::Controller::Instance()->GetKeyHeld(TE::RIGHT_ARROW) || TE::Controller::Instance()->GetKeyHeld(TE::D))
 	{
 		if(_player->GetPosition()[x] < GetRightBorder())
 		{
@@ -620,7 +631,7 @@ void Battleground::_ProcessInput(void)
 		}
 	}
 
-	if(TE::Controller::Instance()->GetKeyDown(TE::SPACE) || TE::Controller::Instance()->GetKeyDown(TE::UP_ARROW))
+	if(TE::Controller::Instance()->GetKeyDown(TE::SPACE) || TE::Controller::Instance()->GetKeyDown(TE::UP_ARROW) || TE::Controller::Instance()->GetKeyDown(TE::W))
 	{
 		for(auto p : _projectilePool)
 		{

@@ -15,6 +15,7 @@
     </Lib>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\Killer_Engine\Bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
