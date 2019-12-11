@@ -598,20 +598,9 @@ void Battleground::_ProcessEvents(void)
 		_SpawnItem(LAZER_ITEM);
 	}
 	
-<<<<<<< HEAD
 	// Remove for now. Update not working and I want to wrap up this project
 	//Level::UpdateText(_roundNumberText, std::to_string(_roundNumber));
 	//Level::UpdateText(_scoreText, std::to_string(_score));
-=======
-	++_roundNumber;
-	UpdateText(_roundNumberText, std::to_string(_roundNumber));
-	//Level::RemoveTextFromLevel(_roundNumberText);
-	//_roundNumberText.AddText(std::to_string(_roundNumber));
-	//Level::AddTextToLevel(_roundNumberText);
-	std::cout << "Level number is " << _roundNumber << std::endl;
-	//Level::UpdateText(_scoreText, std::to_string(_score));
-	std::cout << "score is " << _score << std::endl;
->>>>>>> 34-polish-pass
 }
 
 void Battleground::_ProcessInput(void)
