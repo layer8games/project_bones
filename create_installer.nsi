@@ -1,4 +1,4 @@
-OutFile "install_bones.exe"
+OutFile "install_bones_.exe"
 
 !define pathToGame ".\ProjectBonesRelease"
 !define regKeyName "Software\Microsoft\Windows\CurrentVersion\Uninstall\ProjectBone"
